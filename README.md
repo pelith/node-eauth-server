@@ -36,10 +36,10 @@ After installing dependencies, you may use `npx sequelize` as a shortcut to acce
     ```
 
 ## Usage
-  # Server
+  ### Server
     Start the server: `node index.js`. Test it on `http://localhost:8080/`.
 
-  # Docker
+  ### Docker
     ```bash
     docker build -t pelith/node-eth-auth-server .
     docker run --net=host  -d pelith/node-eth-auth-server

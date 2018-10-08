@@ -6,9 +6,12 @@ A live demo to use MetaMask to authenticate users on a website, issuing JWT (JSO
 
 After installing dependencies, you may use `npx sequelize` as a shortcut to access CLI.
 
-1. Initialize Sequelize: `YOUR_PROJECT_PATH/node_modules/.bin/sequelize init`
+1. Initialize Sequelize: 
+  `./node_modules/.bin/sequelize init`
+  `mv _models/*.js models && rm -rf _models`
+  `./node_modules/.bin/sequelize db:migrate`
 
-2. Configure your `config/config.json`, depending on the environment. Add the following entries:
+3. Configure your `config/config.json`, depending on the environment. Add the following entries:
 
    ```js
    {
@@ -25,7 +28,7 @@ After installing dependencies, you may use `npx sequelize` as a shortcut to acce
 
    Note that you may need to install additional packages to operate on databases.
 
-3. Start the server: `node index.js`. Test it on `http://localhost:8080/`.
+4. Start the server: `node index.js`. Test it on `http://localhost:8080/`.
 
 ## Testing
 

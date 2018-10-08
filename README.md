@@ -7,35 +7,43 @@ A live demo to use MetaMask to authenticate users on a website, issuing JWT (JSO
 After installing dependencies, you may use `npx sequelize` as a shortcut to access CLI.
 
 1. Initialize Sequelize: 
-   ```bash
-    ./node_modules/.bin/sequelize init
+  ```bash
+  ./node_modules/.bin/sequelize init
 
-    mv _models/*.js models && rm -rf _models
-   ```
+  mv _models/*.js models && rm -rf _models
+  ```
 
 2. Configure your `config/config.json`, depending on the environment. Add the following entries:
 
-   ```js
-   {
-     "development": {
-       // app secret
-       "secret": "YOUR_SECRET_HERE",
-       // use the connection path from this environment variable, if specified
-       "use_env_variable": "CONNECTION_PATH",
-       /* ... */
-     },
-     "production": { /* ... */ }
-   }
-   ```
+  ```js
+  {
+    "development": {
+      // app secret
+      "secret": "YOUR_SECRET_HERE",
+      // use the connection path from this environment variable, if specified
+      "use_env_variable": "CONNECTION_PATH",
+      /* ... */
+    },
+    "production": { /* ... */ }
+  }
+  ```
 
    Note that you may need to install additional packages to operate on databases.
 
 3. Migrate database:
     ```bash
     ./node_modules/.bin/sequelize db:migrate
-   ```
+    ```
 
-4. Start the server: `node index.js`. Test it on `http://localhost:8080/`.
+## Usage
+  # Server
+    Start the server: `node index.js`. Test it on `http://localhost:8080/`.
+
+  # Docker
+    ```bash
+    docker build -t pelith/node-eth-auth-server .
+    docker run --net=host  -d pelith/node-eth-auth-server
+    ```
 
 ## Testing
 

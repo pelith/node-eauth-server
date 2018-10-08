@@ -17,5 +17,9 @@
   },
   "devDependencies": {
     "sequelize-cli": "^4.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
   }
 }

@@ -11,11 +11,9 @@ After installing dependencies, you may use `npx sequelize` as a shortcut to acce
     ./node_modules/.bin/sequelize init
 
     mv _models/*.js models && rm -rf _models
-
-    ./node_modules/.bin/sequelize db:migrate
    ```
 
-3. Configure your `config/config.json`, depending on the environment. Add the following entries:
+2. Configure your `config/config.json`, depending on the environment. Add the following entries:
 
    ```js
    {
@@ -31,6 +29,11 @@ After installing dependencies, you may use `npx sequelize` as a shortcut to acce
    ```
 
    Note that you may need to install additional packages to operate on databases.
+
+3. Migrate database:
+    ```bash
+    ./node_modules/.bin/sequelize db:migrate
+   ```
 
 4. Start the server: `node index.js`. Test it on `http://localhost:8080/`.
 

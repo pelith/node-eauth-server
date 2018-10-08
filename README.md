@@ -8,7 +8,9 @@ After installing dependencies, you may use `npx sequelize` as a shortcut to acce
 
 1. Initialize Sequelize: 
   `./node_modules/.bin/sequelize init`
+
   `mv _models/*.js models && rm -rf _models`
+  
   `./node_modules/.bin/sequelize db:migrate`
 
 3. Configure your `config/config.json`, depending on the environment. Add the following entries:

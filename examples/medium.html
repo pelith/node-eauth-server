@@ -99,7 +99,7 @@ window["obvInit"]({"value":{"id":"7f135c0f9d86","versionId":"5a5a942608d6","crea
                 access_token = res.token;
                 console.log("EthAuth Success")
                 console.log("Your JWT token: " + access_token)
-                window.location = '/'
+                window.location = '/medium.html';
               } else {
                 console.log("EthAuth Failed")
               }
@@ -137,7 +137,7 @@ window["obvInit"]({"value":{"id":"7f135c0f9d86","versionId":"5a5a942608d6","crea
                 access_token = res.token;
                 console.log("EthAuth Success")
                 console.log("Your JWT token: " + access_token)
-                window.location = '/'
+                window.location = '/medium.html';
               } else {
                 console.log("EthAuth Failed")
               }
@@ -184,7 +184,7 @@ window["obvInit"]({"value":{"id":"7f135c0f9d86","versionId":"5a5a942608d6","crea
       url: domain + '/api/reset',
       type: "GET",
       success: function(data) {
-        window.location = '/';
+        window.location = '/medium.html';
       }
     });
   });

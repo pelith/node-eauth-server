@@ -1,6 +1,6 @@
 {
   "name": "node-eth-auth-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "author": "Pelith",
   "license": "MIT",
@@ -9,10 +9,12 @@
     "connect-session-sequelize": "^5.2.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "jade": "^1.11.0",
     "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.0",
     "mysql2": "^1.5.3",
     "node-eth-auth": "^1.1.0",
+    "oauth2-server": "^3.0.1",
     "sequelize": "^4.38.0"
   },
   "devDependencies": {

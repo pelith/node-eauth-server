@@ -1,0 +1,15 @@
+extends layout
+
+block append scripts
+    script.
+      document.getElementById("url").value=new URLSearchParams(window.location.search).get('url');
+
+block content
+  .container
+      form.form-signin(method='post', action='/logout', role='form')
+        h2.form-signin-heading Authorise
+        .form-group
+          .div Account #{address}
+        .form-group
+          input(type='hidden', name='url', id='url', value='')
+          button.btn.btn-lg.btn-primary.btn-block(type='submit') Logout

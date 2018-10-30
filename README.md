@@ -4,22 +4,20 @@ A live demo to use MetaMask to authenticate users on a website, issuing JWT (JSO
 
 ## Installing
 
-After installing dependencies, you may use `npx sequelize` as a shortcut to access CLI.
+After installing dependencies.
 
-1. Initialize Sequelize: 
+1. Move `config/config.json.example` to `config/config.json`:
   ```bash
-  ./node_modules/.bin/sequelize init
-
-  mv _models/*.js models && rm -rf _models
+  mv config/config.json.example config/config.json
   ```
 
-2. Configure your `config/config.json`, depending on the environment. Add the following entries:
-
+2. Configure your `config/config.json.example`, depending on the environment. Add the following entries:
   ```js
   {
     "development": {
       // app secret
       "secret": "YOUR_SECRET_HERE",
+      "baner": "YOUR_BANER_HERE",
       // use the connection path from this environment variable, if specified
       "use_env_variable": "CONNECTION_PATH",
       /* ... */
@@ -29,11 +27,6 @@ After installing dependencies, you may use `npx sequelize` as a shortcut to acce
   ```
 
    Note that you may need to install additional packages to operate on databases.
-
-3. Migrate database:
-    ```bash
-    ./node_modules/.bin/sequelize db:migrate
-    ```
 
 ## Usage
   ### Server

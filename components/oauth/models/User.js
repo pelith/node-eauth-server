@@ -9,17 +9,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true,
     },
-    address: DataTypes.STRING(32),
+    address: DataTypes.STRING(42),
     scope: DataTypes.STRING
   }, {
-    tableName: 'users', // oauth_users
+    tableName: 'user',
     timestamps: false,
     underscored: true,
   });
 
   User.associate = function(models) {
     // associations can be defined here
-    // User.hasMany(models.OAuthClient);
   };
   return User;
 }
+

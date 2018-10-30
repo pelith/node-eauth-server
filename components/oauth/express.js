@@ -11,7 +11,7 @@ const OAuthClient = db.OAuthClient;
 // initalize oauth2 server
 const oauth = require('./oauth')
 
-module.exports = function(app, middleware){
+module.exports = function(app, middleware, User){
   // only private can get
   app.get('/oauth/user', middleware, authenticate(), function(req, res) {
     return res.json(req.user.User)

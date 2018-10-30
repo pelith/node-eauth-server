@@ -1,4 +1,4 @@
-# ETH Authenticator (Demo)
+# ETH Auth Server (Demo)
 
 A live demo to use MetaMask to authenticate users on a website, issuing JWT (JSON web tokens).
 
@@ -9,6 +9,7 @@ After installing dependencies.
 1. Move `config/config.json.example` to `config/config.json`:
   ```bash
   mv config/config.json.example config/config.json
+  ln -s  ../../../config/config.json components/oauth/config/config.json
   ```
 
 2. Configure your `config/config.json.example`, depending on the environment. Add the following entries:

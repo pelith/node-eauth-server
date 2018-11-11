@@ -13,11 +13,11 @@ const oauth = require('./oauth')
 
 module.exports = function(app, middleware, User){
   // only private can get
-  app.get('/oauth/user', middleware, authenticate(), function(req, res) {
+  app.get('/oauth/user', authenticate(), function(req, res) {
     return res.json(req.user.User)
   });
 
-  app.all('/oauth/token', middleware, function(req,res,next){
+  app.all('/oauth/token', function(req,res,next){
     const request = new Request(req);
     const response = new Response(res);
 
@@ -72,6 +72,4 @@ module.exports = function(app, middleware, User){
       res.status(err.code || 500).json(err)
     })
   });
-
-
 }

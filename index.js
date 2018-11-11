@@ -135,6 +135,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var listener = app.listen( process.env.PORT || 8080, () => {
+var listener = app.listen(process.env.PORT || 8080, () => {
   console.log('Listening on port ' + listener.address().port)
 })

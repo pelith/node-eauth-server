@@ -1,4 +1,4 @@
-# ETH Auth Server (Demo)
+# ETH Auth Server
 
 A live demo to use MetaMask to authenticate users on a website, issuing JWT (JSON web tokens).
 

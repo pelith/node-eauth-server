@@ -7,12 +7,13 @@ const OAuthAuthorizationCode = db.OAuthAuthorizationCode;
 const OAuthAccessToken = db.OAuthAccessToken;
 const OAuthRefreshToken = db.OAuthRefreshToken;
 
-// creat if not exist
-OAuthClient.sync();
-OAuthAuthorizationCode.sync({force: true});
-OAuthAccessToken.sync({force: true});
-OAuthRefreshToken.sync({force: true});
-
+async function initalize(){
+  await OAuthClient.sync();
+  await OAuthAuthorizationCode.sync({force: true});
+  await OAuthAccessToken.sync({force: true});
+  await OAuthRefreshToken.sync({force: true});
+};
+initalize();
 
 function getAuthorizationCode(code) {
   return OAuthAuthorizationCode

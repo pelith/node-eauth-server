@@ -27,8 +27,11 @@ const User = db.User;
 const Session = db.Session;
 
 // creat database if not exist // if force == true : drop table
-User.sync();
-Session.sync({force: true});
+async function initalize(){
+  await User.sync();
+  await Session.sync({force: true});
+};
+initalize();
 
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);

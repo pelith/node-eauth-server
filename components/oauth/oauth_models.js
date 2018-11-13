@@ -63,7 +63,7 @@ function revokeAuthorizationCode(code) {
       authorization_code: code.code
     }
   }).then(function (rCode) {
-    console.log(rCode)
+    // console.log(rCode)
     // if(rCode) rCode.destroy();
     /***
      * As per the discussion we need set older date

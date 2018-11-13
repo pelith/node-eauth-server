@@ -63,12 +63,12 @@ app.get('/', (req, res) => {
 });
 
 // return Address or Confirm Code or status 400
-app.get('/api/auth/:Address', ethAuth, (req, res) => { 
+app.get('/auth/:Address', ethAuth, (req, res) => { 
   req.ethAuth.message ? res.send(req.ethAuth.message) : res.status(400).send();
 });
 
 // return Address or status 400
-app.post('/api/auth/:Message/:Signature', ethAuth, (req, res) => { 
+app.post('/auth/:Message/:Signature', ethAuth, (req, res) => { 
   const address = req.ethAuth.recoveredAddress;
   if (!address) 
     res.status(400).send();
@@ -111,7 +111,7 @@ function middleware(req, res, next) {
   }
 }
 
-// oauth server
+// oauth server # todo: make it optional
 require('./components/oauth')(app, middleware)
 
 const api = express.Router();
@@ -126,6 +126,13 @@ app.post('/logout', api, (req, res) => {
     if(req.body.url)
       location = req.body.url
     res.redirect(location)
+  });
+});
+
+app.get('/user', api, (req, res) => {
+  res.json({
+    success: true,
+    message: req.session.address
   });
 });
 

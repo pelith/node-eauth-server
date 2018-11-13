@@ -15,7 +15,7 @@ $('.eth-signin').on('click', function () {
   }
 
   if (web3.eth.accounts[0]) {
-    $.get(domain + '/api/auth/' + web3.eth.accounts[0], (res) => {
+    $.get(domain + '/auth/' + web3.eth.accounts[0], (res) => {
       confirmcode = res;
 
       // Call metamask to sign
@@ -35,7 +35,7 @@ $('.eth-signin').on('click', function () {
         }
         signature = result.result;
         if (confirmcode !== null && signature !== null){
-          $.post(domain + '/api/auth/' + confirmcode[1].value + '/' + signature, (res) => {
+          $.post(domain + '/auth/' + confirmcode[1].value + '/' + signature, (res) => {
             if (res.success) {
               access_token = res.token;
               console.log("EthAuth Success")

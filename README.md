@@ -48,7 +48,7 @@ docker run --net=host  -d pelith/node-eth-auth-server
 
 Users should have the [MetaMask extension](https://github.com/MetaMask/metamask-extension) or alternatives installed in order to use the service. For further information, click the MetaMask badge below.
 
-[<img alt="MetaMask badge" src="https://github.com/MetaMask/faq/blob/master/images/download-metamask.png" width="400">](https://metamask.io)
+[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/faq/master/images/download-metamask.png" width="400">](https://metamask.io)
 
 1. In the demo page `/` is an ordinary login button. Think it as a way to sign in with Ethereum credentials. (You need to unlock your wallet on MetaMask prior to this step).
 

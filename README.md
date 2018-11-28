@@ -8,7 +8,7 @@ After installing dependencies,
 
 1. Move `config/config.json.example` to `config/config.json`:
    ```bash
-   mv config/config.json.example config/config.json
+   cp config/config.json.example config/config.json
    ln -s  ../../../config/config.json components/oauth/config/config.json
    ```
 

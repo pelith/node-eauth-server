@@ -9,10 +9,15 @@ $('.eth-signin').on('click', function () {
     console.log("web3 is detected.");
     if ( web3.currentProvider.isMetaMask === true)
       if (web3.eth.accounts[0] === undefined)
-        alert("Please login metamask first.");
+        return alert("Please login metamask first.");
   } else {
-    alert("No web3 detected. Please install metamask");
+    return alert("No web3 detected. Please install metamask");
   }
+
+  if ( web3.currentProvider.enable ){
+   return web3.currentProvider.enable();
+  }
+
 
   if (web3.eth.accounts[0]) {
     $.get(domain + '/auth/' + web3.eth.accounts[0], (res) => {

@@ -6,6 +6,8 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
 const EthAuth = require('node-eth-auth');
+const async = require("async");
+const MobileDetect = require('mobile-detect')
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/config/config.json')[env];
@@ -51,24 +53,46 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 // ethAuth
-const ethAuth = new EthAuth({"banner": config.banner});
+const ethAuth1 = new EthAuth({banner: config.banner});
+const ethAuth2 = new EthAuth({banner: config.banner, method: 'personal_sign'});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => { 
   if(req.session.address)
     res.render('logout', {address:req.session.address});
-  else
-    res.render('index', {});
+  else {
+    md = new MobileDetect(req.headers['user-agent']);
+    if (md.mobile()){
+      console.log("mobilemobilemobilemobilemobile")
+      res.render('index', {method:'personal_sign'})
+    }
+    else {
+      res.render('index', {method:'eth_signTypedData'})
+    }
+  }
 });
 
+async function ethauthMiddleware(req, res, next) {
+  var middleware = ethAuth1;
+  md = new MobileDetect(req.headers['user-agent']);
+  if (md.mobile())
+    middleware = ethAuth2;
+
+  async.series([middleware.bind(null, req, res)], function(err) {
+    if(err) 
+      return next(err);
+    next();
+  });
+}
+
 // return Address or Confirm Code or status 400
-app.get('/auth/:Address', ethAuth, (req, res) => { 
+app.get('/auth/:Address', ethauthMiddleware, (req, res) => { 
   req.ethAuth.message ? res.send(req.ethAuth.message) : res.status(400).send();
 });
 
 // return Address or status 400
-app.post('/auth/:Message/:Signature', ethAuth, (req, res) => { 
+app.post('/auth/:Message/:Signature', ethauthMiddleware, (req, res) => { 
   const address = req.ethAuth.recoveredAddress;
   if (!address) 
     res.status(400).send();
@@ -92,7 +116,7 @@ app.post('/auth/:Message/:Signature', ethAuth, (req, res) => {
   }
 });
 
-function middleware(req, res, next) {
+function apiMiddleware(req, res, next) {
   const token = req.session.token;
   if (token) {
     // issue case: after server restart will pass verify cond,but token is expire, maybe should check database
@@ -112,15 +136,15 @@ function middleware(req, res, next) {
 }
 
 // oauth server # todo: make it optional
-require('./components/oauth')(app, middleware)
+require('./components/oauth')(app, apiMiddleware)
 
 const api = express.Router();
 
 // api middleware
-api.use(middleware);
+api.use(apiMiddleware);
 
 // api logout
-app.post('/logout', api, (req, res) => {
+app.all('/logout', api, (req, res) => {
   req.session.destroy((err)=>{
     location = '/'
     if(req.body.url)

@@ -5,10 +5,12 @@ block append scripts
 
 block content
   .container
-      h2 Ethauth
-      .form-group
-        .div Login account with Ethauth
-      .form-group
-        button.btn.btn-lg.btn-primary.btn-block.eth-signin Login
+    .row.justify-content-center
+      .col-sm-8.col-lg-6
+        h2 Ethauth
+        .form-group
+          .div Authenticate with your Ethereum wallet
+        .form-group
+          button.btn.btn-lg.btn-primary.btn-block.eth-signin Login
 
-      input(type="hidden" id="method" value="#{method}")
+        input(type="hidden" id="method" value="#{method}")

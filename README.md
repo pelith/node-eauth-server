@@ -40,8 +40,8 @@ Test it on `http://localhost:8080/`.
 ### Docker
 
 ```bash
-docker build -t pelith/node-eth-auth-server .
-docker run --net=host  -d pelith/node-eth-auth-server
+docker build -t pelith/node-eauth-server .
+docker run --net=host  -d pelith/node-eauth-server
 ```
 
 ## Testing

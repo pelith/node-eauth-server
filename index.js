@@ -5,7 +5,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
-const EthAuth = require('node-eth-auth');
+const Eauth = require('node-eauth');
 const async = require("async");
 const MobileDetect = require('mobile-detect')
 
@@ -52,9 +52,9 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-// ethAuth
-const ethAuth1 = new EthAuth({banner: config.banner});
-const ethAuth2 = new EthAuth({banner: config.banner, method: 'personal_sign'});
+// eauth
+const eauth1 = new Eauth({banner: config.banner});
+const eauth2 = new Eauth({banner: config.banner, method: 'personal_sign'});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -73,11 +73,11 @@ app.get('/', (req, res) => {
   }
 });
 
-async function ethauthMiddleware(req, res, next) {
-  var middleware = ethAuth1;
+async function eauthMiddleware(req, res, next) {
+  var middleware = eauth1;
   md = new MobileDetect(req.headers['user-agent']);
   if (md.mobile())
-    middleware = ethAuth2;
+    middleware = eauth2;
 
   async.series([middleware.bind(null, req, res)], function(err) {
     if(err) 
@@ -87,29 +87,29 @@ async function ethauthMiddleware(req, res, next) {
 }
 
 // return Address or Confirm Code or status 400
-app.get('/auth/:Address', ethauthMiddleware, (req, res) => { 
-  req.ethAuth.message ? res.send(req.ethAuth.message) : res.status(400).send();
+app.get('/auth/:Address', eauthMiddleware, (req, res) => { 
+  req.eauth.message ? res.send(req.eauth.message) : res.status(400).send();
 });
 
 // return Address or status 400
-app.post('/auth/:Message/:Signature', ethauthMiddleware, (req, res) => { 
-  const address = req.ethAuth.recoveredAddress;
+app.post('/auth/:Message/:Signature', eauthMiddleware, (req, res) => { 
+  const address = req.eauth.recoveredAddress;
   if (!address) 
     res.status(400).send();
   else {
-    User.findOrCreate({ where: {"address": address} }).spread( (ethauth,created) => {
-      const token = jwt.sign(ethauth.get({ plain: true }), app.get('secret'), {
+    User.findOrCreate({ where: {"address": address} }).spread( (eauth,created) => {
+      const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
         expiresIn: 60*15*1000 // session expire time deafault hardcode 15 min // SHOULD CONFIG
       })
 
       req.session.cookie.expires = 60*15*1000; // session expire time deafault hardcode 15 min // SHOULD CONFIG
-      req.session.address_id = ethauth.dataValues.id; // database id // oauth use
+      req.session.address_id = eauth.dataValues.id; // database id // oauth use
       req.session.address = address;
       req.session.token = token;
 
       res.json({
         success: true,
-        message: 'EthAuth Success',
+        message: 'Eauth Success',
         token: token
       })
     });

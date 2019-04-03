@@ -49,7 +49,7 @@ $('.eth-signin').on('click', function () {
           $.post(domain + '/auth/' + message + '/' + signature, (res) => {
             if (res.success) {
               access_token = res.token;
-              console.log("EthAuth Success")
+              console.log("Eauth Success")
               console.log("Your JWT token: " + access_token)
               var url_string = document.URL; //window.location.href
               var url = new URL(url_string);
@@ -62,7 +62,7 @@ $('.eth-signin').on('click', function () {
               console.log(location)
               window.location = location
             } else {
-              console.log("EthAuth Failed")
+              console.log("Eauth Failed")
             }
           });
         }

@@ -6,11 +6,16 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
 const EthAuth = require('node-eth-auth');
+const async = require("async");
+const MobileDetect = require('mobile-detect')
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/config/config.json')[env];
 
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -27,18 +32,22 @@ const User = db.User;
 const Session = db.Session;
 
 // creat database if not exist // if force == true : drop table
-User.sync();
-Session.sync({force: true});
+async function initalize(){
+  await User.sync();
+  await Session.sync({force: true});
+};
+initalize();
 
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const sequelizeStore = new SequelizeStore({
+  db: db.sequelize,
+  table: 'Session'
+})
 
 app.use(session({
   secret: app.get('secret'),
-  store: new SequelizeStore({
-    db: db.sequelize,
-    table: 'Session'
-  }),
+  store: sequelizeStore,
   resave: false,
   saveUninitialized: true
 }))
@@ -48,24 +57,53 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 // ethAuth
-const ethAuth = new EthAuth({"banner": config.banner});
+const ethAuth1 = new EthAuth({banner: config.banner});
+const ethAuth2 = new EthAuth({banner: config.banner, method: 'personal_sign'});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => { 
+app.get('/', async (req, res) => { 
+
   if(req.session.address)
     res.render('logout', {address:req.session.address});
-  else
-    res.render('index', {});
+  else {
+    md = new MobileDetect(req.headers['user-agent']);
+    if (md.mobile()){
+      res.render('index', {method:'personal_sign'})
+    }
+    else {
+      res.render('index', {method:'eth_signTypedData', qrcode:true})
+    }
+  }
 });
 
+const cookieParser = require('socket.io-cookie-parser')
+io.use(cookieParser());
+io.on('connection', function (socket) {
+  socket.emit('init', { session_id: socket.request.cookies['connect.sid'].substr(2,32) });
+  setTimeout(()=>{ socket.emit('refresh');socket.disconnect(true);console.log('socket disconnect') }, 180000);
+});
+
+async function ethauthMiddleware(req, res, next) {
+  var middleware = ethAuth1;
+  md = new MobileDetect(req.headers['user-agent']);
+  if (md.mobile())
+    middleware = ethAuth2;
+
+  async.series([middleware.bind(null, req, res)], function(err) {
+    if(err) 
+      return next(err);
+    next();
+  });
+}
+
 // return Address or Confirm Code or status 400
-app.get('/api/auth/:Address', ethAuth, (req, res) => { 
+app.get('/auth/:Address', ethauthMiddleware, (req, res) => { 
   req.ethAuth.message ? res.send(req.ethAuth.message) : res.status(400).send();
 });
 
 // return Address or status 400
-app.post('/api/auth/:Message/:Signature', ethAuth, (req, res) => { 
+app.post('/auth/:Message/:Signature', ethauthMiddleware, (req, res) => { 
   const address = req.ethAuth.recoveredAddress;
   if (!address) 
     res.status(400).send();
@@ -89,7 +127,7 @@ app.post('/api/auth/:Message/:Signature', ethAuth, (req, res) => {
   }
 });
 
-function middleware(req, res, next) {
+function apiMiddleware(req, res, next) {
   const token = req.session.token;
   if (token) {
     // issue case: after server restart will pass verify cond,but token is expire, maybe should check database
@@ -108,22 +146,45 @@ function middleware(req, res, next) {
   }
 }
 
-// oauth server
-require('./components/oauth')(app, middleware)
+// oauth server # todo: make it optional
+require('./components/oauth')(app, apiMiddleware)
 
 const api = express.Router();
 
 // api middleware
-api.use(middleware);
+api.use(apiMiddleware);
 
 // api logout
-app.post('/logout', api, (req, res) => {
+app.all('/logout', api, (req, res) => {
   req.session.destroy((err)=>{
     location = '/'
     if(req.body.url)
       location = req.body.url
     res.redirect(location)
   });
+});
+
+app.get('/user', api, (req, res) => {
+  res.json({
+    success: true,
+    message: req.session.address
+  });
+});
+
+app.get('/qrcode', api, async (req, res) => {
+  // set session to logined
+  if ( req.query.session_id && req.query.socket_id ) {
+    s =  await sequelizeStore.get(req.query.session_id)
+    if ( s )
+      await sequelizeStore.set(req.query.session_id, req.session)
+    // emit loggin message
+    socket = io.clients().sockets[req.query.socket_id]
+    if ( socket)
+      await socket.emit('refresh')
+  }
+
+  // clean client session
+  res.redirect('/logout')
 });
 
 // error handler
@@ -135,6 +196,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var listener = app.listen(process.env.PORT || 8080, () => {
+var listener = server.listen(process.env.PORT || 8080, () => {
   console.log('Listening on port ' + listener.address().port)
 })

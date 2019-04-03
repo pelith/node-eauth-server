@@ -2,6 +2,35 @@ extends layout
 
 block append scripts
     script(src='/scripts/index.js')
+    if qrcode
+        script(src='/scripts/qrcode.min.js')
+        script(src='/socket.io/socket.io.js')
+        script.
+          var socket = io.connect('/');
+          socket.on('init', function (data) {
+            console.log(data.session_id)
+            QRCode.toCanvas($('#qrcode')[0], 'https://'+document.domain+'/?socket_id='+socket.id+'&session_id='+data.session_id, function (error) {
+              if (error) console.error(error)
+              console.log('success!');
+            });
+          });
+
+          socket.on('refresh', function () {
+            var url_string = document.URL; //window.location.href
+            var url = new URL(url_string);
+            var location = '/'
+            var c = url.searchParams.get("url");
+            if (c) location = c;
+            window.location = location  
+          });
+
+          let count = 180;
+          let counter = 180;
+          setInterval(() => {
+            counter -= 1;
+            $('#progressbar')[0].style.width = (counter/count)*100+"%"
+            $('#progressbar')[0].innerText = counter+'s'
+          },1000);
 
 block content
   .container
@@ -10,3 +39,12 @@ block content
         .div Login account with Ethauth
       .form-group
         button.btn.btn-lg.btn-primary.btn-block.eth-signin Login
+      if qrcode
+          .form-group 
+            .div or use mobile wallet login ( will refresh in 180s)
+          .form-group 
+            canvas(id="qrcode")
+          .progress
+            .div.progress-bar(id="progressbar" role="progressbar" style="width: 100%;" aria-valuenow="180" aria-valuemin="0" aria-valuemax="180") 180s
+      
+      input(type="hidden" id="method" value="#{method}")

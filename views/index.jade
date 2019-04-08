@@ -34,17 +34,20 @@ block append scripts
 
 block content
   .container
-      h2 Eauth
-      .form-group
-        .div Login account with Eauth
-      .form-group
-        button.btn.btn-lg.btn-primary.btn-block.eth-signin Login
-      if qrcode
-          .form-group 
-            .div or use mobile wallet login ( will refresh in 180s)
-          .form-group 
-            canvas(id="qrcode")
-          .progress
-            .div.progress-bar(id="progressbar" role="progressbar" style="width: 100%;" aria-valuenow="180" aria-valuemin="0" aria-valuemax="180") 180s
+    .row.justify-content-center
+      .col-sm-10.col-lg-4
+        h2 Eauth
+        .form-group
+          .div Authenticate with your Ethereum wallet
+        .form-group
+          button.btn.btn-lg.btn-primary.btn-block.eth-signin Login
+      
+        if qrcode
+        .form-group 
+          .div or use mobile wallet login ( will refresh in 180s)
+        .form-group 
+          canvas(id="qrcode")
+        .progress
+          .div.progress-bar(id="progressbar" role="progressbar" style="width: 100%;" aria-valuenow="180" aria-valuemin="0" aria-valuemax="180") 180s
       
       input(type="hidden" id="method" value="#{method}")

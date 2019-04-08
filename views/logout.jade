@@ -6,10 +6,12 @@ block append scripts
 
 block content
   .container
-      form.form-signin(method='post', action='/logout', role='form')
-        h2.form-signin-heading Authorise
-        .form-group
-          .div Account #{address}
-        .form-group
-          input(type='hidden', name='url', id='url', value='')
-          button.btn.btn-lg.btn-primary.btn-block(type='submit') Logout
+    .row.justify-content-center
+      .col-sm-8.col-lg-6
+        form.form-signin(method='post', action='/logout', role='form')
+          h2.form-signin-heading Authorised
+          .form-group
+            .div Your account is #{address}.
+          .form-group
+            input(type='hidden', name='url', id='url', value='')
+            button.btn.btn-lg.btn-primary.btn-block(type='submit') Logout

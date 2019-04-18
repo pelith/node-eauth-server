@@ -3,11 +3,10 @@ let confirmcode = null;
 let signature = null;
 let access_token = null;
 let fm = new Fortmatic('pk_live_CC75CEEE7D7E8630');
-let metamask_web3 = null;
-let fortmatic_web3 = null 
+let fortmatic_web3 = null
 
-function authStart() {
-  return $.get(domain + '/auth/' + web3.eth.accounts[0], (res) => {
+function authStart(_web3) {
+  return $.get(domain + '/auth/' + _web3.eth.accounts[0], (res) => {
     data = ''
     meassage = ''
     if ( $("#method")[0].value === 'personal_sign' ) {
@@ -20,10 +19,10 @@ function authStart() {
     }
 
     // Call metamask to sign
-    const from = web3.eth.accounts[0];
+    const from = _web3.eth.accounts[0];
     const params = [data, from];
     const method = $("#method")[0].value;
-    web3.currentProvider.sendAsync({
+    _web3.currentProvider.sendAsync({
       id:1,
       method,
       params
@@ -66,13 +65,11 @@ function authStart() {
   });
 }
 
+$(()=>{
+  fortmatic_web3 = new Web3(fm.getProvider());
+});
+
 $('.eth-signin').on('click', function () {
-  // make copy of original web3
-  if(metamask_web3===null)
-    metamask_web3 = (typeof web3 === 'undefined') ?undefined:web3;
-
-  web3 = metamask_web3;
-
   // Detect metamask
   if (typeof web3 !== 'undefined') {
     console.log("web3 is detected.");
@@ -86,23 +83,17 @@ $('.eth-signin').on('click', function () {
   if (web3.currentProvider.enable)
     web3.currentProvider.enable()
     .then(function() {
-      authStart();
+      authStart(web3);
     });
   else if (web3.eth.accounts[0]) {
-    authStart();
+    authStart(web3);
   }
 });
 
 $('.fortmatic-signin').on('click', function () {
-  // make copy of original web3
-  if (metamask_web3===null) 
-    metamask_web3 = (typeof web3 === 'undefined') ?undefined:web3;
-  
-  fortmatic_web3 = new Web3(fm.getProvider());
-  web3 = fortmatic_web3;
-  web3.currentProvider.enable()
+  fortmatic_web3.currentProvider.enable()
   .then(function() {
-    authStart();
+    authStart(fortmatic_web3);
   });
 });
 

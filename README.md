@@ -2,6 +2,12 @@
 
 An OAuth-compatiable service based on Ethereum credentials to authenticate users on a website.
 
+## Demo
+
+Ethauth - Decentralized Identity Authentication on Ethereum https://www.youtube.com/watch?v=Rbo5AzYk79s
+
+Gitlab Oauth with Eauth: https://gitlab-demo.pelith.com
+
 ## Installing
 
 After installing dependencies,

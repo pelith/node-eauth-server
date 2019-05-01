@@ -23,6 +23,10 @@
     "socket.io-cookie-parser": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jquery": "^1.5.0",
     "sequelize-cli": "^4.0.0"
   },
   "main": "index.js",

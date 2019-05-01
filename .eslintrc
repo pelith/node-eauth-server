@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jquery": true,
+    "node": true
+  },
+  "plugins": [
+    "jquery"
+  ],
+  "extends": "airbnb-base",
+  "rules": {
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "semi": [
+      "error", 
+      "never"
+    ],
+    "no-console": ["error", { allow: ["log", warn", "error"] }],
+    "no-shadow": "off",
+    "arrow-body-style": "off",
+    "arrow-parens": "off",
+    "import/prefer-default-export": "off",
+    "indent": [0, "tab"],
+    "max-len": "off",
+    "no-case-declarations": "off",
+    "no-trailing-spaces": "off",
+    "object-shorthand": "off",
+    "one-var": "off",
+    "prefer-template": "off",
+    "prefer-const": 1,
+    "no-param-reassign" : "off",
+  }
+}

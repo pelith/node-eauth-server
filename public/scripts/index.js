@@ -27,7 +27,7 @@ function authStart(_web3) {
     }, async (err, result) => {
       if (err) return console.error(err)
       if (result.error) return console.error(result.error)
-      
+
       const signature = result.result
 
       if (message !== null && signature !== null) {

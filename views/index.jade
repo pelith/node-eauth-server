@@ -25,7 +25,7 @@ block append scripts
           var location = '/'
           var c = url.searchParams.get("url");
           if (c) location = c;
-          window.location = location  
+          window.location = location
         });
 
         let count = 180;
@@ -49,11 +49,11 @@ block content
           button(disabled="disabled").btn.btn-lg.btn-primary.btn-block.fortmatic-signin Fortmatic Login
 
         if qrcode
-        .form-group 
+        .form-group
           .div or use mobile wallet login ( will refresh in 180s)
-        .form-group 
+        .form-group
           canvas(id="qrcode")
         .progress
           .div.progress-bar(id="progressbar" role="progressbar" style="width: 100%;" aria-valuenow="180" aria-valuemin="0" aria-valuemax="180") 180s
-      
+
       input(type="hidden" id="method" value="#{method}")

@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
   if (req.session.address) res.render('logout', { address: req.session.address })
   else {
     const md = new MobileDetect(req.headers['user-agent'])
-    if (md.mobile()) res.render('index', { method: 'personal_sign' })
+    if (md.mobile()) res.render('index', { method: 'personal_sign', qrcode: true })
     else res.render('index', { method: 'eth_signTypedData', qrcode: true })
   }
 })

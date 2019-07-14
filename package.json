@@ -1,6 +1,6 @@
 {
   "name": "node-eauth-server",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "author": "Pelith",
   "license": "MIT",
@@ -11,12 +11,12 @@
     "express": "^4.16.4",
     "express-eauth": "^1.1.0",
     "express-session": "^1.16.1",
-    "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
     "mobile-detect": "^1.4.3",
     "morgan": "^1.9.0",
     "mysql2": "^1.6.5",
     "oauth2-server": "^3.0.1",
+    "pug": "^2.0.4",
     "qrcode": "^1.3.3",
     "sequelize": "^5.3.0",
     "socket.io": "^2.2.0",
@@ -27,7 +27,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jquery": "^1.5.0",
-    "sequelize-cli": "^4.0.0"
+    "sequelize-cli": "^5.5.0"
   },
   "main": "index.js",
   "scripts": {

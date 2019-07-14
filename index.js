@@ -127,8 +127,8 @@ function apiMiddleware(req, res, next) {
     jwt.verify(token, app.get('secret'), (err, decoded) => {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' })
-      } 
-        
+      }
+
       req.decoded = decoded
       return next()
     })
@@ -165,7 +165,7 @@ app.get('/user', api, (req, res) => {
 app.get('/qrcode', api, async (req, res) => {
   // set session to logined
   if (req.query.session_id && req.query.socket_id) {
-    if (await sequelizeStore.get(req.query.session_id)) {      
+    if (await sequelizeStore.get(req.query.session_id)) {
       await sequelizeStore.set(req.query.session_id, req.session)
     }
     // emit loggin message

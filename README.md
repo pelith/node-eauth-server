@@ -50,6 +50,12 @@ docker build -t pelith/node-eauth-server .
 docker run --net=host  -d pelith/node-eauth-server
 ```
 
+### Setup OAuth Clients
+
+  1. setup your `client_id, client_secret, redirect_uri` in components/seeders/20190725062038-oauth_clients.js
+  2. seeding them with `npx sequelize db:seed:all`
+
+
 ## Testing
 
 Users should have the [MetaMask extension](https://github.com/MetaMask/metamask-extension) or alternatives installed in order to use the service. For further information, click the MetaMask badge below.

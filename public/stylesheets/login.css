@@ -1,0 +1,151 @@
+.background-center {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/eauth_bg.png');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.powered-by-text {
+  margin-top: 24px;
+  font-family: Roboto;
+  font-size: 12px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.dialog {
+  width: 350px;
+  height: 610px;
+  border-radius: 12px;
+  padding: 45px 40px;
+  background-color: #FFFFFF;
+}
+
+.dialog__logo > img {
+  width: 62px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.dialog__message {
+  margin: 40px 0;
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.dialog__actions > *:not(:first-child) {
+  margin-top: 16px;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  font-family: Roboto;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 200;
+  line-height: 1.5;
+  color: #FFFFFF;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186) rgb(209, 209, 209);
+  outline: none;
+}
+
+.button.button--eauth {
+  box-shadow: inset 0 -1px 1px 0 #36b52b;
+  background-color: #60d956;
+}
+
+.button.button--fortmatic {
+  box-shadow: inset 0 -1px 1px 0 #213dab;
+  background-color: #496bf4;
+}
+
+.divider {
+  position: relative;
+  height: 20px;
+  margin: 16px;
+  text-align: center;
+  opacity: .5;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #818078, transparent);
+}
+
+.divider::after {
+  content: attr(data-content);
+  position: relative;
+  height: 20px;
+  display: inline-block;
+  padding: 0 8px;
+  color: #818078;
+  background-color: #fcfcfa;
+}
+
+.qrcode-wrapper__text {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  color: #758095;
+}
+
+.qrcode-wrapper__qrcode {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.qrcode-wrapper__qrcode > #qrcode {
+  width: 100px;
+  height: 100px;
+  background-color: #758095;
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer__number {
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: 300;
+  color: #758095;
+}
+
+.timer__message {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.timer__text {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 200;
+  color: #758095;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+}

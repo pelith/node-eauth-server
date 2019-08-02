@@ -72,6 +72,11 @@ app.get('/', async (req, res) => {
   }
 })
 
+app.get('/login', (req, res) => {
+  if (req.session.address) res.redirect('/')
+  res.render('login')
+})
+
 
 io.use(cookieParser())
 io.on('connection', (socket) => {

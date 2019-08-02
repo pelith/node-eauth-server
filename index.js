@@ -64,17 +64,20 @@ const eauth2 = new Eauth({ banner: config.banner, method: 'personal_sign' })
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', async (req, res) => {
-  if (req.session.address) res.render('logout', { address: req.session.address })
-  else {
-    const md = new MobileDetect(req.headers['user-agent'])
-    if (md.mobile()) res.render('index', { method: 'personal_sign', qrcode: true })
-    else res.render('index', { method: 'eth_signTypedData', qrcode: true })
+  if (req.session.address) {
+    res.redirect('/logout')
+  } else {
+    res.redirect('/login')
   }
 })
 
 app.get('/login', (req, res) => {
   if (req.session.address) res.redirect('/')
   res.render('login')
+})
+
+app.get('/logout', (req, res) => {
+  res.render('logout', { address: req.session.address })
 })
 
 
@@ -152,7 +155,7 @@ const api = express.Router()
 api.use(apiMiddleware)
 
 // api logout
-app.all('/logout', api, (req, res) => {
+app.all('/api/logout', api, (req, res) => {
   req.session.destroy((err) => {
     let location = '/'
     if (req.body.url) location = req.body.url
@@ -160,14 +163,14 @@ app.all('/logout', api, (req, res) => {
   })
 })
 
-app.get('/user', api, (req, res) => {
+app.get('/api/user', api, (req, res) => {
   res.json({
     success: true,
     message: req.session.address,
   })
 })
 
-app.get('/qrcode', api, async (req, res) => {
+app.get('/api/qrcode', api, async (req, res) => {
   // set session to logined
   if (req.query.session_id && req.query.socket_id) {
     if (await sequelizeStore.get(req.query.session_id)) {
@@ -179,7 +182,7 @@ app.get('/qrcode', api, async (req, res) => {
   }
 
   // clean client session
-  res.redirect('/logout')
+  res.redirect('/api/logout')
 })
 
 // error handler

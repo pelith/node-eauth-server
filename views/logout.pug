@@ -3,18 +3,33 @@ extends layout
 block vars
   - var title = 'Logout'
 
-block append scripts
-    script.
-      document.getElementById("url").value=new URLSearchParams(window.location.search).get('url');
-
 block content
-  .container
-    .row.justify-content-center
-      .col-sm-8.col-lg-6
-        form.form-signin(method='post', action='/logout', role='form')
-          h2.form-signin-heading Authorised
-          .form-group
-            .div Your account is #{address}.
-          .form-group
-            input(type='hidden', name='url', id='url', value='')
-            button.btn.btn-lg.btn-primary.btn-block(type='submit') Logout
+  .background-center
+    .dialog
+      .dialog__logo
+        img(src='/images/logo.png' alt='logo')
+      .dialog__message
+        .title Authorized
+        .subtitle.mt-24 You are now authorised with
+        .address(data-toggle='collapse' href='#fulladdress' aria-expanded='false')
+          span#address #{address}
+          i.far.fa-caret-square-down
+        #fulladdress.collapse #{address}
+      .dialog__actions
+        form(action='/api/logout' method='post')
+          input#url(type='hidden' name='url' value='')
+          button.button.button--logout Logout
+    .powered-by-text Powered by Pelith
+
+block scripts
+  script.
+    document.getElementById('url').value=new URLSearchParams(window.location.search).get('url');
+    const address = document.querySelector('#fulladdress').textContent
+    const prefixAddress = address.slice(0, 8)
+    const suffixAddress = address.slice(address.length - 8, address.length)
+    const partialAddress = `${prefixAddress}...${suffixAddress}`
+    document.getElementById('address').textContent = partialAddress
+
+block stylesheets
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css' integrity='sha256-PF6MatZtiJ8/c9O9HQ8uSUXr++R9KBYu4gbNG5511WE=' crossorigin='anonymous')
+  link(rel='stylesheet' href='/stylesheets/main.css')

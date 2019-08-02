@@ -4,6 +4,11 @@
   "description": "",
   "author": "Pelith",
   "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "async": "^2.6.2",
     "body-parser": "^1.18.3",
@@ -27,10 +32,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jquery": "^1.5.0",
+    "nodemon": "^1.19.1",
     "sequelize-cli": "^5.5.0"
-  },
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
   }
 }

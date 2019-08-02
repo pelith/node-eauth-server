@@ -7,12 +7,13 @@ block content
   .background-center
     .dialog
       .dialog__logo
-        img(src='/images/logo.png' alt="logo")
-      .dialog__message Authenticate with your Ethereum wallet.
+        img(src='/images/logo.png' alt='logo')
+      .dialog__message 
+        .title Authenticate with your Ethereum wallet.
       .dialog__actions
         button.button.button--eauth Login with browser
         button.button.button--fortmatic Login with fortmatic
-      hr.divider(data-content="or")
+      hr.divider(data-content='or')
       .dialog__actions
         .qrcode-wrapper
           .qrcode-wrapper__text Login with mobile wallet
@@ -30,7 +31,7 @@ block scripts
   script(src='https://cdn.jsdelivr.net/npm/easytimer@1.1.1/src/easytimer.min.js' type='text/javascript')
   script(src='https://cdn.jsdelivr.net/gh/pelith/eauth.js/dist/eauth.min.js' type='text/javascript')
   script(src='/scripts/qrcode.min.js' type='text/javascript')
-  script(src="/scripts/login.js" type='text/javascript')
+  script(src='/scripts/login.js' type='text/javascript')
 
 block stylesheets
-  link(rel="stylesheet" href="/stylesheets/login.css")
+  link(rel='stylesheet' href='/stylesheets/main.css')

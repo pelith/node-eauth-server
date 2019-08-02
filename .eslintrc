@@ -18,7 +18,7 @@
       "error", 
       "never"
     ],
-    "no-console": ["error", { allow: ["log", warn", "error"] }],
+    "no-console": ["error", { "allow": ["log", "warn", "error"] }],
     "no-shadow": "off",
     "arrow-body-style": "off",
     "arrow-parens": "off",

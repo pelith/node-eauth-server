@@ -19,7 +19,7 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade')
+app.set('view engine', 'pug')
 
 // LOG
 if (app.get('env') === 'development') app.use(morgan('dev'))

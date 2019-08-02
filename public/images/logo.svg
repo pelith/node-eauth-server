@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="18" viewBox="0 0 58 18">
+    <defs>
+        <path id="a" d="M0 0h62v28H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(-2 -5)">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <text fill="#006ECC" font-family="Axiforma-Book, Axiforma" font-size="22" font-weight="300" letter-spacing="-.5" mask="url(#b)">
+            <tspan x="0" y="22">Eauth</tspan>
+        </text>
+    </g>
+</svg>

@@ -71,9 +71,14 @@
   outline: none;
 }
 
-.button.button--eauth {
+.button.button--eauth, .button.button--authorize {
   box-shadow: inset 0 -1px 1px 0 #36b52b;
   background-color: #60d956;
+}
+
+.button.button--switch {
+  box-shadow: inset 0 -1px 1px 0 #213dab;
+  background-color: #444444;
 }
 
 .divider {

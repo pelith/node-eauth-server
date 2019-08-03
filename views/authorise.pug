@@ -1,28 +1,41 @@
 extends layout
 
 block vars
-  - var title = 'Authorise'
-
-block append scripts
-    script.
-        document.getElementById("url").value=window.location.pathname+window.location.search;
+  - var title = 'Authorize'
 
 block content
-  .container
-    .row.justify-content-center
-      .col-sm-8.col-lg-6
-        form.form-signin(method='post', action='', role='form')
-          h2.form-signin-heading Authorise
-          .form-group
-            .div You will continue with account #{address}.
-          .form-group
-            input(type='hidden', name='allow', value='yes')
-            input(type='hidden', name='client_id', value=client_id)
-            input(type='hidden', name='redirect_uri', value=redirect_uri)
-            input(type='hidden', name='response_type', value='code')
-            button.btn.btn-lg.btn-primary.btn-block(type='submit') Authorise
+  .background-center
+    .dialog
+      .dialog__logo
+        img(src='/images/logo.png' alt='logo')
+      .dialog__message
+        .title Authorize
+        .subtitle.mt-24 You are now authorised with
+        .address(data-toggle='collapse' href='#fulladdress' aria-expanded='false')
+          span#address #{address}
+          i.far.fa-caret-square-down
+        #fulladdress.collapse #{address}
+      .dialog__actions
+        form(action='' method='post')
+          input(type='hidden', name='allow', value='yes')
+          input(type='hidden', name='client_id', value=client_id)
+          input(type='hidden', name='redirect_uri', value=redirect_uri)
+          input(type='hidden', name='response_type', value='code')
+          button.button.button--authorize(type="submit") Authorize
+        form(action='/api/logout' method='post')
+          input#url(type='hidden' name='url' value='')
+          button.button.button--switch(type="submit") Use Another Account
+    .powered-by-text Powered by Pelith
 
-        form.form-signin(method='post', action='/logout', role='form')
-          .form-group
-            input(type='hidden', name='url', id='url', value='')
-            button.btn.btn-lg.btn-primary.btn-block(type='submit') Use another account
+block scripts
+  script.
+    document.getElementById('url').value=new URLSearchParams(window.location.search).get('url');
+    const address = document.querySelector('#fulladdress').textContent
+    const prefixAddress = address.slice(0, 8)
+    const suffixAddress = address.slice(address.length - 8, address.length)
+    const partialAddress = `${prefixAddress}...${suffixAddress}`
+    document.getElementById('address').textContent = partialAddress
+
+block stylesheets
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css' integrity='sha256-PF6MatZtiJ8/c9O9HQ8uSUXr++R9KBYu4gbNG5511WE=' crossorigin='anonymous')
+  link(rel='stylesheet' href='/stylesheets/main.css')

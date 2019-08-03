@@ -80,6 +80,10 @@ app.get('/logout', (req, res) => {
   res.render('logout', { address: req.session.address })
 })
 
+// for development
+app.get('/authorize', (req, res) => {
+  res.render('authorise', { address: req.session.address })
+})
 
 io.use(cookieParser())
 io.on('connection', (socket) => {

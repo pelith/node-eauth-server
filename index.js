@@ -67,13 +67,8 @@ app.get('/', async (req, res) => {
   if (req.session.address) {
     res.redirect('/logout')
   } else {
-    res.redirect('/login')
+    res.render('login')
   }
-})
-
-app.get('/login', (req, res) => {
-  if (req.session.address) res.redirect('/')
-  res.render('login')
 })
 
 app.get('/logout', (req, res) => {

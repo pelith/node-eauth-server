@@ -28,7 +28,7 @@ class LoginApp {
     if (c) {
       location = c
     } else if (q && s) {
-      location = '/qrcode?socket_id=' + q + '&session_id=' + s
+      location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
     }
     window.location = location
   }
@@ -52,6 +52,7 @@ class LoginApp {
   }
 
   renderQRCode(text) {
+    this.qrcode.innerHTML = null
     return new QRCode(this.qrcode, {
       text,
       width: 100,

@@ -19,12 +19,26 @@ class LoginApp {
     this.runTimer()
   }
 
+  authorise() {
+    const url = new URL(document.URL)
+    let location = '/'
+    const c = url.searchParams.get('url')
+    const q = url.searchParams.get('socket_id')
+    const s = url.searchParams.get('session_id')
+    if (c) {
+      location = c
+    } else if (q && s) {
+      location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
+    }
+    window.location = location
+  }
+
   loginWithEauth() {
-    this.eauth.ethLogin()
+    this.eauth.ethLogin(this.authorise)
   }
 
   loginWithFortmatic() {
-    this.eauth.fortmaticLogin()
+    this.eauth.fortmaticLogin(this.authorise)
   }
 
   handleSocketInit(data) {
@@ -38,6 +52,7 @@ class LoginApp {
   }
 
   renderQRCode(text) {
+    this.qrcode.innerHTML = null
     return new QRCode(this.qrcode, {
       text,
       width: 100,

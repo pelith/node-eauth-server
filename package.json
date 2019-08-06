@@ -1,6 +1,6 @@
 {
   "name": "node-eauth-server",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "",
   "author": "Pelith",
   "license": "MIT",
@@ -16,7 +16,6 @@
     "express": "^4.16.4",
     "express-eauth": "^1.1.0",
     "express-session": "^1.16.1",
-    "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
     "mobile-detect": "^1.4.3",
     "morgan": "^1.9.0",

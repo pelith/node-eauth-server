@@ -64,7 +64,8 @@ app.use(bodyParser.json())
 // eauth
 const eauth1 = new Eauth({ banner: config.banner })
 const eauth2 = new Eauth({ banner: config.banner, method: 'personal_sign' })
-const eauth3 = new Eauth({ banner: config.banner, method: 'wallet_validation' }, web3)
+const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData' }, web3)
+const eauthContractPersonal = new Eauth({ banner: config.banner, method: 'wallet_validation_personal' }, web3)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -140,7 +141,9 @@ app.post('/auth/:Message/:Signature', eauthMiddleware, (req, res) => {
 })
 
 async function eauthContractMiddleware(req, res, next) {
-  let middleware = eauth3
+  let middleware = eauthContractTypedData
+  const md = new MobileDetect(req.headers['user-agent'])
+  if (md.mobile()) middleware = eauthContractPersonal
 
   async.series([middleware.bind(null, req, res)], (err) => {
     return err ? next(err) : next()

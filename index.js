@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken')
 const Eauth = require('express-eauth')
 const async = require('async')
 const MobileDetect = require('mobile-detect')
+const Web3 = require('web3')
 const cookieParser = require('socket.io-cookie-parser')
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
@@ -25,6 +26,9 @@ app.set('view engine', 'pug')
 if (app.get('env') === 'development') app.use(morgan('dev'))
 
 const config = require('./config/config.json')[env]
+
+const web3 = new Web3()
+web3.setProvider(new Web3.providers.HttpProvider(config.rpc))
 
 // issue, dev // maybe add salt with secret
 app.set('secret', config.secret)
@@ -60,6 +64,7 @@ app.use(bodyParser.json())
 // eauth
 const eauth1 = new Eauth({ banner: config.banner })
 const eauth2 = new Eauth({ banner: config.banner, method: 'personal_sign' })
+const eauth3 = new Eauth({ banner: config.banner, method: 'wallet_validation' }, web3)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -68,6 +73,14 @@ app.get('/', async (req, res) => {
     res.redirect('/logout')
   } else {
     res.render('login')
+  }
+})
+
+app.get('/contractLogin', async (req, res) => {
+  if (req.session.address) {
+    res.redirect('/logout')
+  } else {
+    res.render('contractLogin')
   }
 })
 
@@ -124,6 +137,46 @@ app.post('/auth/:Message/:Signature', eauthMiddleware, (req, res) => {
       })
     })
   }
+})
+
+async function eauthContractMiddleware(req, res, next) {
+  let middleware = eauth3
+
+  async.series([middleware.bind(null, req, res)], (err) => {
+    return err ? next(err) : next()
+  })
+}
+
+// return Address or Confirm Code or status 400
+app.get('/auth/contract/:Contract', eauthContractMiddleware, (req, res) => {
+  return req.eauth.message ? res.send(req.eauth.message) : res.status(400).send()
+})
+
+// return Address or status 400
+app.post('/auth/contract/:Message/:Signature', eauthContractMiddleware, (req, res) => {
+  const recoveredAddress = req.eauth.recoveredAddress
+  Promise.resolve(recoveredAddress)
+  .then((address) => {
+    if (!address) res.status(400).send()
+    else {
+      User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
+        const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
+          expiresIn: 60 * 15 * 1000, // session expire time deafault hardcode 15 min // SHOULD CONFIG
+        })
+
+        req.session.cookie.expires = 60 * 15 * 1000 // session expire time deafault hardcode 15 min // SHOULD CONFIG
+        req.session.address_id = eauth.dataValues.id // database id // oauth use
+        req.session.address = address
+        req.session.token = token
+
+        res.json({
+          success: true,
+          message: 'Eauth Success',
+          token: token,
+        })
+      })
+    }
+  })
 })
 
 function apiMiddleware(req, res, next) {

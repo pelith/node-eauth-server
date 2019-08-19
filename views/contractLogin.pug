@@ -11,13 +11,27 @@ block content
       .dialog__message 
         .title Authenticate with your Ethereum Contract wallet.
       .dialog__actions
-        label Contract Address #[input.input--contract(value='')]
         button.button.button--eauth Login with browser
         button.button.button--fortmatic Login with fortmatic
+      hr.divider(data-content='or')
+      .dialog__actions
+        .qrcode-wrapper
+          .qrcode-wrapper__text Login with mobile wallet
+          .qrcode-wrapper__qrcode
+            #qrcode
+        .timer
+          .timer__number 00:00
+          .timer__message
+            img.icon(src='/images/refresh.svg' alt='refresh-icon')
+            .timer__text will refresh
+          a(href='/contractLogin').contract__login contract login (Pre-alpha)
     .powered-by-text Powered by Pelith
 
 block scripts
+  script(src='/socket.io/socket.io.js' type='text/javascript')
+  script(src='https://cdn.jsdelivr.net/npm/easytimer@1.1.1/src/easytimer.min.js' type='text/javascript')
   script(src='https://cdn.jsdelivr.net/gh/pelith/eauth.js@isValidSignature/dist/eauth.min.js' type='text/javascript')
+  script(src='/scripts/qrcode.min.js' type='text/javascript')
   script(src='/scripts/contractlogin.js' type='text/javascript')
 
 block stylesheets

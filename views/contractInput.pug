@@ -1,0 +1,22 @@
+extends layout
+
+block vars
+  - var title = 'Contract Login'
+
+block content
+  .background-center
+    .dialog
+      .dialog__logo
+        img(src='/images/logo.png' alt='logo')
+      .dialog__message 
+        .title Input your Ethereum Contract wallet.
+      .dialog__actions
+        label Contract Address #[input.input--contract(value='')]
+        button.button.button--eauth Use Contract
+    .powered-by-text Powered by Pelith
+
+block scripts
+  script(src='/scripts/contractinput.js' type='text/javascript')
+
+block stylesheets
+  link(rel='stylesheet' href='/stylesheets/main.css')

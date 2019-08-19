@@ -80,8 +80,10 @@ app.get('/', async (req, res) => {
 app.get('/contractLogin', async (req, res) => {
   if (req.session.address) {
     res.redirect('/logout')
-  } else {
+  } else if (req.query.wallet) {
     res.render('contractLogin')
+  } else {
+    res.render('contractInput')
   }
 })
 

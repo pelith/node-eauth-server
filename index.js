@@ -73,6 +73,14 @@ app.get('/', async (req, res) => {
   if (req.session.address) {
     res.redirect('/logout')
   } else {
+    res.render('index')
+  }
+})
+
+app.get('/login', async (req, res) => {
+  if (req.session.address) {
+    res.redirect('/logout')
+  } else {
     res.render('login')
   }
 })

@@ -42,7 +42,7 @@ class LoginApp {
   }
 
   handleSocketInit(data) {
-    const url = `https://${document.domain}/?socket_id=${this.socket.id}&session_id=${data.session_id}`
+    const url = `https://${document.domain}/login/?socket_id=${this.socket.id}&session_id=${data.session_id}`
     this.renderQRCode(url)
   }
 

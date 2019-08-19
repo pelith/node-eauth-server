@@ -8,8 +8,13 @@ class LoginApp {
 
   useContractWallet() {
     const url = new URL(window.location.href)
+    const c = url.searchParams.get('url')
     if (this.contractWallet.value) {
-      window.location = url + '?wallet=' + this.contractWallet.value
+      if (c) {
+        window.location = `/contractLogin?url=${encodeURIComponent(c)}&wallet=${this.contractWallet.value}`
+      } else {
+        window.location = `/contractLogin?wallet=${this.contractWallet.value}`
+      }
     } else {
       window.location = url
     }

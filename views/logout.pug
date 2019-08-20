@@ -10,10 +10,10 @@ block content
         img(src='/images/logo.png' alt='logo')
       .dialog__message
         .title Authorized
-        .subtitle.mt-24 You are now authorised with
-        .address(data-toggle='collapse' href='#fulladdress' aria-expanded='false')
-          span#address #{address}
-          i.far.fa-caret-square-down
+        .subtitle.mt-24 You are now authorized with
+        #fulladdress(style='display: none;') #{address}
+        .address
+          span#address -
         #fulladdress.collapse #{address}
       .dialog__actions
         form(action='/api/logout' method='post')
@@ -22,13 +22,9 @@ block content
     .powered-by-text Powered by Pelith
 
 block scripts
+  script(src='/scripts/showAddress.js' type='text/javascript')
   script.
-    document.getElementById('url').value=new URLSearchParams(window.location.search).get('url');
-    const address = document.querySelector('#fulladdress').textContent
-    const prefixAddress = address.slice(0, 8)
-    const suffixAddress = address.slice(address.length - 8, address.length)
-    const partialAddress = `${prefixAddress}...${suffixAddress}`
-    document.getElementById('address').textContent = partialAddress
+    document.getElementById('url').value = new URLSearchParams(window.location.search).get('url')
 
 block stylesheets
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css' integrity='sha256-PF6MatZtiJ8/c9O9HQ8uSUXr++R9KBYu4gbNG5511WE=' crossorigin='anonymous')

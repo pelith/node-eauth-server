@@ -1,7 +1,7 @@
 class LoginApp {
   constructor() {
     this.contractWallet = document.querySelector('.input--contract')
-    this.eauthButton = document.querySelector('.button--eauth')
+    this.eauthButton = document.querySelector('.button--contractinput')
 
     this.eauthButton.addEventListener('click', this.useContractWallet.bind(this))
   }

@@ -89,7 +89,7 @@ app.get('/contractLogin', async (req, res) => {
   if (req.session.address) {
     res.redirect('/logout')
   } else if (req.query.wallet) {
-    res.render('contractLogin')
+    res.render('contractLogin', { address: req.query.wallet })
   } else {
     res.render('contractInput')
   }

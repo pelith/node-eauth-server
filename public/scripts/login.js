@@ -55,8 +55,9 @@ class LoginApp {
     this.qrcode.innerHTML = null
     return new QRCode(this.qrcode, {
       text,
-      width: 100,
-      height: 100,
+      errorCorrectionLevel: 'H',
+      width: 170,
+      height: 170,
     })
   }
 

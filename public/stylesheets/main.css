@@ -11,42 +11,65 @@
   align-items: center;
 }
 
+@media (min-width: 413px) {
+  .powered-by-text {
+    padding-top: 20px;
+    height: 15px;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: lighter;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #758095;
+  }
+}
+
 .powered-by-text {
-  margin-top: 24px;
+  height: 15px;
   font-family: Roboto;
   font-size: 12px;
+  font-weight: lighter;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
-  color: #FFFFFF;
+  color: #758095;
 }
 
 .title {
   font-family: Roboto;
-  font-size: 22px;
-  font-weight: 400;
+  font-size: 23px;
+  font-weight: bold;
+  text-align: center;
+  color: #00194c;
 }
 
 .subtitle {
   font-family: Roboto;
-  font-size: 16px;
+  font-size: 15px;
   color: #758095;
 }
 
 .dialog {
   width: 350px;
-  height: 610px;
+  min-height: 630px;
   border-radius: 12px;
   padding: 45px 40px;
   background-color: #FFFFFF;
+  box-shadow: 0 5px 30px -10px rgba(0, 50, 152, 0.3);
 }
 
 .dialog__logo > img {
-  width: 62px;
-  height: 28px;
+  width: 108px;
   object-fit: contain;
 }
 
 .dialog__message {
-  margin: 40px 0;
+  margin: 20px 0;
 }
 
 .dialog__actions > *:not(:first-child) {
@@ -70,27 +93,61 @@
   width: 100%;
   padding: 8px 16px;
   font-family: Roboto;
-  border-radius: 4px;
+  border-radius: 3px;
   font-size: 15px;
-  font-weight: 200;
   line-height: 1.5;
-  color: #FFFFFF;
-  box-shadow: inset 0 -1px 1px 0 #213dab;
-  background-color: #496bf4;
+  color: #00194c;
+  background-color: #fafbff;
   border-width: 1px;
   border-style: solid;
   border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186) rgb(209, 209, 209);
   outline: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.button.button--eauth, .button.button--authorize {
-  box-shadow: inset 0 -1px 1px 0 #36b52b;
-  background-color: #60d956;
+.button:hover {
+  background-color: #fff;
+  box-shadow: 0 2px 8px -2px rgba(0, 50, 152, 0.25);
 }
 
 .button.button--switch {
-  box-shadow: inset 0 -1px 1px 0 #213dab;
-  background-color: #444444;
+  border: solid 1px #BEBEBE;
+}
+
+.button:active {
+  background-color: #F2F4FA;
+}
+
+.button.button--eauth, .button.button--authorize, .button.button--contractinput {
+  border: solid 1px #74d592;
+}
+
+.button.button--fortmatic, .button.button--logout {
+  border: solid 1px #68abf7;
+}
+
+.button--eauth::before {
+  content:'';
+  display: inline-block;
+  background-image:url(/images/ethereum@2x.png);
+  background-size:22px 22px;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-bottom: 2px;
+}
+
+.button--fortmatic::before {
+  content:'';
+  display: inline-block;
+  background-image:url(/images/fortmatic@2x.png);
+  background-size:22px 22px;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-bottom: 2px;
 }
 
 .divider {
@@ -125,7 +182,7 @@
 .qrcode-wrapper__text {
   text-align: center;
   font-family: Roboto;
-  font-size: 16px;
+  font-size: 14px;
   color: #758095;
 }
 
@@ -136,8 +193,8 @@
 }
 
 .qrcode-wrapper__qrcode > #qrcode {
-  width: 100px;
-  height: 100px;
+  width: 170px;
+  height: 170px;
   background-color: #758095;
 }
 
@@ -164,15 +221,7 @@
 .timer__text {
   font-family: Roboto;
   font-size: 14px;
-  font-weight: 200;
-  color: #758095;
-}
-
-.contract__login {
-  font-family: Roboto;
-  font-size: 12px;
-  font-weight: 200;
-  margin-top: 12px;
+  font-weight: normal;
   color: #758095;
 }
 
@@ -190,17 +239,11 @@
   margin-top: 8px;
   font-family: Roboto;
   font-size: 22px;
-  font-weight: 400;
+  font-weight: bold;
   color: #00194c;
+  word-break: break-all;
 }
 
 .address > .far {
   margin-left: 8px;
-}
-
-#fulladdress {
-  margin-top: 12px;
-  font-family: "Lucida Grande";
-  font-size: 14px;
-  word-break: break-all;
 }

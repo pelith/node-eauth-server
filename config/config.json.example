@@ -6,8 +6,9 @@
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": true,
-    "rpc": "https://rinkeby.infura.io/",
+    "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
+    "message_prefix": "",
     "secret": "secret",
   },
   "test": {
@@ -17,8 +18,9 @@
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": true,
-    "rpc": "https://rinkeby.infura.io/",
+    "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
+    "message_prefix": "",
     "secret": "secret",
   },
   "production": {
@@ -28,8 +30,9 @@
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": true,
-    "rpc": "https://rinkeby.infura.io/",
+    "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
+    "message_prefix": "",
     "secret": "secret",
   }
 }

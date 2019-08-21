@@ -7,6 +7,7 @@ class LoginApp {
 
     this.eauth = new Eauth({
       AUTH_ROUTE: '/auth',
+      PREFIX: 'This is a prefix example\n\ntoken:\n----------\n',
     })
 
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))
@@ -48,7 +49,7 @@ class LoginApp {
 
   handleSocketRefresh() {
     const url = new URL(window.location.href)
-    window.location = url.searchParams.get('url') || '/'
+    window.location = url.searchParams.get('url') || url
   }
 
   renderQRCode(text) {

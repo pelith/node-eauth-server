@@ -9,6 +9,7 @@ class LoginApp {
 
     this.eauth = new Eauth({
       CONTRACT_AUTH_ROUTE: '/auth/contract',
+      PREFIX: 'This is a prefix example\n\ntoken:\n----------\n',
     })
 
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))

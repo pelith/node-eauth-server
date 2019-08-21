@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken')
 const Eauth = require('express-eauth')
 const async = require('async')
 const MobileDetect = require('mobile-detect')
-const Web3 = require('web3')
 const cookieParser = require('socket.io-cookie-parser')
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
@@ -26,9 +25,6 @@ app.set('view engine', 'pug')
 if (app.get('env') === 'development') app.use(morgan('dev'))
 
 const config = require('./config/config.json')[env]
-
-const web3 = new Web3()
-web3.setProvider(new Web3.providers.HttpProvider(config.rpc))
 
 // issue, dev // maybe add salt with secret
 app.set('secret', config.secret)
@@ -62,10 +58,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // eauth
-const eauth1 = new Eauth({ banner: config.banner })
-const eauth2 = new Eauth({ banner: config.banner, method: 'personal_sign' })
-const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData' }, web3)
-const eauthContractPersonal = new Eauth({ banner: config.banner, method: 'wallet_validation_personal' }, web3)
+const eauth1 = new Eauth({ banner: config.banner, prefix: config.message_prefix })
+const eauth2 = new Eauth({ banner: config.banner, method: 'personal_sign', prefix: config.message_prefix })
+const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData', prefix: config.message_prefix, rpc: config.rpcURL })
+const eauthContractPersonal = new Eauth({ banner: config.banner, method: 'wallet_validation_personal', prefix: config.message_prefix, rpc: config.rpcURL })
 
 app.use(express.static(path.join(__dirname, 'public')))
 

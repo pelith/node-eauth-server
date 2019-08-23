@@ -58,10 +58,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // eauth
-const eauth1 = new Eauth({ banner: config.banner, prefix: config.message_prefix })
-const eauth2 = new Eauth({ banner: config.banner, method: 'personal_sign', prefix: config.message_prefix })
+const eauthTypedData = new Eauth({ banner: config.banner, prefix: config.message_prefix })
+const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.message_prefix })
 const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData', prefix: config.message_prefix, rpc: config.rpcURL })
-const eauthContractPersonal = new Eauth({ banner: config.banner, method: 'wallet_validation_personal', prefix: config.message_prefix, rpc: config.rpcURL })
+const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: config.message_prefix, rpc: config.rpcURL })
+const eauthContract = new Eauth({ method: 'wallet_validation', prefix: config.message_prefix, rpc: config.rpcURL })
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -70,24 +71,6 @@ app.get('/', async (req, res) => {
     res.redirect('/logout')
   } else {
     res.render('index')
-  }
-})
-
-app.get('/login', async (req, res) => {
-  if (req.session.address) {
-    res.redirect('/logout')
-  } else {
-    res.render('login')
-  }
-})
-
-app.get('/contractLogin', async (req, res) => {
-  if (req.session.address) {
-    res.redirect('/logout')
-  } else if (req.query.wallet) {
-    res.render('contractLogin', { address: req.query.wallet })
-  } else {
-    res.render('contractInput')
   }
 })
 
@@ -107,86 +90,29 @@ io.on('connection', (socket) => {
 })
 
 async function eauthMiddleware(req, res, next) {
-  let middleware = eauth1
+  let middleware = eauthTypedData
   const md = new MobileDetect(req.headers['user-agent'])
-  if (md.mobile()) middleware = eauth2
+  if (md.mobile()) middleware = eauthPersonal
 
   async.series([middleware.bind(null, req, res)], (err) => {
     return err ? next(err) : next()
   })
 }
 
-// return Address or Confirm Code or status 400
-app.get('/auth/:Address', eauthMiddleware, (req, res) => {
-  return req.eauth.message ? res.send(req.eauth.message) : res.status(400).send()
-})
-
-// return Address or status 400
-app.post('/auth/:Message/:Signature', eauthMiddleware, (req, res) => {
-  const address = req.eauth.recoveredAddress
-
-  if (!address) res.status(400).send()
-  else {
-    User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
-      const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-        expiresIn: 60 * 15 * 1000, // session expire time deafault hardcode 15 min // SHOULD CONFIG
-      })
-
-      req.session.cookie.expires = 60 * 15 * 1000 // session expire time deafault hardcode 15 min // SHOULD CONFIG
-      req.session.address_id = eauth.dataValues.id // database id // oauth use
-      req.session.address = address
-      req.session.token = token
-
-      res.json({
-        success: true,
-        message: 'Eauth Success',
-        token: token,
-      })
-    })
-  }
-})
+require('./routes/eauth')(app, eauthMiddleware, User, jwt)
 
 async function eauthContractMiddleware(req, res, next) {
   let middleware = eauthContractTypedData
   const md = new MobileDetect(req.headers['user-agent'])
   if (md.mobile()) middleware = eauthContractPersonal
+  if (req.path.includes('customizedsign')) middleware = eauthContract
 
   async.series([middleware.bind(null, req, res)], (err) => {
     return err ? next(err) : next()
   })
 }
 
-// return Address or Confirm Code or status 400
-app.get('/auth/contract/:Contract', eauthContractMiddleware, (req, res) => {
-  return req.eauth.message ? res.send(req.eauth.message) : res.status(400).send()
-})
-
-// return Address or status 400
-app.post('/auth/contract/:Message/:Signature', eauthContractMiddleware, (req, res) => {
-  const recoveredAddress = req.eauth.recoveredAddress
-  Promise.resolve(recoveredAddress)
-  .then((address) => {
-    if (!address) res.status(400).send()
-    else {
-      User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
-        const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-          expiresIn: 60 * 15 * 1000, // session expire time deafault hardcode 15 min // SHOULD CONFIG
-        })
-
-        req.session.cookie.expires = 60 * 15 * 1000 // session expire time deafault hardcode 15 min // SHOULD CONFIG
-        req.session.address_id = eauth.dataValues.id // database id // oauth use
-        req.session.address = address
-        req.session.token = token
-
-        res.json({
-          success: true,
-          message: 'Eauth Success',
-          token: token,
-        })
-      })
-    }
-  })
-})
+require('./routes/contract')(app, eauthContractMiddleware, User, jwt)
 
 function apiMiddleware(req, res, next) {
   const { token } = req.session
@@ -211,40 +137,9 @@ function apiMiddleware(req, res, next) {
 require('./components/oauth')(app, apiMiddleware)
 
 const api = express.Router()
-
 // api middleware
 api.use(apiMiddleware)
-
-// api logout
-app.all('/api/logout', api, (req, res) => {
-  req.session.destroy((err) => {
-    let location = '/'
-    if (req.body.url) location = req.body.url
-    res.redirect(location)
-  })
-})
-
-app.get('/api/user', api, (req, res) => {
-  res.json({
-    success: true,
-    message: req.session.address,
-  })
-})
-
-app.get('/api/qrcode', api, async (req, res) => {
-  // set session to logined
-  if (req.query.session_id && req.query.socket_id) {
-    if (await sequelizeStore.get(req.query.session_id)) {
-      await sequelizeStore.set(req.query.session_id, req.session)
-    }
-    // emit loggin message
-    const socket = io.clients().sockets[req.query.socket_id]
-    if (socket) await socket.emit('refresh')
-  }
-
-  // clean client session
-  res.redirect('/api/logout')
-})
+require('./routes/api')(app, api, sequelizeStore, io)
 
 // error handler
 app.use((err, req, res, next) => {

@@ -4,6 +4,7 @@ class LoginApp {
     this.contractWallet = url.searchParams.get('wallet')
     this.eauthButton = document.querySelector('.button--eauth')
     this.fortmaticButton = document.querySelector('.button--fortmatic')
+    this.customizedButton = document.querySelector('.button--customized')
     this.qrcode = document.getElementById('qrcode')
     this.timerNumber = document.querySelector('.timer__number')
 
@@ -14,6 +15,7 @@ class LoginApp {
 
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))
     this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
+    this.customizedButton.addEventListener('click', this.useCustomizedSign.bind(this))
 
     this.socket = io()
     this.socket.on('init', this.handleSocketInit.bind(this))
@@ -44,6 +46,16 @@ class LoginApp {
     this.eauth.contractFortmaticLogin(this.contractWallet, this.authorise)
   }
 
+  useCustomizedSign() {
+    const url = new URL(document.URL)
+    const c = url.searchParams.get('url')
+    let location = `/customizedsign?wallet=${this.contractWallet}`
+    if (c) {
+      location = `/customizedsign?url=${encodeURIComponent(c)}&wallet=${this.contractWallet}`
+    }
+    window.location = location
+  }
+
   handleSocketInit(data) {
     const url = `https://${document.domain}/contractLogin/?socket_id=${this.socket.id}&session_id=${data.session_id}&wallet=${this.contractWallet}`
     this.renderQRCode(url)
@@ -59,8 +71,8 @@ class LoginApp {
     return new QRCode(this.qrcode, {
       text,
       errorCorrectionLevel: 'H',
-      width: 170,
-      height: 170,
+      width: 160,
+      height: 160,
     })
   }
 

@@ -58,9 +58,20 @@
   width: 350px;
   min-height: 630px;
   border-radius: 12px;
-  padding: 45px 40px;
+  padding: 10px 40px;
   background-color: #FFFFFF;
   box-shadow: 0 5px 30px -10px rgba(0, 50, 152, 0.3);
+}
+
+@media (max-width: 321px) {
+  .dialog {
+    width: 350px;
+    min-height: 630px;
+    border-radius: 12px;
+    padding: 30px 40px;
+    background-color: #FFFFFF;
+    box-shadow: 0 5px 30px -10px rgba(0, 50, 152, 0.3);
+  }
 }
 
 .dialog__logo > img {
@@ -110,8 +121,13 @@
   box-shadow: 0 2px 8px -2px rgba(0, 50, 152, 0.25);
 }
 
-.button.button--switch {
+.button.button--switch, .button.button--customized {
   border: solid 1px #BEBEBE;
+}
+
+.button.button--verify {
+  border: solid 1px #BEBEBE;
+  margin-top: 14px;
 }
 
 .button:active {
@@ -148,6 +164,33 @@
   vertical-align: middle;
   margin-right: 8px;
   margin-bottom: 2px;
+}
+
+.button--customized::before, .button.button--verify::before {
+  content:'';
+  display: inline-block;
+  background-image:url(/images/sign@2x.png);
+  background-size:22px 22px;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 1px;
+  margin-bottom: 2px;
+}
+
+.message {
+  margin-bottom: 12px;
+  min-height: 100px;
+}
+
+.messageHex {
+  margin-bottom: 12px;
+  min-height: 60px;
+}
+
+.signature {
+  margin-top: 20px;
+  min-height: 80px;
 }
 
 .divider {
@@ -193,8 +236,8 @@
 }
 
 .qrcode-wrapper__qrcode > #qrcode {
-  width: 170px;
-  height: 170px;
+  width: 160px;
+  height: 160px;
   background-color: #758095;
 }
 

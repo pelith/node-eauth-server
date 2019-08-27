@@ -19,7 +19,6 @@
     },
     "sessionMinutes": 60,
     "secret": "secret",
-    "rpcURL": ""
   },
   "test": {
     "username": "root",
@@ -41,7 +40,6 @@
     },
     "sessionMinutes": 60,
     "secret": "secret",
-    "rpcURL": ""
   },
   "production": {
     "username": "root",
@@ -63,6 +61,5 @@
     },
     "sessionMinutes": 60,
     "secret": "secret",
-    "rpcURL": ""
   }
 }

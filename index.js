@@ -97,7 +97,7 @@ if (config.components.contract)
   require('./components/contract')(config, app, User, jwt, Eauth, async, MobileDetect, ens)
 
 if (config.components.oauth)
-  require('./components/oauth')(app, apiMiddleware)
+  require('./components/oauth')(app, apiMiddleware, User, async, ens)
 
 if (config.components.qrcode)
   require('./components/qrcode')(app, api, sequelizeStore, server)

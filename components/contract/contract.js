@@ -21,8 +21,12 @@ module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect, en
       } else if (req.query.wallet) {
         let address = req.query.wallet
         if (/.*\.eth$/.test(req.query.wallet)) {
-          if (config.components.ens && ens)
-            address = await ens.resolver(req.query.wallet).addr().catch((err) => { return false })
+          if (config.components.ens && ens) {
+            address = await ens.resolver(req.query.wallet).addr().catch((err) => {
+              console.log(err)
+              return false
+            })
+          }
           else
             address = null
         }

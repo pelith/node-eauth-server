@@ -1,4 +1,4 @@
-module.exports = function(config, app, api, User, jwt, Eauth, async, MobileDetect) {
+module.exports = function(config, app, api, User, jwt, Eauth, async, MobileDetect, ens) {
   const eauthTypedData = new Eauth({ banner: config.banner, prefix: config.messagePrefix })
   const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.messagePrefix })
 

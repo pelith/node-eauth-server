@@ -23,6 +23,15 @@ app.set('view engine', 'pug')
 if (app.get('env') === 'development') app.use(morgan('dev'))
 
 const config = require('./config/config.json')[env]
+let ens = null
+try {
+  const ENS = require('ethereum-ens')
+  const Web3 = require('web3')
+  const provider = new Web3.providers.HttpProvider(config.rpcURL)
+  ens = new ENS(provider)
+} catch (err) {
+  console.log('ens disabled')
+}
 
 // issue, dev // maybe add salt with secret
 app.set('secret', config.secret)
@@ -82,10 +91,10 @@ const api = express.Router()
 // api middleware
 api.use(apiMiddleware)
 
-require('./components/eauth')(config, app, api, User, jwt, Eauth, async, MobileDetect)
+require('./components/eauth')(config, app, api, User, jwt, Eauth, async, MobileDetect, ens)
 
 if (config.components.contract)
-  require('./components/contract')(config, app, User, jwt, Eauth, async, MobileDetect)
+  require('./components/contract')(config, app, User, jwt, Eauth, async, MobileDetect, ens)
 
 if (config.components.oauth)
   require('./components/oauth')(app, apiMiddleware)

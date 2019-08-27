@@ -1,7 +1,6 @@
 class LoginApp {
   constructor() {
-    const url = new URL(document.URL)
-    this.contractWallet = url.searchParams.get('wallet')
+    this.contractWallet = document.querySelector('#fulladdress').innerHTML
     this.verifyButton = document.querySelector('.button--verify')
     this.message = document.querySelector('.message')
     this.messageHex = document.querySelector('.messageHex')

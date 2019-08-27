@@ -1,4 +1,4 @@
-module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect) {
+module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect, ens) {
   const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData', prefix: config.messagePrefix, rpc: config.rpcURL })
   const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: config.messagePrefix, rpc: config.rpcURL })
   const eauthContract = new Eauth({ method: 'wallet_validation', prefix: config.messagePrefix, rpc: config.rpcURL })
@@ -19,7 +19,19 @@ module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect) {
       if (req.session.address) {
         res.redirect('/logout')
       } else if (req.query.wallet) {
-        res.render('contractLogin', { address: req.query.wallet, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
+        let address = req.query.wallet
+        if (/.*\.eth$/.test(req.query.wallet)) {
+          if (config.components.ens && ens)
+            address = await ens.resolver(req.query.wallet).addr().catch((err) => { return false })
+          else
+            address = null
+        }
+
+        if (address)
+          res.render('contractLogin', { address: address, prefix: config.messagePrefix, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
+        else {
+          res.render('contractInput', { error: `'${req.query.wallet}' is not valid` })
+        }
       } else {
         res.render('contractInput')
       }

@@ -14,6 +14,7 @@
         "fortmatic": true,
         "oauth": true,
         "contract": true,
+        "ens": true,
         "qrcode": true
     },
     "sessionMinutes": 60,
@@ -34,6 +35,7 @@
         "fortmatic": true,
         "oauth": true,
         "contract": true,
+        "ens": true,
         "qrcode": true
     },
     "sessionMinutes": 60,
@@ -54,6 +56,7 @@
         "fortmatic": true,
         "oauth": true,
         "contract": true,
+        "ens": true,
         "qrcode": true
     },
     "sessionMinutes": 60,

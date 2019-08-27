@@ -1,7 +1,6 @@
 class LoginApp {
   constructor() {
-    const url = new URL(document.URL)
-    this.contractWallet = url.searchParams.get('wallet')
+    this.contractWallet = document.querySelector('#fulladdress').innerHTML
     this.eauthButton = document.querySelector('.button--eauth')
     this.fortmaticButton = document.querySelector('.button--fortmatic')
     this.customizedButton = document.querySelector('.button--customized')

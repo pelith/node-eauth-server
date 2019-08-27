@@ -29,7 +29,7 @@ module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect) {
       if (req.session.address) {
         res.redirect('/logout')
       } else {
-        res.render('customizedSign', { address: req.query.wallet })
+        res.render('customizedSign', { address: req.query.wallet, prefix: config.messagePrefix })
       }
     })
   }
@@ -46,10 +46,10 @@ module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect) {
       else {
         User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
           const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-            expiresIn: config.sessionMinutes * 1000,
+            expiresIn: config.sessionMinutes * 60 * 1000,
           })
 
-          req.session.cookie.expires = config.sessionMinutes * 1000
+          req.session.cookie.expires = config.sessionMinutes * 60 * 1000
           req.session.address_id = eauth.dataValues.id // database id // oauth use
           req.session.address = address
           req.session.token = token
@@ -78,10 +78,10 @@ module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect) {
       else {
         User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
           const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-            expiresIn: config.sessionMinutes * 1000,
+            expiresIn: config.sessionMinutes * 60 * 1000,
           })
 
-          req.session.cookie.expires = config.sessionMinutes * 1000
+          req.session.cookie.expires = config.sessionMinutes * 60 * 1000
           req.session.address_id = eauth.dataValues.id // database id // oauth use
           req.session.address = address
           req.session.token = token

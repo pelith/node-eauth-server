@@ -27,7 +27,7 @@ module.exports = function(config, app, api, User, jwt, Eauth, async, MobileDetec
       if (req.session.address) {
         res.redirect('/logout')
       } else {
-        res.render('login', { useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
+        res.render('login', { prefix: config.messagePrefix, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
       }
     })
 
@@ -68,10 +68,10 @@ module.exports = function(config, app, api, User, jwt, Eauth, async, MobileDetec
     else {
       User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
         const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-          expiresIn: config.sessionMinutes * 1000,
+          expiresIn: config.sessionMinutes * 60 * 1000,
         })
 
-        req.session.cookie.expires = config.sessionMinutes * 1000
+        req.session.cookie.expires = config.sessionMinutes * 60 * 1000
         req.session.address_id = eauth.dataValues.id // database id // oauth use
         req.session.address = address
         req.session.token = token

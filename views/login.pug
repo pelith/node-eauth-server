@@ -5,7 +5,7 @@ block vars
 
 block content
   .background-center
-    .dialog
+    .dialog__default.dialog
       .dialog__logo
         img(src='/images/logo.png' alt='logo')
       .dialog__message 
@@ -30,6 +30,8 @@ block content
     .powered-by-text Powered by Pelith
 
 block scripts
+  script.
+   const prefix = `#{prefix}`
   script(src='/scripts/login.js' type='text/javascript')
 
   if useSocket

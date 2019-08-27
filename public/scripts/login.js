@@ -5,7 +5,7 @@ class LoginApp {
 
     this.eauth = new Eauth({
       AUTH_ROUTE: '/auth',
-      PREFIX: 'This is a prefix example\n\ntoken:\n----------\n',
+      PREFIX: prefix,
     })
 
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))

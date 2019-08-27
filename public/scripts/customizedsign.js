@@ -10,7 +10,7 @@ class LoginApp {
 
     this.eauth = new Eauth({
       CONTRACT_AUTH_ROUTE: '/customizedsign',
-      PREFIX: 'This is a prefix example\n\ntoken:\n----------\n',
+      PREFIX: prefix,
     })
 
     this.eauth.getMessage(this.contractWallet).then(msg => {

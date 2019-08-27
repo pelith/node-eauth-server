@@ -8,7 +8,15 @@
     "logging": true,
     "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
-    "message_prefix": "",
+    "message_prefix": "This is a prefix example\n\ntoken:\n----------\n",
+    "components": {
+        "ui": true,
+        "fortmatic": true,
+        "oauth": true,
+        "contract": true,
+        "qrcode": true
+    },
+    "sessionMinutes": 60,
     "secret": "secret",
   },
   "test": {
@@ -20,7 +28,15 @@
     "logging": true,
     "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
-    "message_prefix": "",
+    "message_prefix": "This is a prefix example\n\ntoken:\n----------\n",
+    "components": {
+        "ui": true,
+        "fortmatic": true,
+        "oauth": true,
+        "contract": true,
+        "qrcode": true
+    },
+    "sessionMinutes": 60,
     "secret": "secret",
   },
   "production": {
@@ -32,7 +48,15 @@
     "logging": true,
     "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
-    "message_prefix": "",
+    "message_prefix": "This is a prefix example\n\ntoken:\n----------\n",
+    "components": {
+        "ui": true,
+        "fortmatic": true,
+        "oauth": true,
+        "contract": true,
+        "qrcode": true
+    },
+    "sessionMinutes": 60,
     "secret": "secret",
   }
 }

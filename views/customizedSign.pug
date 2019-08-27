@@ -14,9 +14,13 @@ block content
         .address
           span#address -
       label Message
-      textarea.form-control.message(disabled="disabled") #{message}
+        button.btn.btn-default.btn-xs.copy#copyMessage
+          i.far.fa-copy
+      textarea.form-control.message(readonly) #{message}
       label Message Hex
-      textarea.form-control.messageHex(disabled="disabled")
+        button.btn.btn-default.btn-xs.copy#copyHexMessage
+          i.far.fa-copy
+      textarea.form-control.messageHex(readonly)
       hr.divider(data-content='fill in your signature')
       textarea.form-control.signature
       .dialog__actions
@@ -24,9 +28,6 @@ block content
     .powered-by-text Powered by Pelith
 
 block scripts
-  script(src='/socket.io/socket.io.js' type='text/javascript')
-  script(src='https://cdn.jsdelivr.net/npm/easytimer@1.1.1/src/easytimer.min.js' type='text/javascript')
-  script(src='/scripts/qrcode.min.js' type='text/javascript')
   script(src='/scripts/customizedsign.js' type='text/javascript')
   script(src='/scripts/showAddress.js' type='text/javascript')
 

@@ -9,14 +9,14 @@ class LoginApp {
   useContractWallet() {
     const url = new URL(window.location.href)
     const c = url.searchParams.get('url')
-    if (this.contractWallet.value) {
+    if (/^(0x)?[0-9a-f]{40}$/i.test(this.contractWallet.value)) {
       if (c) {
         window.location = `/contractLogin?url=${encodeURIComponent(c)}&wallet=${this.contractWallet.value}`
       } else {
         window.location = `/contractLogin?wallet=${this.contractWallet.value}`
       }
     } else {
-      window.location = url
+      alert('not a valid address')
     }
   }
 }

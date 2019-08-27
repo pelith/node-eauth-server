@@ -1,18 +1,12 @@
-module.exports = function(app, api, sequelizeStore, io) {
-  // api logout
-  app.all('/api/logout', api, (req, res) => {
-    req.session.destroy((err) => {
-      let location = '/'
-      if (req.body.url) location = req.body.url
-      res.redirect(location)
-    })
-  })
+const cookieParser = require('socket.io-cookie-parser')
 
-  app.get('/api/user', api, (req, res) => {
-    res.json({
-      success: true,
-      message: req.session.address,
-    })
+module.exports = function(app, api, sequelizeStore, server) {
+  const io = require('socket.io')(server)
+
+  io.use(cookieParser())
+  io.on('connection', (socket) => {
+    socket.emit('init', { session_id: socket.request.cookies['connect.sid'].substr(2, 32) })
+    setTimeout(() => { socket.emit('refresh'); socket.disconnect(true); console.log('socket disconnect') }, 180000)
   })
 
   app.get('/api/qrcode', api, async (req, res) => {

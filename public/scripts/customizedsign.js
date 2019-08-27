@@ -5,6 +5,8 @@ class LoginApp {
     this.verifyButton = document.querySelector('.button--verify')
     this.message = document.querySelector('.message')
     this.messageHex = document.querySelector('.messageHex')
+    this.copyOrig = document.querySelector('#copyMessage')
+    this.copyHex = document.querySelector('#copyHexMessage')
 
     this.eauth = new Eauth({
       CONTRACT_AUTH_ROUTE: '/customizedsign',
@@ -15,9 +17,12 @@ class LoginApp {
       this.message.innerHTML = msg
       return msg
     }).then(orgiMsg => {
+      const web3 = new Web3()
       this.messageHex.innerHTML = web3.sha3(orgiMsg)
     })
     
+    this.copyOrig.addEventListener('click', this.copyMessage.bind(this))
+    this.copyHex.addEventListener('click', this.copyHexMessage.bind(this))
     this.verifyButton.addEventListener('click', this.checkIsValid.bind(this))
   }
 
@@ -38,6 +43,16 @@ class LoginApp {
   checkIsValid() {
     const signature = document.querySelector('.signature').value
     this.eauth.checkIsValid(this.message.value, signature, this.authorise)
+  }
+
+  copyMessage() {
+    this.message.select()
+    document.execCommand("copy")
+  }
+
+  copyHexMessage() {
+    this.messageHex.select()
+    document.execCommand("copy")
   }
 }
 

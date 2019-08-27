@@ -15,26 +15,32 @@ block content
           span#address -
       .dialog__actions
         button.button.button--eauth Ethereum Login
-        button.button.button--fortmatic Fortmatic Login
+        if useFortmatic
+          button.button.button--fortmatic Fortmatic Login
         button.button.button--customized Customized Sign
-      hr.divider(data-content='by mobile wallet')
-      .dialog__actions
-        .qrcode-wrapper
-          .qrcode-wrapper__qrcode
-            #qrcode
-        .timer
-          .timer__number 00:00
-          .timer__message
-            img.icon(src='/images/refresh.svg' alt='refresh-icon')
-            .timer__text will refresh
+
+      if useSocket
+        hr.divider(data-content='by mobile wallet')
+        .dialog__actions
+          .qrcode-wrapper
+            .qrcode-wrapper__qrcode
+              #qrcode
+          .timer
+            .timer__number 00:00
+            .timer__message
+              img.icon(src='/images/refresh.svg' alt='refresh-icon')
+              .timer__text will refresh
     .powered-by-text Powered by Pelith
 
 block scripts
-  script(src='/socket.io/socket.io.js' type='text/javascript')
-  script(src='https://cdn.jsdelivr.net/npm/easytimer@1.1.1/src/easytimer.min.js' type='text/javascript')
-  script(src='/scripts/qrcode.min.js' type='text/javascript')
   script(src='/scripts/contractlogin.js' type='text/javascript')
   script(src='/scripts/showAddress.js' type='text/javascript')
+
+  if useSocket
+    script(src='/socket.io/socket.io.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/npm/easytimer@1.1.1/src/easytimer.min.js' type='text/javascript')
+    script(src='/scripts/qrcode.min.js' type='text/javascript')
+    script(src='/scripts/mobile-socket.js' type='text/javascript')
 
 block stylesheets
   link(rel='stylesheet' href='/stylesheets/main.css')

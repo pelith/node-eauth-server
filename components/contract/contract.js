@@ -1,21 +1,38 @@
-module.exports = function(app, eauthContractMiddleware, User, jwt) {
-  app.get('/contractLogin', async (req, res) => {
-    if (req.session.address) {
-      res.redirect('/logout')
-    } else if (req.query.wallet) {
-      res.render('contractLogin', { address: req.query.wallet })
-    } else {
-      res.render('contractInput')
-    }
-  })
+module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect) {
+  const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData', prefix: config.messagePrefix, rpc: config.rpcURL })
+  const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: config.messagePrefix, rpc: config.rpcURL })
+  const eauthContract = new Eauth({ method: 'wallet_validation', prefix: config.messagePrefix, rpc: config.rpcURL })
 
-  app.get('/customizedsign', async (req, res) => {
-    if (req.session.address) {
-      res.redirect('/logout')
-    } else {
-      res.render('customizedSign', { address: req.query.wallet })
-    }
-  })
+  async function eauthContractMiddleware(req, res, next) {
+    let middleware = eauthContractTypedData
+    const md = new MobileDetect(req.headers['user-agent'])
+    if (md.mobile()) middleware = eauthContractPersonal
+    if (req.path.includes('customizedsign')) middleware = eauthContract
+
+    async.series([middleware.bind(null, req, res)], (err) => {
+      return err ? next(err) : next()
+    })
+  }
+
+  if (config.components.ui) {
+    app.get('/contractLogin', async (req, res) => {
+      if (req.session.address) {
+        res.redirect('/logout')
+      } else if (req.query.wallet) {
+        res.render('contractLogin', { address: req.query.wallet, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
+      } else {
+        res.render('contractInput')
+      }
+    })
+
+    app.get('/customizedsign', async (req, res) => {
+      if (req.session.address) {
+        res.redirect('/logout')
+      } else {
+        res.render('customizedSign', { address: req.query.wallet })
+      }
+    })
+  }
 
   app.get('/customizedsign/:Contract', eauthContractMiddleware, async (req, res) => {
     return req.eauth.message ? res.send(req.eauth.message) : res.status(400).send()
@@ -29,10 +46,10 @@ module.exports = function(app, eauthContractMiddleware, User, jwt) {
       else {
         User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
           const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-            expiresIn: 60 * 15 * 1000, // session expire time deafault hardcode 15 min // SHOULD CONFIG
+            expiresIn: config.sessionMinutes * 1000,
           })
 
-          req.session.cookie.expires = 60 * 15 * 1000 // session expire time deafault hardcode 15 min // SHOULD CONFIG
+          req.session.cookie.expires = config.sessionMinutes * 1000
           req.session.address_id = eauth.dataValues.id // database id // oauth use
           req.session.address = address
           req.session.token = token
@@ -61,10 +78,10 @@ module.exports = function(app, eauthContractMiddleware, User, jwt) {
       else {
         User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
           const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-            expiresIn: 60 * 15 * 1000, // session expire time deafault hardcode 15 min // SHOULD CONFIG
+            expiresIn: config.sessionMinutes * 1000,
           })
 
-          req.session.cookie.expires = 60 * 15 * 1000 // session expire time deafault hardcode 15 min // SHOULD CONFIG
+          req.session.cookie.expires = config.sessionMinutes * 1000
           req.session.address_id = eauth.dataValues.id // database id // oauth use
           req.session.address = address
           req.session.token = token

@@ -1,3 +1,3 @@
-module.exports = function(config, app, api, User, jwt, Eauth, async, MobileDetect, ens){
-    require('./eauth')(config, app, api, User, jwt, Eauth, async, MobileDetect, ens)
+module.exports = function(app, api, User, jwt, ens){
+    require('./eauth')(app, api, User, jwt, ens)
 }

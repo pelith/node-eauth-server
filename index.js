@@ -5,9 +5,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
-const Eauth = require('express-eauth')
 const async = require('async')
-const MobileDetect = require('mobile-detect')
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
@@ -91,13 +89,13 @@ const api = express.Router()
 // api middleware
 api.use(apiMiddleware)
 
-require('./components/eauth')(config, app, api, User, jwt, Eauth, async, MobileDetect, ens)
+require('./components/eauth')(app, api, User, jwt, ens)
 
 if (config.components.contract)
-  require('./components/contract')(config, app, User, jwt, Eauth, async, MobileDetect, ens)
+  require('./components/contract')(app, User, jwt, ens)
 
 if (config.components.oauth)
-  require('./components/oauth')(app, apiMiddleware, User, async, ens)
+  require('./components/oauth')(app, apiMiddleware, User, ens)
 
 if (config.components.qrcode)
   require('./components/qrcode')(app, api, sequelizeStore, server)

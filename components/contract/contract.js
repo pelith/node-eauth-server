@@ -1,4 +1,10 @@
-module.exports = function(config, app, User, jwt, Eauth, async, MobileDetect, ens) {
+const async = require('async')
+const Eauth = require('express-eauth')
+const MobileDetect = require('mobile-detect')
+const env = process.env.NODE_ENV || 'development'
+const config = require('../../config/config.json')[env]
+
+module.exports = function(app, User, jwt, ens) {
   const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData', prefix: config.messagePrefix, rpc: config.rpcURL })
   const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: config.messagePrefix, rpc: config.rpcURL })
   const eauthContract = new Eauth({ method: 'wallet_validation', prefix: config.messagePrefix, rpc: config.rpcURL })

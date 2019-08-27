@@ -1,4 +1,10 @@
-module.exports = function(config, app, api, User, jwt, Eauth, async, MobileDetect, ens) {
+const async = require('async')
+const Eauth = require('express-eauth')
+const MobileDetect = require('mobile-detect')
+const env = process.env.NODE_ENV || 'development'
+const config = require('../../config/config.json')[env]
+
+module.exports = function(app, api, User, jwt, ens) {
   const eauthTypedData = new Eauth({ banner: config.banner, prefix: config.messagePrefix })
   const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.messagePrefix })
 

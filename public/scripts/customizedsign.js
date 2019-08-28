@@ -36,12 +36,18 @@ class LoginApp {
     } else if (q && s) {
       location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
     }
-    window.location = location
+
+    if (!this.eauth.AUTH_RESPONSE) {
+      alert('Authentication failed.')
+      window.location.reload()
+    } else {
+      window.location = location
+    }
   }
 
   checkIsValid() {
     const signature = document.querySelector('.signature').value
-    this.eauth.checkIsValid(this.message.value, signature, this.authorise)
+    this.eauth.checkIsValid(this.message.value, signature, this.authorise.bind(this))
   }
 
   copyMessage() {

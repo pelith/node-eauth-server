@@ -24,15 +24,21 @@ class LoginApp {
     } else if (q && s) {
       location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
     }
-    window.location = location
+
+    if (!this.eauth.AUTH_RESPONSE) {
+      alert('Authentication failed.')
+      window.location.reload()
+    } else {
+      window.location = location
+    }
   }
 
   loginWithEauth() {
-    this.eauth.ethLogin(this.authorise)
+    this.eauth.ethLogin(this.authorise.bind(this))
   }
 
   loginWithFortmatic() {
-    this.eauth.fortmaticLogin(this.authorise)
+    this.eauth.fortmaticLogin(this.authorise.bind(this))
   }
 }
 

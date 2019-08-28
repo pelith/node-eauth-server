@@ -27,15 +27,21 @@ class LoginApp {
     } else if (q && s) {
       location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
     }
-    window.location = location
+
+    if (!this.eauth.AUTH_RESPONSE) {
+      alert('Authentication failed.')
+      window.location.reload()
+    } else {
+      window.location = location
+    }
   }
 
   loginWithEauth() {
-    this.eauth.contractEthLogin(this.contractWallet, this.authorise)
+    this.eauth.contractEthLogin(this.contractWallet, this.authorise.bind(this))
   }
 
   loginWithFortmatic() {
-    this.eauth.contractFortmaticLogin(this.contractWallet, this.authorise)
+    this.eauth.contractFortmaticLogin(this.contractWallet, this.authorise.bind(this))
   }
 
   useCustomizedSign() {

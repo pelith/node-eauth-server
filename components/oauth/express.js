@@ -16,7 +16,7 @@ const oauth = require('./oauth')
 const env = process.env.NODE_ENV || 'development'
 const config = require('./config/config.json')[env]
 
-module.exports = function(app, middleware, User, ens) {
+module.exports = function(app, api, User, ens) {
   // only private can get
   app.get('/oauth/user', authenticate(), async function(req, res) {
     // ENS HOOK
@@ -37,7 +37,7 @@ module.exports = function(app, middleware, User, ens) {
     return ens_name ? res.json(Object.assign(req.user.User, {ens: ens_name})) : res.json(req.user.User)
   })
 
-  app.all('/oauth/token', function(req,res,next){
+  app.all('/oauth/token', function(req,res,next) {
     const request = new Request(req)
     const response = new Response(res)
 
@@ -53,7 +53,7 @@ module.exports = function(app, middleware, User, ens) {
     })
   })
 
-  app.get('/oauth/authorize', middleware, function(req, res) {
+  app.get('/oauth/authorize', api, function(req, res) {
     return OAuthClient.findOne({
         where: {
           client_id: req.query.client_id,
@@ -73,15 +73,17 @@ module.exports = function(app, middleware, User, ens) {
       })
   })
 
-  app.post('/oauth/authorize', middleware, function(req, res){
+  app.post('/oauth/authorize', api, function(req, res) {
     const request = new Request(req)
     const response = new Response(res)
+    const address_id = req.session.address_id
+    req.session.destroy()
 
     const options = {
       authenticateHandler: {
         handle: (data) => {
           // Whatever you need to do to authorize / retrieve your user from post data here
-          return {id: req.session.address_id}
+          return {id: address_id}
         }
       }
     }

@@ -64,10 +64,26 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+function oauthMiddleware(req, res, next) {
+  if (req.method == 'GET') {
+    if (req.path === '/oauth/authorize' && req.session.previousPath === '/oauth/authorize') {
+      return req.session.destroy((err) => {
+        let location = '/'
+        if (req.url) location = util.format('/?url=%s', encodeURIComponent(req.url))
+        return res.redirect(location)
+      })
+    }
+    
+    req.session.previousPath = req.path
+  }
+  
+  next()
+}
+
+app.use(oauthMiddleware)
+
 function apiMiddleware(req, res, next) {
   const { token } = req.session
-
-  // auth destroy
   
   if (token) {
     // issue case: after server restart will pass verify cond,but token is expire, maybe should check database
@@ -95,7 +111,7 @@ if (config.components.contract)
   require('./components/contract')(app, User, jwt, ens)
 
 if (config.components.oauth)
-  require('./components/oauth')(app, apiMiddleware, User, ens)
+  require('./components/oauth')(app, api, User, ens)
 
 if (config.components.qrcode)
   require('./components/qrcode')(app, api, sequelizeStore, server)

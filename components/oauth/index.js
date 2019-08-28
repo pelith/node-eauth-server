@@ -1,3 +1,3 @@
-module.exports = function(app, middleware, User, ens){
-    require('./express')(app, middleware, User, ens)
+module.exports = function(app, api, User, ens){
+    require('./express')(app, api, User, ens)
 }

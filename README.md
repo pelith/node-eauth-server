@@ -10,6 +10,8 @@ Gitlab Oauth with Eauth: https://gitlab-demo.pelith.com
 
 ## Installing
 
+You can use `npm i --no-optional` instead of `npm i` if you're not using ens and web3.
+
 After installing dependencies,
 
 1. Move `config/config.json.example` to `config/config.json`:
@@ -28,6 +30,25 @@ After installing dependencies,
        "banner": "YOUR_BANNER_HERE",
        // use the connection path from this environment variable, if specified
        "use_env_variable": "CONNECTION_PATH",
+       // rpc for ens and contract wallets
+       "rpcURL": "https://rinkeby.infura.io/",
+       // prefix showing with token
+       "messagePrefix": "This is a prefix example\n\ntoken:\n----------\n",
+       // component configs
+       "components": {
+          "ui": true,
+          // fortmatic ui component
+          "fortmatic": true,
+          // oauth component
+          "oauth": true,
+          // isValidSignature feature for ERC-1271
+          "contract": true,
+          // ens feature for OAuth and contract wallet
+          "ens": true,
+          // qrcode for socket
+          "qrcode": true
+       },
+       "sessionMinutes": 1,
        /* or fill in database-related configs... */
      },
      "test": { /* ... */ }

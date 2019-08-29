@@ -11,6 +11,7 @@ COPY package*.json ./
 RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
+# You can add --no-optional if you're not using ens and web3
 
 # Bundle app source
 COPY . .

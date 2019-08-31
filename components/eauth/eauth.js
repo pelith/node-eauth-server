@@ -21,7 +21,7 @@ module.exports = function(app, api, User, jwt, ens) {
   if (config.components.ui) {
     app.get('/', async (req, res) => {
       if (req.session.address) {
-        res.redirect('/logout')
+        res.render('logout', { address: req.session.address })
       } else if (!config.components.contract) {
         res.redirect('/login')
       } else {
@@ -31,17 +31,9 @@ module.exports = function(app, api, User, jwt, ens) {
 
     app.get('/login', async (req, res) => {
       if (req.session.address) {
-        res.redirect('/logout')
+        res.redirect('/')
       } else {
         res.render('login', { prefix: config.messagePrefix, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
-      }
-    })
-
-    app.get('/logout', (req, res) => {
-      if (req.session.address) {
-        res.render('logout', { address: req.session.address })
-      } else {
-        res.redirect('/')
       }
     })
   }

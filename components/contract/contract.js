@@ -23,7 +23,7 @@ module.exports = function(app, User, jwt, ens) {
   if (config.components.ui) {
     app.get('/contractLogin', async (req, res) => {
       if (req.session.address) {
-        res.redirect('/logout')
+        res.redirect('/')
       } else if (req.query.wallet) {
         let address = req.query.wallet
         if (/.*\.eth$/.test(req.query.wallet)) {
@@ -49,7 +49,7 @@ module.exports = function(app, User, jwt, ens) {
 
     app.get('/customizedsign', async (req, res) => {
       if (req.session.address) {
-        res.redirect('/logout')
+        res.redirect('/')
       } else {
         res.render('customizedSign', { address: req.query.wallet, prefix: config.messagePrefix })
       }

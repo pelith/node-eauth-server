@@ -4,28 +4,27 @@ block vars
   - var title = 'Contract Login'
 
 block content
-  .background-center
-    .dialog__default.dialog
-      .dialog__logo
-        img(src='/images/logo.png' alt='logo')
-      .dialog__message
-        .subtitle.mt-24 Continue login with your contract
-        #fulladdress(style='display: none;') #{address}
-        .address
-          span#address -
-      label Message
-        button.btn.btn-default.btn-xs.copy#copyMessage
-          i.far.fa-copy
-      textarea.form-control.message(readonly) #{message}
-      label Message Hex
-        button.btn.btn-default.btn-xs.copy#copyHexMessage
-          i.far.fa-copy
-      textarea.form-control.messageHex(readonly)
-      hr.divider(data-content='fill in your signature')
-      textarea.form-control.signature
-      .dialog__actions
-        button.button.button--verify Verify Signature
-    .powered-by-text Powered by Pelith
+  .dialog__default.dialog
+    .dialog__logo
+      img(src='/images/logo.png' alt='logo')
+    .dialog__message
+      .subtitle.mt-24 Continue login with your contract
+      #fulladdress(style='display: none;') #{address}
+      .address
+        span#address(data-toggle="tooltip" title=`${address}`) -
+    label Message
+      button.btn.btn-default.btn-xs.copy#copyMessage
+        i.far.fa-copy
+    textarea.form-control.message(readonly) #{message}
+    label Message Hex
+      button.btn.btn-default.btn-xs.copy#copyHexMessage
+        i.far.fa-copy
+    textarea.form-control.messageHex(readonly)
+    hr.divider(data-content='fill in your signature')
+    textarea.form-control.signature
+    .dialog__actions
+      button.button.button--verify Verify Signature
+  .powered-by-text Powered by Pelith
 
 block scripts
   script.

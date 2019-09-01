@@ -4,28 +4,27 @@ block vars
   - var title = 'Authorize'
 
 block content
-  .background-center
-    .dialog__default.dialog
-      .dialog__logo
-        img(src='/images/logo.png' alt='logo')
-      .dialog__message
-        .title Authorize
-        .subtitle.mt-24 You will continue with
-        #fulladdress(style='display: none;') #{address}
-        .address
-          span#address -
-        #fulladdress.collapse #{address}
-      .dialog__actions
-        form(action='' method='post')
-          input(type='hidden', name='allow', value='yes')
-          input(type='hidden', name='client_id', value=client_id)
-          input(type='hidden', name='redirect_uri', value=redirect_uri)
-          input(type='hidden', name='response_type', value='code')
-          button.button.button--authorize(type="submit") Authorize
-        form(action='/api/logout' method='post')
-          input#url(type='hidden' name='url' value='')
-          button.button.button--switch(type="submit") Use Another Account
-    .powered-by-text Powered by Pelith
+  .dialog__default.dialog
+    .dialog__logo
+      img(src='/images/logo.png' alt='logo')
+    .dialog__message
+      .title Authorize
+      .subtitle.mt-24 You will continue with
+      #fulladdress(style='display: none;') #{address}
+      .address
+        span#address(data-toggle="tooltip" title=`${address}`) -
+      #fulladdress.collapse #{address}
+    .dialog__actions
+      form(action='' method='post')
+        input(type='hidden', name='allow', value='yes')
+        input(type='hidden', name='client_id', value=client_id)
+        input(type='hidden', name='redirect_uri', value=redirect_uri)
+        input(type='hidden', name='response_type', value='code')
+        button.button.button--authorize(type="submit") Authorize
+      form(action='/api/logout' method='post')
+        input#url(type='hidden' name='url' value='')
+        button.button.button--switch(type="submit") Use Another Account
+  .powered-by-text Powered by Pelith
 
 block scripts
   script(src='/scripts/showAddress.js' type='text/javascript')

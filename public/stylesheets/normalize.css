@@ -23,6 +23,16 @@ html {
 
 body {
   margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url('/images/eauth_bg.png');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /**
@@ -347,4 +357,20 @@ template {
 
 [hidden] {
   display: none;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
 }

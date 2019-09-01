@@ -4,16 +4,15 @@ block vars
   - var title = 'Eauth'
 
 block content
-  .background-center
-    .dialog__default.dialog
-      .dialog__logo
-        img(src='/images/logo.png' alt='logo')
-      .dialog__message 
-        .title Authenticate with your Ethereum wallet
-      .dialog__actions
-        button.button.button--normal Login with Ethereum wallet
-        button.button.button--contract Login with Contract wallet
-    .powered-by-text Powered by Pelith
+  .dialog__default.dialog
+    .dialog__logo
+      img(src='/images/logo.png' alt='logo')
+    .dialog__message
+      .title Authenticate with your Ethereum wallet
+    .dialog__actions
+      button.button.button--normal Login with Ethereum wallet
+      button.button.button--contract Login with Contract wallet
+  .powered-by-text Powered by Pelith
 
 block scripts
   script(src='/scripts/index.js' type='text/javascript')

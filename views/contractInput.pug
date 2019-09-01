@@ -4,17 +4,16 @@ block vars
   - var title = 'Contract Login'
 
 block content
-  .background-center
-    .dialog__default.dialog
-      .dialog__logo
-        img(src='/images/logo.png' alt='logo')
-      .dialog__message 
-        .title Input your Ethereum contract wallet
-      .dialog__actions
-        label Contract Address #[input.input--contract(value='')]
-        label.error #{error}
-        button.button.button--contractinput Use Contract
-    .powered-by-text Powered by Pelith
+  .dialog__default.dialog
+    .dialog__logo
+      img(src='/images/logo.png' alt='logo')
+    .dialog__message
+      .title Input your Ethereum contract wallet
+    .dialog__actions
+      label Contract Address #[input.input--contract(value='')]
+      label.error #{error}
+      button.button.button--contractinput Use Contract
+  .powered-by-text Powered by Pelith
 
 block scripts
   script(src='/scripts/contractinput.js' type='text/javascript')

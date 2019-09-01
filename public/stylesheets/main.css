@@ -1,45 +1,3 @@
-.background-center {
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/images/eauth_bg.png');
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-@media (min-width: 413px) {
-  .powered-by-text {
-    padding-top: 20px;
-    height: 15px;
-    font-family: Roboto;
-    font-size: 12px;
-    font-weight: lighter;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
-    color: #758095;
-  }
-}
-
-.powered-by-text {
-  height: 15px;
-  font-family: Roboto;
-  font-size: 12px;
-  font-weight: lighter;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: #758095;
-}
-
 .title {
   font-family: Roboto;
   font-size: 23px;
@@ -304,6 +262,7 @@
   font-weight: bold;
   color: #00194c;
   word-break: break-all;
+  cursor: default;
 }
 
 .error {
@@ -314,21 +273,31 @@
   margin-left: 8px;
 }
 
-/* Let's get this party started */
-::-webkit-scrollbar {
-    width: 8px;
+@media (min-width: 413px) {
+  .powered-by-text {
+    padding-top: 20px;
+    height: 15px;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: lighter;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #758095;
+  }
 }
- 
-/* Track */
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+
+.powered-by-text {
+  height: 15px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: lighter;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #758095;
 }

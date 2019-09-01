@@ -4,22 +4,21 @@ block vars
   - var title = 'Logout'
 
 block content
-  .background-center
-    .dialog__default.dialog
-      .dialog__logo
-        img(src='/images/logo.png' alt='logo')
-      .dialog__message
-        .title Authorized
-        .subtitle.mt-24 You are now authorized with
-        #fulladdress(style='display: none;') #{address}
-        .address
-          span#address -
-        #fulladdress.collapse #{address}
-      .dialog__actions
-        form(action='/api/logout' method='post')
-          input#url(type='hidden' name='url' value='')
-          button.button.button--logout Logout
-    .powered-by-text Powered by Pelith
+  .dialog__default.dialog
+    .dialog__logo
+      img(src='/images/logo.png' alt='logo')
+    .dialog__message
+      .title Authorized
+      .subtitle.mt-24 You are now authorized with
+      #fulladdress(style='display: none;') #{address}
+      .address
+        span#address(data-toggle="tooltip" title=`${address}`) -
+      #fulladdress.collapse #{address}
+    .dialog__actions
+      form(action='/api/logout' method='post')
+        input#url(type='hidden' name='url' value='')
+        button.button.button--logout Logout
+  .powered-by-text Powered by Pelith
 
 block scripts
   script(src='/scripts/showAddress.js' type='text/javascript')

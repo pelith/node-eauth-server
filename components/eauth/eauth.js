@@ -4,20 +4,20 @@ const MobileDetect = require('mobile-detect')
 const env = process.env.NODE_ENV || 'development'
 const config = require('../../config/config.json')[env]
 
+const eauthTypedData = new Eauth({ banner: config.banner, prefix: config.messagePrefix })
+const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.messagePrefix })
+
+async function eauthMiddleware(req, res, next) {
+  let middleware = eauthTypedData
+  const md = new MobileDetect(req.headers['user-agent'])
+  if (md.mobile()) middleware = eauthPersonal
+
+  async.series([middleware.bind(null, req, res)], (err) => {
+    return err ? next(err) : next()
+  })
+}
+
 module.exports = function(app, api, User, jwt, ens) {
-  const eauthTypedData = new Eauth({ banner: config.banner, prefix: config.messagePrefix })
-  const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.messagePrefix })
-
-  async function eauthMiddleware(req, res, next) {
-    let middleware = eauthTypedData
-    const md = new MobileDetect(req.headers['user-agent'])
-    if (md.mobile()) middleware = eauthPersonal
-
-    async.series([middleware.bind(null, req, res)], (err) => {
-      return err ? next(err) : next()
-    })
-  }
-
   if (config.components.ui) {
     app.get('/', async (req, res) => {
       if (req.session.address) {

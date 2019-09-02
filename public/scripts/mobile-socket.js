@@ -6,11 +6,10 @@ class SetupSocket {
     this.socket = io()
     this.socket.on('init', this.handleSocketInit.bind(this))
     this.socket.on('refresh', this.handleSocketRefresh.bind(this))
-
-    this.runTimer()
   }
   
   handleSocketInit(data) {
+    this.runTimer()
     const url = new URL(document.URL)
     const walletAddr = url.searchParams.get('wallet')
     const renderUrl = `https://${document.domain}${window.location.pathname}/?socket_id=${this.socket.id}&session_id=${data.session_id}&wallet=${walletAddr}`
@@ -23,6 +22,7 @@ class SetupSocket {
   }
 
   renderQRCode(text) {
+    this.qrcode.style.display = ""
     this.qrcode.innerHTML = null
     return new QRCode(this.qrcode, {
       text,

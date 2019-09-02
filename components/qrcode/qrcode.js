@@ -5,8 +5,17 @@ module.exports = function(app, api, sequelizeStore, server) {
 
   io.use(cookieParser())
   io.on('connection', (socket) => {
-    socket.emit('init', { session_id: socket.request.cookies['connect.sid'].substr(2, 32) })
-    setTimeout(() => { socket.emit('refresh'); socket.disconnect(true); console.log('socket disconnect') }, 180000)
+    if (socket.request.cookies['connect.sid'] && socket.request.cookies['connect.sid'].length > 32) {
+      socket.emit('init', {
+        session_id: socket.request.cookies['connect.sid'].substr(2, 32)
+      })
+
+      setTimeout(() => {
+        socket.emit('refresh')
+        socket.disconnect(true)
+        console.log('socket disconnect')
+      }, 180000)
+    }
   })
 
   app.get('/api/qrcode', api, async (req, res) => {

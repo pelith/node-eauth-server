@@ -18,7 +18,7 @@
         "qrcode": true
     },
     "sessionMinutes": 1,
-    "secret": "secret",
+    "secret": "secret"
   },
   "test": {
     "username": "root",
@@ -39,7 +39,7 @@
         "qrcode": true
     },
     "sessionMinutes": 1,
-    "secret": "secret",
+    "secret": "secret"
   },
   "production": {
     "username": "root",
@@ -60,6 +60,6 @@
         "qrcode": true
     },
     "sessionMinutes": 1,
-    "secret": "secret",
+    "secret": "secret"
   }
 }

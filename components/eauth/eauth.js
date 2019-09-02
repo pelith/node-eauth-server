@@ -1,5 +1,6 @@
 const async = require('async')
 const Eauth = require('express-eauth')
+const jwt = require('jsonwebtoken')
 const MobileDetect = require('mobile-detect')
 const env = process.env.NODE_ENV || 'development'
 const config = require('../../config/config.json')[env]
@@ -17,7 +18,7 @@ async function eauthMiddleware(req, res, next) {
   })
 }
 
-module.exports = function(app, api, User, jwt, ens) {
+module.exports = function(app, api, User, ens) {
   if (config.components.ui) {
     app.get('/', async (req, res) => {
       if (req.session.address) {

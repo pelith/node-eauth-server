@@ -1,5 +1,6 @@
 const async = require('async')
 const Eauth = require('express-eauth')
+const jwt = require('jsonwebtoken')
 const MobileDetect = require('mobile-detect')
 const env = process.env.NODE_ENV || 'development'
 const config = require('../../config/config.json')[env]
@@ -31,7 +32,7 @@ function eauthWrapper(customizedsign = false) {
     return contractMiddleware
 }
 
-module.exports = function(app, User, jwt, ens) {
+module.exports = function(app, User, ens) {
   if (config.components.ui) {
     app.get('/contractLogin', async (req, res) => {
       if (req.session.address) {

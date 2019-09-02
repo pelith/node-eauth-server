@@ -1,3 +1,3 @@
-module.exports = function(app, api, User, jwt, ens){
-    require('./eauth')(app, api, User, jwt, ens)
+module.exports = function(app, api, User, ens){
+    require('./eauth')(app, api, User, ens)
 }

@@ -142,4 +142,6 @@ Browser Extensions (MetaMask) | Mobile Wallets (imToken / Trustwallet) | Other S
 3. Set max username length up to 42.
 ![username length](https://user-images.githubusercontent.com/16600750/64155052-9a54c480-ce21-11e9-92a7-fbe6e08befff.png)
 
-4. Finally, enjoy!
+4. [Setup OAuth client](https://github.com/pelith/node-eauth-server/tree/componentize#setup-oauth-clients) and use `http://your.domain/auth/eauthoauth2/callback` as your OAuth `redirect_uri`
+
+5. Finally, enjoy!

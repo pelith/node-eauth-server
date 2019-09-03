@@ -1,0 +1,22 @@
+module.exports = {
+  apps : [
+      {
+        name: "Eauth",
+        script: "./index.js",
+        instances: 1,
+        env: {
+            "PORT": 8080,
+            "NODE_ENV": "development",
+            "watch": true,
+            "script": "npm",
+            "args" : "dev"
+        },
+        env_production: {
+            "PORT": 80,
+            "NODE_ENV": "production",
+            "script": "npm",
+            "args" : "start"
+        }
+      }
+  ]
+}

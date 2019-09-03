@@ -30,4 +30,6 @@ node_modules
 
 config.json
 
+pm2.config.js
+
 .DS_Store

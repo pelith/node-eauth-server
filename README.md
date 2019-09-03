@@ -1,12 +1,14 @@
-# ETH Auth Server
+# Eauth Server
 
-An OAuth-compatiable service based on Ethereum credentials to authenticate users on a website.
+An OAuth2-compatiable service based on Ethereum credentials to authenticate users on website.
 
 ## Demo
 
-Ethauth - Decentralized Identity Authentication on Ethereum https://www.youtube.com/watch?v=Rbo5AzYk79s
+Eauth - Decentralized Identity Authentication on Ethereum https://www.youtube.com/watch?v=Rbo5AzYk79s
 
-Gitlab Oauth with Eauth: https://gitlab-demo.pelith.com
+Gitlab OAuth with Eauth: https://gitlab-demo.pelith.com
+
+Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
 
 ## Installing
 
@@ -17,6 +19,8 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
    cp config/config.json.example config/config.json
    ln -s  ../../../config/config.json components/oauth/config/config.json
    ```
+
+   You can also execute `cp components/oauth/config/config.json.example components/oauth/config/config.json` and fill in database configs instead of linking `config/config.json` to `components/oauth/config/config.json` if you want to use another database for OAuth.
 
 2. Configure your `config/config.json` accordingly. Edit the following entries:
    ```js
@@ -35,17 +39,18 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
        // component configs
        "components": {
           "ui": true,
-          // fortmatic ui component
+          // Fortmatic ui component
           "fortmatic": true,
-          // oauth component
+          // OAuth component
           "oauth": true,
           // isValidSignature feature for ERC-1271
           "contract": true,
           // ENS feature for OAuth and contract wallet
           "ens": true,
-          // qrcode for socket
+          // qrcode for remote login
           "qrcode": true
        },
+       // session lifetime for OAuth
        "sessionMinutes": 1,
        /* or fill in database-related configs... */
      },
@@ -56,11 +61,24 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
 
    Note that you may need to install additional packages to operate on databases.
 
+   ### Fortmatic
+
+   Let users access blockchain apps from anywhere 💻📱 - without forcing them to wrestle with browser extensions, wallets, or seed phrases, see more at [fortmatic.com](fortmatic.com)
+
 ## Usage
-### Server
+### Quickstart
 
 Start the server: `node index.js`. \
 Test it on `http://localhost:8080/`.
+
+### Using PM2
+
+```bash
+npm i -g pm2
+cp pm2.config.js.example pm2.config.js
+pm2 start pm2.config.js --env development // development mode on port 8080
+pm2 start pm2.config.js --env production // production mode on port 80
+```
 
 ### Docker
 
@@ -75,26 +93,53 @@ docker run --net=host  -d pelith/node-eauth-server
   2. seeding them with `npx sequelize db:seed:all`
 
 
-## Tutorial (with MetaMask)
+## Tutorial
 
-This service requires a compatible wallet like [MetaMask extension](https://github.com/MetaMask/metamask-extension) or alternatives installed in the browser. For first-time visitors, the simplest setup to guide them is to include a MetaMask download badge before proceeding to the authentication page.
+This service requires a wallet which supports `eth_signTypedData`, `personal_sign` or customized method for your contract wallet. For first-time visitors, the simplest setup is to include a MetaMask download badge before proceeding to the authentication page.
 
-[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/faq/master/images/download-metamask.png" width="400">](https://metamask.io)
+Browser Extensions (MetaMask) | Mobile Wallets (imToken / Trustwallet) | Other SDK (Fortmatic)
+:-------------------------:|:-------------------------:|:-------------------------:
+[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/faq/master/images/download-metamask.png" height="100">](https://metamask.io)  |  [<img alt="MetaMask badge" src="https://token.im/img/appLogo.97de1461.svg" height="100">](https://token.im/download?locale=en-us) [<img alt="MetaMask badge" src="https://avatars0.githubusercontent.com/u/32179889?s=100&v=4" height="100">](https://trustwallet.com/) | [<img alt="MetaMask badge" src="https://avatars1.githubusercontent.com/u/38988377?s=90&v=4" height="100">](https://fortmatic.com/)
 
-1. In the demo page `/` is an ordinary login button. No email/id/password input fields. Instead, **you are going to sign in with your Ethereum credentials**. If your MetaMask is locked or [the privacy mode](https://medium.com/metamask/introducing-privacy-mode-42549d4870fa) is on, it will prompt you to unlock.
+1. In the page `/`, you can decide to login with your Ethereum wallet or contract wallet which implements [ERC-1271](https://github.com/ethereum/EIPs/issues/1271).
 
-   ![signing process](https://user-images.githubusercontent.com/5269414/43250814-cbdc2832-90f0-11e8-8a75-71565fbb9e3d.png)
+![Main Page](https://user-images.githubusercontent.com/16600750/64110015-7dac8400-cd70-11e9-83ab-412ad8b17a59.png)
 
-2. In MetaMask, you should check the banner, usually the brand name of a site, and a challenge string. If that is indeed the site you are about to login, click "Sign" to proceed.
-3. Next, in the second page, where your wallet address is shown and you are asked for authorization. **This step is to bind that wallet address to your account.** Click "Authorise" to proceed, or click "Use another account" if this is not the account you intend to use.
-4. If everything is fine, you will be redirected back to the original site. Click "Logout" will log you out and reset the session.
+2. For Ethereum wallet, there is no email/id/password input fields. Instead, **you gotta sign in with your Ethereum credentials**. If your MetaMask is locked or in [the privacy mode](https://medium.com/metamask/introducing-privacy-mode-42549d4870fa), it would prompt you to unlock. You can also scan the QR Code to open the URL with your mobile wallet (imToken or Trustwallet), then sign the message for authentication through socket.
 
-## Fortmatic
+![Login with Ethereum](https://user-images.githubusercontent.com/16600750/64110510-e8aa8a80-cd71-11e9-9f5a-8bd3195b95e8.png)
 
-Identity authentication is the first step while interacting with a website, so we believe that the revolution of this interface can lower barriers of the entrance to blockchain world. Besides, this interface is the prerequisite of identity abstraction.
+3. In your wallet, you should check the banner and the prefix of message, usually the brand name of a site. The challenge message should contain a token string. If it's the correct info from the site you are about to login, click "Sign" or "Confirm" to proceed.
 
-This project consists of a server side and a client side. The Server side is compatible with Oauth2 standard, so developers can customize their own client side without handicap if they do not use our client-side framework, which is designed for express of node.js, making sure that no new obstacle emerges.
+![Signing Process](https://user-images.githubusercontent.com/16600750/64104830-90b95700-cd64-11e9-8f0f-6d642692b72b.jpeg)
 
-The authentication process starts with asking users to sign a challenge package issued by the authentication server with the private key of one of their wallets, and then clients send the signed package to servers for verification and authorization. In this way, verification can be done without saving sensitive data like passwords in centralized databases. In addition, service providers do not need to worry about the reliability of authentication providers, such as sudden breakdown causing login service to crash. Last but not least, after logging in a service platform, users can manage their digital assets on this platform with their bound accounts.
+3. Next, your wallet address is shown and you are asked for authorization. **This step is to bind that wallet address to your account.** Click "Authorize" to proceed, or click "Use another account" if this is not the account you intend to use.
 
-After integrating fortmatic into this project, it is easier for general users to interact with websites that have integrated this authentication system. There is no need for them to download any web3 provided extension such as Metamask or web3 installed browser like Brave. As people can access blockchain with phone number through Fortmatic, they can enjoy decentralization, convenience, and security without the learning curve of using the blockchain.
+![Authorise](https://user-images.githubusercontent.com/16600750/64116418-d3d5f300-cd81-11e9-9de6-fb81bfb437df.png)
+
+4. If everything is fine, you will be redirected back to the original site. Clicking "Logout" will log you out and reset the session.
+
+5. For contract wallet, you'll have to input your contract address (ENS is also acceptable if the feature is enabled), Click "Use Contract" and choose your way to verify.
+
+![Contract Input](https://user-images.githubusercontent.com/16600750/64110524-f19b5c00-cd71-11e9-9705-39fe7ee70084.png)
+
+6. The `eth_signTypedData` and `personal_sign` will both works if you implement the [ERC-1271](https://github.com/ethereum/EIPs/issues/1271) like [this](https://github.com/artistic709/solidity_contracts/blob/master/personalwalletfactory.sol#L106). The signing process will be the same as Ethereum login. However, if you're using customized signature for verification, click "Customized Sign".
+
+![Contract](https://user-images.githubusercontent.com/16600750/64110536-f7913d00-cd71-11e9-9107-5d5ce93ca57b.png)
+
+7. For Customized Sign, server will return the full message for signing and the hexed message after web3.sha3(message). Sign the message with your customized way and fill the signature below. Click "Verify Signature" to login with your contract wallet.
+
+![Customized](https://user-images.githubusercontent.com/16600750/64110579-17286580-cd72-11e9-89d4-42bf5cfd4123.png)
+
+## Discourse Integration
+
+1. Install [discourse-eauth](https://github.com/pelith/discourse-eauth) plugin by following this [guide](https://meta.discourse.org/t/install-plugins-in-discourse/19157).
+
+2. Enable the plugin at `/admin/site_settings/category/plugins`.
+![Setup Plugin](https://user-images.githubusercontent.com/16600750/64149783-63c57c80-ce16-11e9-92f1-693eb0a70680.png)
+![Configs](https://user-images.githubusercontent.com/16600750/64155221-e7d13180-ce21-11e9-9ae8-0644a81d85a0.png)
+
+3. Set max username length up to 42.
+![username length](https://user-images.githubusercontent.com/16600750/64155052-9a54c480-ce21-11e9-92a7-fbe6e08befff.png)
+
+4. Finally, enjoy!

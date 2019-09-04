@@ -1,0 +1,36 @@
+version: '3.6'
+services:
+  db:
+    container_name: eauth_mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: eauth
+      MYSQL_ROOT_PASSWORD: changeme
+
+  phpmyadmin:
+    container_name: eauth_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "9001:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: changeme
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      
+  app:
+    container_name: eauth
+    restart: always
+    build: ./
+    image: pelith/node-eauth-server
+    depends_on:
+      - db
+    ports:
+      - "80:8080"
+    environment:
+      - DOCKER_MODE=true
+      - NODE_ENV=production

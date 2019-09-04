@@ -61,5 +61,13 @@
     },
     "sessionMinutes": 1,
     "secret": "secret"
+  },
+  "docker": {
+    "username": "root",
+    "password": "changeme",
+    "database": "eauth",
+    "host": "db",
+    "dialect": "mysql",
+    "logging": false
   }
 }

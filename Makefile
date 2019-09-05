@@ -8,7 +8,10 @@ dependencies:
 	@echo "Setup production dependencies..."
 	$(COMPOSE) up -d db phpmyadmin
 
-prepare: dependencies
+proxy:
+	@touch acme.json && chmod 0600 acme.json
+
+prepare: proxy dependencies
 	@echo "Setup OAuth configurations..."
 	@echo $(shell rm components/oauth/config/config.json & ln -s  ../../../config/config.json components/oauth/config/config.json)
 
@@ -20,7 +23,7 @@ rebuild: prepare
 
 run: prepare
 	@echo "Build Eauth app in production mode..."
-	$(COMPOSE) up -d app
+	$(COMPOSE) up -d app proxy
 
 down:
 	@echo "Eauth stopped..."

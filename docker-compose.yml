@@ -1,8 +1,25 @@
 version: '3.6'
 services:
+  app:
+    container_name: eauth
+    restart: always
+    build: ./
+    image: pelith/node-eauth-server
+    depends_on:
+      - db
+    environment:
+      - DOCKER_MODE=true
+      - NODE_ENV=production
+    labels:
+      traefik.enable: true
+      traefik.frontend.rule: 'Host: eauth.wb.local'
+      traefik.port: 8080
+
   db:
     container_name: eauth_mysql
     image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_DATABASE: eauth
@@ -14,23 +31,35 @@ services:
     restart: always
     depends_on:
       - db
-    ports:
-      - "9001:80"
     environment:
       PMA_HOST: db
       PMA_USER: root
       PMA_PASSWORD: changeme
       PHP_UPLOAD_MAX_FILESIZE: 1G
-      
-  app:
-    container_name: eauth
-    restart: always
-    build: ./
-    image: pelith/node-eauth-server
-    depends_on:
-      - db
+    labels:
+      traefik.enable: true
+      traefik.frontend.rule: 'Host: pma.wb.local'
+      traefik.port: 80
+
+  proxy:
+    image: traefik
     ports:
-      - "80:8080"
-    environment:
-      - DOCKER_MODE=true
-      - NODE_ENV=production
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/etc/traefik/traefik.toml:ro
+      - ./acme.json:/acme.json
+    networks:
+      default:
+        aliases:
+          - eauth.wb.local
+          - pma.wb.local
+          - monitor.wb.local
+    labels:
+      traefik.enable: true
+      traefik.frontend.rule: 'Host: monitor.wb.local'
+      traefik.port: 8080
+
+volumes:
+  db_data:

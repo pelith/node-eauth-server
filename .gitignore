@@ -32,4 +32,6 @@ config.json
 
 pm2.config.js
 
+acme.json
+
 .DS_Store

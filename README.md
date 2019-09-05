@@ -73,18 +73,40 @@ Test it on `http://localhost:8080/`.
 
 ### Using PM2
 
-```bash
-npm i -g pm2
-cp pm2.config.js.example pm2.config.js
-pm2 start pm2.config.js --env development // development mode on port 8080
-pm2 start pm2.config.js --env production // production mode on port 80
+```sh
+$> npm i -g pm2
+$> cp pm2.config.js.example pm2.config.js
+$> pm2 start pm2.config.js --env development // development mode on port 8080
+$> pm2 start pm2.config.js --env production // production mode on port 80
 ```
 
 ### Docker
 
+```sh
+$> docker build -t pelith/node-eauth-server .
+$> docker run --net=host -d pelith/node-eauth-server
+```
+
+### Build with Makefile (Eauth & MySQL & phpMyAdmin & Traefik)
+
+1. You should add those hosts to your `/etc/hosts` file if running on localhost:
 ```bash
-docker build -t pelith/node-eauth-server .
-docker run --net=host -d pelith/node-eauth-server
+127.0.0.1 eauth.wb.local
+127.0.0.1 pma.wb.local
+127.0.0.1 monitor.wb.local
+```
+2. If you're using custom domains on server, replace `your.domain` in `domain.sh` file and execute:
+```sh
+$> sudo chmod +x domain.sh
+$> ./domain.sh
+```
+3. Run the application
+```sh
+$> make run
+```
+4. Rebuild the application
+```sh
+$> make rebuild
 ```
 
 ### Setup OAuth Clients

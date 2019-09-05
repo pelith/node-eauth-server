@@ -5,26 +5,26 @@ COMPOSE = docker-compose
 default: run
 
 dependencies:
-	@echo "Setup production dependencies..."
+	@echo "\e[32;1mSetup production dependencies...`tput sgr0`"
 	$(COMPOSE) up -d db phpmyadmin
 
 proxy:
 	@touch acme.json && chmod 0600 acme.json
 
 prepare: proxy dependencies
-	@echo "Setup OAuth configurations..."
-	@echo $(shell rm components/oauth/config/config.json & ln -s  ../../../config/config.json components/oauth/config/config.json)
+	@echo "\e[32;1mSetup OAuth configurations...`tput sgr0`"
+	@echo $(shell ln -s  ../../../config/config.json components/oauth/config/config.json)
 
 rebuild: prepare
-	@echo "Rebuild Eauth app in production mode..."
+	@echo "\e[32;1mRebuild Eauth app in production mode...`tput sgr0`"
 	docker tag pelith/node-eauth-server pelith/node-eauth-server-old
 	$(COMPOSE) up -d --no-deps --build app
 	docker image rm pelith/node-eauth-server-old
 
 run: prepare
-	@echo "Build Eauth app in production mode..."
+	@echo "\e[32;1mRun Eauth app in production mode...`tput sgr0`"
 	$(COMPOSE) up -d app proxy
 
 down:
-	@echo "Eauth stopped..."
+	@echo "\e[32;1mEauth stopping...`tput sgr0`"
 	$(COMPOSE) down

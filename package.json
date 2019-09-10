@@ -36,6 +36,6 @@
     "sequelize-cli": "^5.5.0"
   },
   "optionalDependencies": {
-    "ethereum-ens": "^0.7.7"
+    "ethereum-ens": "^0.7.8"
   }
 }

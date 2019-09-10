@@ -18,7 +18,7 @@ async function eauthMiddleware(req, res, next) {
   })
 }
 
-module.exports = function(app, api, User, ens) {
+module.exports = function(app, api, User) {
   if (config.components.ui) {
     app.get('/', async (req, res) => {
       if (req.session.address) {

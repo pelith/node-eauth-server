@@ -24,9 +24,7 @@ const config = require('./config/config.json')[env]
 let ens = null
 try {
   const ENS = require('ethereum-ens')
-  const Web3 = require('web3')
-  const provider = new Web3.providers.HttpProvider(config.rpcURL)
-  ens = new ENS(provider)
+  ens = new ENS(config.rpcURL)
 } catch (err) {
   console.log('ens disabled')
 }
@@ -105,10 +103,10 @@ const api = express.Router()
 // api middleware
 api.use(apiMiddleware)
 
-require('./components/eauth')(app, api, User, jwt, ens)
+require('./components/eauth')(app, api, User)
 
 if (config.components.contract)
-  require('./components/contract')(app, User, jwt, ens)
+  require('./components/contract')(app, User, ens)
 
 if (config.components.oauth)
   require('./components/oauth')(app, api, User, ens)

@@ -23,16 +23,6 @@ html {
 
 body {
   margin: 0;
-  min-width: 100vw;
-  min-height: 100vh;
-  background-image: url('/images/eauth_bg.png');
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 /**

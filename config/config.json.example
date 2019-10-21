@@ -11,6 +11,7 @@
     "messagePrefix": "This is a prefix example\n\ntoken:\n----------\n",
     "components": {
         "ui": true,
+        "authereum": true,
         "fortmatic": true,
         "oauth": true,
         "contract": true,
@@ -32,6 +33,7 @@
     "messagePrefix": "This is a prefix example\n\ntoken:\n----------\n",
     "components": {
         "ui": true,
+        "authereum": true,
         "fortmatic": true,
         "oauth": true,
         "contract": true,
@@ -53,6 +55,7 @@
     "messagePrefix": "This is a prefix example\n\ntoken:\n----------\n",
     "components": {
         "ui": true,
+        "authereum": true,
         "fortmatic": true,
         "oauth": true,
         "contract": true,

@@ -34,7 +34,7 @@ module.exports = function(app, api, User) {
       if (req.session.address) {
         res.redirect('/')
       } else {
-        res.render('login', { prefix: config.messagePrefix, useSocket: config.components.qrcode, useAuthereum: config.components.authereum, useFortmatic: config.components.fortmatic })
+        res.render('login', { prefix: config.messagePrefix, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
       }
     })
   }

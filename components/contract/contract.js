@@ -51,7 +51,7 @@ module.exports = function(app, User, ens) {
         }
 
         if (address)
-          res.render('contractLogin', { address: address, prefix: config.messagePrefix, useSocket: config.components.qrcode, useAuthereum: config.components.authereum, useFortmatic: config.components.fortmatic })
+          res.render('contractLogin', { address: address, prefix: config.messagePrefix, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
         else {
           res.render('contractInput', { error: `'${req.query.wallet}' is not valid` })
         }

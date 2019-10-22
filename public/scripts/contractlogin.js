@@ -2,7 +2,6 @@ class LoginApp {
   constructor() {
     this.contractWallet = document.querySelector('#fulladdress').innerHTML
     this.eauthButton = document.querySelector('.button--eauth')
-    this.authereumButton = document.querySelector('.button--authereum')
     this.fortmaticButton = document.querySelector('.button--fortmatic')
     this.customizedButton = document.querySelector('.button--customized')
 
@@ -13,8 +12,6 @@ class LoginApp {
 
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))
     this.customizedButton.addEventListener('click', this.useCustomizedSign.bind(this))
-    if (this.authereumButton)
-      this.authereumButton.addEventListener('click', this.loginWithAuthereum.bind(this))
     if (this.fortmaticButton)
       this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
   }
@@ -41,10 +38,6 @@ class LoginApp {
 
   loginWithEauth() {
     this.eauth.contractEthLogin(this.contractWallet, this.authorise.bind(this))
-  }
-
-  loginWithAuthereum() {
-    this.eauth.contractAuthereumLogin(this.contractWallet, this.authorise.bind(this))
   }
 
   loginWithFortmatic() {

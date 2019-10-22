@@ -39,6 +39,8 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
        // component configs
        "components": {
           "ui": true,
+          // Authereum ui component
+          "authereum": true,
           // Fortmatic ui component
           "fortmatic": true,
           // OAuth component
@@ -60,6 +62,10 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
    ```
 
    Note that you may need to install additional packages to operate on databases.
+
+   ### Authereum
+
+   Let users access blockchain apps from anywhere 💻📱 - without forcing them to wrestle with browser extensions, wallets, or seed phrases, see more at [authereum.org](authereum.org)
 
    ### Fortmatic
 

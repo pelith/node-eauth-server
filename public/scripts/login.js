@@ -9,6 +9,8 @@ class LoginApp {
     })
 
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))
+    if (this.authereumButton)
+      this.fortmaticButton.addEventListener('click', this.loginWithAuthereum.bind(this))
     if (this.fortmaticButton)
       this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
   }
@@ -35,6 +37,10 @@ class LoginApp {
 
   loginWithEauth() {
     this.eauth.ethLogin(this.authorise.bind(this))
+  }
+
+  loginWithAuthereum() {
+    this.eauth.authereumLogin(this.authorise.bind(this))
   }
 
   loginWithFortmatic() {

@@ -1,6 +1,6 @@
 # Eauth Server
 
-An OAuth2-compatiable service based on Ethereum credentials to authenticate users on website.
+An OAuth2-compatible service based on Ethereum credentials to authenticate users on website.
 
 ## Demo
 

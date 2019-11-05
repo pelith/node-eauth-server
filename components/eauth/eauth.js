@@ -11,7 +11,7 @@ const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.messag
 async function eauthMiddleware(req, res, next) {
   let middleware = eauthTypedData
   const md = new MobileDetect(req.headers['user-agent'])
-  if (md.mobile()) middleware = eauthPersonal
+  if (md.mobile() || req.headers['user-target'] == 'WalletConnect') middleware = eauthPersonal
 
   async.series([middleware.bind(null, req, res)], (err) => {
     return err ? next(err) : next()

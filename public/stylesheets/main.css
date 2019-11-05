@@ -116,7 +116,7 @@
   border: solid 1px #74d592;
 }
 
-.button.button--fortmatic, .button.button--logout {
+.button.button--fortmatic, .button.button--walletConnect, .button.button--logout {
   border: solid 1px #68abf7;
 }
 
@@ -136,6 +136,18 @@
   content:'';
   display: inline-block;
   background-image:url(/images/fortmatic@2x.png);
+  background-size:22px 22px;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-bottom: 2px;
+}
+
+.button--walletConnect::before {
+  content:'';
+  display: inline-block;
+  background-image:url(/images/WalletConnect@2x.png);
   background-size:22px 22px;
   width: 22px;
   height: 22px;

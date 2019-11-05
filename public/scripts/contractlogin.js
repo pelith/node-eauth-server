@@ -3,6 +3,7 @@ class LoginApp {
     this.contractWallet = document.querySelector('#fulladdress').innerHTML
     this.eauthButton = document.querySelector('.button--eauth')
     this.fortmaticButton = document.querySelector('.button--fortmatic')
+    this.walletConnectButton = document.querySelector('.button--walletConnect')
     this.customizedButton = document.querySelector('.button--customized')
 
     this.eauth = new Eauth({
@@ -14,6 +15,7 @@ class LoginApp {
     this.customizedButton.addEventListener('click', this.useCustomizedSign.bind(this))
     if (this.fortmaticButton)
       this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
+    this.walletConnectButton.addEventListener('click', this.loginWithWalletConnect.bind(this))
   }
 
   authorise() {
@@ -42,6 +44,10 @@ class LoginApp {
 
   loginWithFortmatic() {
     this.eauth.contractFortmaticLogin(this.contractWallet, this.authorise.bind(this))
+  }
+
+  loginWithWalletConnect() {
+    this.eauth.contractWalletConnect(this.contractWallet)
   }
 
   useCustomizedSign() {

@@ -12,7 +12,7 @@ const eauthContractCustomizedSign = new Eauth({ method: 'wallet_validation', pre
 async function contractMiddleware(req, res, next) {
   let middleware = eauthContractTypedData
   const md = new MobileDetect(req.headers['user-agent'])
-  if (md.mobile()) middleware = eauthContractPersonal
+  if (md.mobile() || req.headers['user-target'] == 'WalletConnect') middleware = eauthContractPersonal
 
   async.series([middleware.bind(null, req, res)], (err) => {
     return err ? next(err) : next()

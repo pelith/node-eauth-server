@@ -15,7 +15,8 @@ class LoginApp {
     this.customizedButton.addEventListener('click', this.useCustomizedSign.bind(this))
     if (this.fortmaticButton)
       this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
-    this.walletConnectButton.addEventListener('click', this.loginWithWalletConnect.bind(this))
+    if (this.walletConnectButton)
+      this.walletConnectButton.addEventListener('click', this.loginWithWalletConnect.bind(this))
   }
 
   authorise() {

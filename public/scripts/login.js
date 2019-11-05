@@ -2,7 +2,7 @@ class LoginApp {
   constructor() {
     this.eauthButton = document.querySelector('.button--eauth')
     this.fortmaticButton = document.querySelector('.button--fortmatic')
-    this.walletConnect = document.querySelector('.button--walletConnect')
+    this.walletConnectButton = document.querySelector('.button--walletConnect')
 
     this.eauth = new Eauth({
       AUTH_ROUTE: '/auth',
@@ -12,7 +12,8 @@ class LoginApp {
     this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))
     if (this.fortmaticButton)
       this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
-    this.walletConnect.addEventListener('click', this.loginWithWalletConnect.bind(this))
+    if (this.walletConnectButton)
+      this.walletConnectButton.addEventListener('click', this.loginWithWalletConnect.bind(this))
   }
 
   authorise() {

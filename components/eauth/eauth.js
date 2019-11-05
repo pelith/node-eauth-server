@@ -34,7 +34,12 @@ module.exports = function(app, api, User) {
       if (req.session.address) {
         res.redirect('/')
       } else {
-        res.render('login', { prefix: config.messagePrefix, useSocket: config.components.qrcode, useFortmatic: config.components.fortmatic })
+        res.render('login', {
+          prefix: config.messagePrefix,
+          useSocket: config.components.qrcode,
+          useFortmatic: config.components.fortmatic,
+          useWalletConnect: config.components.walletconnect,
+        })
       }
     })
   }

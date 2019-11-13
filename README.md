@@ -43,6 +43,8 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
           "authereum": true,
           // Fortmatic ui component
           "fortmatic": true,
+          // Authereum ui component
+          "authereum": true,
           // OAuth component
           "oauth": true,
           // isValidSignature feature for ERC-1271
@@ -70,6 +72,10 @@ Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to
    ### Fortmatic
 
    Let users access blockchain apps from anywhere 💻📱 - without forcing them to wrestle with browser extensions, wallets, or seed phrases, see more at [fortmatic.com](fortmatic.com)
+
+   ### Authereum
+
+   Let users access blockchain apps from anywhere 💻📱 - without forcing them to wrestle with browser extensions, wallets, or seed phrases, see more at [authereum.org](authereum.org)
 
 ## Usage
 ### Quickstart

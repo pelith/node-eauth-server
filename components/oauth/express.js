@@ -60,13 +60,27 @@ module.exports = function(app, api, User, ens) {
           redirect_uri: req.query.redirect_uri,
         },
         attributes: ['id', 'name'],
-      }).then(function(model) {
+      }).then(async function(model) {
         if (!model) return res.status(404).json({ error: 'Invalid Client' })
+        let ens_name = null
+        if (config.components.ens) {
+          try {
+            const reverse_name = await ens.reverse(req.session.address).name()
+            const name = await ens.resolver(reverse_name).addr()
+
+           // Check to be sure the reverse record is correct.
+            if (req.session.address.toLowerCase() == name.toLowerCase())
+              ens_name = reverse_name
+          } catch (e) {
+            console.log(e)
+          }
+        }
 
         return res.render('authorise', {
           client_id: req.query.client_id,
           redirect_uri: req.query.redirect_uri,
-          address: req.session.address
+          address: req.session.address,
+          ens: ens_name,
         })
       }).catch(function(err){
         return res.status(err.code || 500).json(err)

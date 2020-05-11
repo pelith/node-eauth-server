@@ -14,6 +14,10 @@ block content
       .address
         span#address(data-toggle="tooltip" title=`${address}`) -
       #fulladdress.collapse #{address}
+    .dialog__message(style=`${!!ens ? '' : 'display: none;'}`)
+      .subtitle ENS
+      .address
+        span#address(title=`${ens}`) #{ens}
     .dialog__actions
       form(action='/api/logout' method='post')
         input#url(type='hidden' name='url' value='')

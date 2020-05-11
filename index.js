@@ -103,7 +103,7 @@ const api = express.Router()
 // api middleware
 api.use(apiMiddleware)
 
-require('./components/eauth')(app, api, User)
+require('./components/eauth')(app, api, User, ens)
 
 if (config.components.contract)
   require('./components/contract')(app, User, ens)

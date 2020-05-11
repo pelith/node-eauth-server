@@ -18,11 +18,25 @@ async function eauthMiddleware(req, res, next) {
   })
 }
 
-module.exports = function(app, api, User) {
+module.exports = function(app, api, User, ens) {
   if (config.components.ui) {
     app.get('/', async (req, res) => {
       if (req.session.address) {
-        res.render('logout', { address: req.session.address })
+        let ens_name = null
+        if (config.components.ens) {
+          try {
+            const reverse_name = await ens.reverse(req.session.address).name()
+            const name = await ens.resolver(reverse_name).addr()
+
+           // Check to be sure the reverse record is correct.
+            if (req.session.address.toLowerCase() == name.toLowerCase())
+              ens_name = reverse_name
+          } catch (e) {
+            console.log(e)
+          }
+        }
+
+        res.render('logout', { address: req.session.address, ens: ens_name })
       } else if (!config.components.contract) {
         res.redirect('/login')
       } else {

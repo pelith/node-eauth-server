@@ -4,6 +4,7 @@ class LoginApp {
     this.eauthButton = document.querySelector('.button--contractinput')
 
     this.eauthButton.addEventListener('click', this.useContractWallet.bind(this))
+    document.addEventListener('keydown', this.submit.bind(this))
   }
 
   useContractWallet() {
@@ -18,6 +19,12 @@ class LoginApp {
       }
     } else {
       alert('not a valid address')
+    }
+  }
+
+  submit() {
+    if (event.keyCode === 13) { // Enter
+      this.useContractWallet()
     }
   }
 }

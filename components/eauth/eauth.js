@@ -38,9 +38,15 @@ module.exports = function(app, api, User, ens) {
 
         res.render('logout', { address: req.session.address, ens: ens_name })
       } else if (!config.components.contract) {
-        res.redirect('/login')
+        res.render('login', {
+          isRoot: true,
+          prefix: config.messagePrefix,
+          useSocket: config.components.qrcode,
+          useFortmatic: config.components.fortmatic,
+          useWalletConnect: config.components.walletconnect,
+        })
       } else {
-        res.render('index')
+        res.render('index', { isRoot: true })
       }
     })
 

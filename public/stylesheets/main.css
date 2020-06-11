@@ -27,7 +27,7 @@
 
 .dialog__default {
   border-radius: 12px;
-  padding: 30px 40px;
+  padding: 40px;
   background-color: #FFFFFF;
   box-shadow: 0 5px 30px -10px rgba(0, 50, 152, 0.3);
     min-height: 350px;
@@ -325,4 +325,27 @@
   letter-spacing: normal;
   text-align: center;
   color: #758095;
+}
+
+.page-control {
+  width: 350px;
+}
+
+.back {
+  margin-left: 5px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: lighter;
+  color: #758095;
+  cursor: pointer;
+}
+
+.top {
+  margin-right: 5px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: lighter;
+  color: #758095;
+  cursor: pointer;
+  float: right;
 }

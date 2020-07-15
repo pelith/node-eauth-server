@@ -14,7 +14,7 @@ const oauth = require('./oauth')
 
 // ENS HOOK
 const env = process.env.NODE_ENV || 'development'
-const config = require('./config/config.json')[env]
+const config = require('../../config/config.json')[env]
 
 module.exports = function(app, api, User, ens) {
   // only private can get

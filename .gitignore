@@ -2,7 +2,6 @@
 logs
 *.log
 npm-debug.log*
-sftp-config.json
 
 # Runtime data
 pids
@@ -28,8 +27,10 @@ build/Release
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
 
-config.json
-
-pm2.config.js
-
+# OSX
 .DS_Store
+
+# Config
+config.json
+database.json
+pm2.config.js

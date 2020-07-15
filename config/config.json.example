@@ -1,10 +1,5 @@
 {
-  "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+  "development": {    
     "logging": true,
     "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
@@ -22,11 +17,6 @@
     "secret": "secret"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
     "logging": true,
     "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",
@@ -44,11 +34,6 @@
     "secret": "secret"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
     "logging": true,
     "rpcURL": "https://rinkeby.infura.io/",
     "banner": "banner",

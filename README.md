@@ -1,16 +1,21 @@
 # Eauth Server
 
+## Introduction
 An OAuth2-compatible service based on Ethereum credentials to authenticate users on website.
 
 ## Demo
 
-Eauth - Decentralized Identity Authentication on Ethereum https://www.youtube.com/watch?v=fE5B7DaRHnA
+Eauth - An Oauth2 compatible authentication service: https://www.youtube.com/watch?v=fE5B7DaRHnA
 
 Gitlab OAuth with Eauth: https://gitlab-demo.pelith.com
 
 Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
 
-## Installing
+## Requirements
+
+* **Node.js** 10 or higher
+
+## Installation
 
 Installing dependencies: You can use `npm i --no-optional` instead of `npm i` to speed up this step if you're not using ENS and web3.
 

@@ -4,7 +4,7 @@ An OAuth2-compatible service based on Ethereum credentials to authenticate users
 
 ## Demo
 
-Eauth - Decentralized Identity Authentication on Ethereum https://www.youtube.com/watch?v=Rbo5AzYk79s
+Eauth - Decentralized Identity Authentication on Ethereum https://www.youtube.com/watch?v=fE5B7DaRHnA
 
 Gitlab OAuth with Eauth: https://gitlab-demo.pelith.com
 
@@ -99,7 +99,7 @@ This service requires a wallet which supports `eth_signTypedData`, `personal_sig
 
 Browser Extensions (MetaMask) | Mobile Wallets (imToken / Trustwallet) | Other SDK (Fortmatic)
 :-------------------------:|:-------------------------:|:-------------------------:
-[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/faq/master/images/download-metamask.png" height="100">](https://metamask.io)  |  [<img alt="MetaMask badge" src="https://token.im/img/appLogo.97de1461.svg" height="100">](https://token.im/download?locale=en-us) [<img alt="MetaMask badge" src="https://avatars0.githubusercontent.com/u/32179889?s=100&v=4" height="100">](https://trustwallet.com/) | [<img alt="MetaMask badge" src="https://avatars1.githubusercontent.com/u/38988377?s=90&v=4" height="100">](https://fortmatic.com/)
+[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/faq/master/images/download-metamask.png" height="100">](https://metamask.io)  |  [<img alt="imToken badge" src="https://token.im/img/appLogo.svg" height="100">](https://token.im/download?locale=en-us) [<img alt="Trustwallet badge" src="https://avatars0.githubusercontent.com/u/32179889?s=100&v=4" height="100">](https://trustwallet.com/) | [<img alt="Fortmatic badge" src="https://avatars1.githubusercontent.com/u/38988377?s=90&v=4" height="100">](https://fortmatic.com/)
 
 1. In the page `/`, you can decide to login with your Ethereum wallet or contract wallet which implements [ERC-1271](https://github.com/ethereum/EIPs/issues/1271).
 

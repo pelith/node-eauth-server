@@ -142,7 +142,7 @@ pm2 start pm2.config.js --env production // production mode on port 80
 
 ```bash
 docker build -t pelith/node-eauth-server .
-docker run --net=host  -d pelith/node-eauth-server
+docker run -p 8080:8080 -d pelith/node-eauth-server
 ```
 
 ## Tutorial

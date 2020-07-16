@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10.18.1
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -18,4 +18,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD npm start

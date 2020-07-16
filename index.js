@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
 const async = require('async')
+
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 

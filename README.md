@@ -41,13 +41,13 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    ```bash
    $ cp config/database.json.example config/database.json
 
-   $ ln -s  ../../../config/database.json components/oauth/config/database.json
+   $ ln -s ../../../config/database.json components/oauth/config/database.json
    ```
    
    2.2. Configure your `config/database.json` accordingly. Edit the following entries:
    ```js
    {
-     "d  evelopment": {
+     "development": {
        "username": "root",
        "password": null,
        "database": "database_development",

@@ -8,13 +8,13 @@ module.exports = {
             "PORT": 8080,
             "NODE_ENV": "development",
             "watch": true,
-            "script": "npm",
+            "script": "yarn",
             "args" : "dev"
         },
         env_production: {
             "PORT": 80,
             "NODE_ENV": "production",
-            "script": "npm",
+            "script": "yarn",
             "args" : "start"
         }
       }

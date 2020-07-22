@@ -1,21 +1,22 @@
-FROM node:10.18.1
+FROM node:10.22.0
+
+# Setting Node environment
+ENV NODE_ENV production
 
 # Create app directory
 WORKDIR /usr/src/app
 
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+COPY ["package.json", "yarn.lock", "./"]
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-# You can add --no-optional if you're not using ens and web3
+# If you are building your code for development
+# RUN yarn --development
+# You can add --ignore-optional if you're not using ens and web3
+RUN yarn --production --silent && yarn cache clean && mv node_modules ../
 
 # Bundle app source
 COPY . .
 
 EXPOSE 8080
 
-CMD npm start
+CMD yarn start

@@ -35,90 +35,80 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    $ npm i --no-optional
    ```
 
-### 2. Configure Database config.
+### 2. Configure Eauth config.
 
    2.1. Copy an example configuration:
    ```bash
-   $ cp config/database.json.example config/database.json
-
-   $ ln -s ../../../config/database.json components/oauth/config/database.json
+   $ cp .env.example .env
    ```
    
-   2.2. Configure your `config/database.json` accordingly. Edit the following entries:
-   ```js
-   {
-     "development": {
-       "username": "root",
-       "password": null,
-       "database": "database_development",
-       "host": "127.0.0.1",
-       "port": "3306",
-       "dialect": "mysql"
-     },
-     "test": { /* ... */ },
-     "production": { /* ... */ }
-   }
-  
+   2.2. Configure your `.env` accordingly. Edit the following entries:
+   ```yaml
+   # eauth configs
+   # your brand name
+   EAUTH_BANNER=YOUR_BANNER_HERE
+   # morgan logger
+   EAUTH_LOGGING=true
+   # prefix showing with token
+   EAUTH_MESSAGE_PREFIX=This is a prefix example%0A%0Atoken:%0A----------%0A
+   # rpc for ENS and contract wallets
+   EAUTH_RPC_URL=https://rinkeby.infura.io/
+   # session lifetime for OAuth
+   EAUTH_SESSION_TIMEOUT=60000
+   #  app secret
+   EAUTH_SECRET=YOUR_SECRET_HERE
+
+   # component configs
+   # isValidSignature feature for ERC-1271
+   EAUTH_COMPONENTS_CONTRACT=true 
+   # ENS feature for OAuth and contract wallet
+   EAUTH_COMPONENTS_ENS=true
+   # Fortmatic ui component
+   EAUTH_COMPONENTS_FORTMATIC=true
+   # OAuth component
+   EAUTH_COMPONENTS_OAUTH=true
+   # qrcode for remote login
+   EAUTH_COMPONENTS_QRCODE=true
+   # 
+   EAUTH_COMPONENTS_UI=true
+   # Wallet Connect component
+   EAUTH_COMPONENTS_WALLETCONNECT=true
+
+   # Eauth DB configs
+   EAUTH_DB_DIALECT=mysql
+   EAUTH_DB_HOST=127.0.0.1
+   EAUTH_DB_PORT=3306
+   EAUTH_DB_USER=YOUR_DB_USER_HERE
+   EAUTH_DB_PASSWORD=YOUR_DB_PASSWORD_HERE
+   EAUTH_DB_NAME=YOUR_DB_NAME_HERE
+
+   # Eauth OAuth db configs
+   EAUTH_OAUTH_DB_DIALECT=mysql
+   EAUTH_OAUTH_DB_HOST=127.0.0.1
+   EAUTH_OAUTH_DB_PORT=32769
+   EAUTH_OAUTH_DB_USER=YOUR_DB_USER_HERE
+   EAUTH_OAUTH_DB_PASSWORD=YOUR_DB_PASSWORD_HERE
+   EAUTH_OAUTH_DB_NAME=YOUR_DB_NAME_HERE
    ```
    See more information : [Sequelize configuration](https://sequelize.org/master/manual/migrations.html#configuration)
-
-   **Notice**: You can also execute 
-   ```bash
-   $ cp components/oauth/config/database.json.example components/oauth/config/database.json
-   ``` 
-   and fill in database configs instead of linking `config/database.json` to `components/oauth/config/database.json` if you want to use another database for OAuth.
    
-### 3. Configure Eauth config.
+### 3. Setup OAuth Clients.
+  
+  ### Manual
+  
+  3.1.1 Connect to your database, and fulfill the table below with Oauth datas 
+  
+  Table: oauth_clients
 
-   3.1. Copy an example configuration:
-   ```bash
-   $ cp config/config.json.example config/config.json
-   ```
+  | client_id | client_secret |  redirect_uri |
+  |    ---    |      ---      |      ---      |
+  |    ...    |      ...      |      ...      |
 
-   3.2. Configure your `config/config.json` accordingly. Edit the following entries:
-   ```js
-   {
-     "development": {
-       // app secret
-       "secret": "YOUR_SECRET_HERE",
-       // your brand name
-       "banner": "YOUR_BANNER_HERE",
-       // prefix showing with token
-       "messagePrefix": "This is a prefix example\n\ntoken:\n----------\n",
-       // component configs
-       "components": {
-         "ui": true,
-         // Fortmatic ui component
-         "fortmatic": true,
-         // Wallet Connect component
-         "walletconnect": true,
-         // OAuth component
-         "oauth": true,
-         // isValidSignature feature for ERC-1271
-         "contract": true,
-         // ENS feature for OAuth and contract wallet
-         "ens": true,
-         // qrcode for remote login
-         "qrcode": true
-       },
-       // morgan logger 
-       "logging": true,
-       // rpc for ENS and contract wallets
-       "rpcURL": "https://rinkeby.infura.io/",
-       // session lifetime for OAuth
-       "sessionMinutes": 1
-       /* or fill in database-related configs... */
-     },
-     "test": { /* ... */ },
-     "production": { /* ... */ }
-   }
-   ```
-   
-### 4. Setup OAuth Clients.
+  ### Command
 
-  4.1. Setup your `client_id, client_secret, redirect_uri` in [components/seeders/20190725062038-oauth_clients.js](./components/seeders/20190725062038-oauth_clients.js)
+  3.2.1 Setup your `client_id, client_secret, redirect_uri` in [components/seeders/20190725062038-oauth_clients.js](./components/seeders/20190725062038-oauth_clients.js)
 
-  4.2. Seeding them with follow command:
+  3.2.2 Seeding them with follow command:
    ```bash
    $ npx sequelize db:seed:all
    ```
@@ -126,23 +116,35 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
 ## Usage
 ### Quickstart
 
-Start the server: `node index.js`. \
+Start the server: `node -r dotenv/config index.js`. \
 Test it on `http://localhost:8080/`.
 
 ### Using PM2
 
 ```bash
-npm i -g pm2
-cp pm2.config.js.example pm2.config.js
-pm2 start pm2.config.js --env development // development mode on port 8080
-pm2 start pm2.config.js --env production // production mode on port 80
+$ npm i -g pm2
+
+$ cp pm2.config.js.example pm2.config.js
+
+$ pm2 start pm2.config.js --env development // development mode on port 8080
+
+// or
+
+$ pm2 start pm2.config.js --env production // production mode on port 80
 ```
 
 ### Docker
 
+Get it from [DockerHub](https://hub.docker.com/r/pelith/node-eauth-server)
+
 ```bash
-docker build -t pelith/node-eauth-server .
-docker run -p 8080:8080 -d pelith/node-eauth-server
+$ docker run --env-file ./.env -p 8080:8080 -d pelith/node-eauth-server
+```
+
+**Optionally**: Build docker image manually 
+
+```bash
+$ docker build -t pelith/node-eauth-server .
 ```
 
 ## Tutorial

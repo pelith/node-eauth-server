@@ -2,11 +2,9 @@ const async = require('async')
 const Eauth = require('express-eauth')
 const jwt = require('jsonwebtoken')
 const MobileDetect = require('mobile-detect')
-const env = process.env.NODE_ENV || 'development'
-const config = require('../../config/config.json')[env]
 
-const eauthTypedData = new Eauth({ banner: config.banner, prefix: config.messagePrefix })
-const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: config.messagePrefix })
+const eauthTypedData = new Eauth({ banner: process.env.EAUTH_BANNER, prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX) })
+const eauthPersonal = new Eauth({ method: 'personal_sign', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX) })
 
 async function eauthMiddleware(req, res, next) {
   let middleware = eauthTypedData
@@ -19,31 +17,19 @@ async function eauthMiddleware(req, res, next) {
 }
 
 module.exports = function(app, api, User, ens) {
-  if (config.components.ui) {
+  if (process.env.EAUTH_COMPONENTS_UI === 'true') {
     app.get('/', async (req, res) => {
       if (req.session.address) {
-        let ens_name = null
-        if (config.components.ens) {
-          try {
-            const reverse_name = await ens.reverse(req.session.address).name()
-            const name = await ens.resolver(reverse_name).addr()
-
-           // Check to be sure the reverse record is correct.
-            if (req.session.address.toLowerCase() == name.toLowerCase())
-              ens_name = reverse_name
-          } catch (e) {
-            console.log(e)
-          }
-        }
+        const ens_name = ens ? await ens.reverse(req.session.address) : null
 
         res.render('logout', { address: req.session.address, ens: ens_name })
-      } else if (!config.components.contract) {
+      } else if (process.env.EAUTH_COMPONENTS_CONTRACT !== 'true') {
         res.render('login', {
           isRoot: true,
-          prefix: config.messagePrefix,
-          useSocket: config.components.qrcode,
-          useFortmatic: config.components.fortmatic,
-          useWalletConnect: config.components.walletconnect,
+          prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX),
+          useSocket: process.env.EAUTH_COMPONENTS_QRCODE,
+          useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC,
+          useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT,
         })
       } else {
         res.render('index', { isRoot: true })
@@ -55,10 +41,10 @@ module.exports = function(app, api, User, ens) {
         res.redirect('/')
       } else {
         res.render('login', {
-          prefix: config.messagePrefix,
-          useSocket: config.components.qrcode,
-          useFortmatic: config.components.fortmatic,
-          useWalletConnect: config.components.walletconnect,
+          prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX),
+          useSocket: process.env.EAUTH_COMPONENTS_QRCODE,
+          useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC,
+          useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT,
         })
       }
     })
@@ -92,10 +78,10 @@ module.exports = function(app, api, User, ens) {
     else {
       User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
         const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-          expiresIn: config.sessionMinutes * 60 * 1000,
+          expiresIn: parseInt(process.env.EAUTH_SESSION_TIMEOUT),
         })
 
-        req.session.cookie.expires = config.sessionMinutes * 60 * 1000
+        req.session.cookie.expires = parseInt(process.env.EAUTH_SESSION_TIMEOUT)
         req.session.address_id = eauth.dataValues.id // database id // oauth use
         req.session.address = address
         req.session.token = token

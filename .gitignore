@@ -31,6 +31,5 @@ node_modules
 .DS_Store
 
 # Config
-config.json
-database.json
+.env
 pm2.config.js

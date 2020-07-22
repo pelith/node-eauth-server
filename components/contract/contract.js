@@ -2,12 +2,10 @@ const async = require('async')
 const Eauth = require('express-eauth')
 const jwt = require('jsonwebtoken')
 const MobileDetect = require('mobile-detect')
-const env = process.env.NODE_ENV || 'development'
-const config = require('../../config/config.json')[env]
 
-const eauthContractTypedData = new Eauth({ banner: config.banner, method: 'wallet_validation_typedData', prefix: config.messagePrefix, rpc: config.rpcURL })
-const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: config.messagePrefix, rpc: config.rpcURL })
-const eauthContractCustomizedSign = new Eauth({ method: 'wallet_validation', prefix: config.messagePrefix, rpc: config.rpcURL })
+const eauthContractTypedData = new Eauth({ banner: process.env.EAUTH_BANNER, method: 'wallet_validation_typedData', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX), rpc: process.env.EAUTH_RPC_URL })
+const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX), rpc: process.env.EAUTH_RPC_URL })
+const eauthContractCustomizedSign = new Eauth({ method: 'wallet_validation', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX), rpc: process.env.EAUTH_RPC_URL })
 
 async function contractMiddleware(req, res, next) {
   let middleware = eauthContractTypedData
@@ -33,32 +31,29 @@ function eauthWrapper(customizedsign = false) {
 }
 
 module.exports = function(app, User, ens) {
-  if (config.components.ui) {
+  if (process.env.EAUTH_COMPONENTS_UI === 'true') {
     app.get('/contractLogin', async (req, res) => {
       if (req.session.address) {
         res.redirect('/')
       } else if (req.query.wallet) {
         let address = req.query.wallet
         if (/.*\.eth$/.test(req.query.wallet)) {
-          if (config.components.ens && ens) {
-            address = await ens.resolver(req.query.wallet).addr().catch((err) => {
-              console.log(err)
-              return false
-            })
+          if (ens) {
+            address = await ens.reverseName(req.query.wallet)
+          } else {
+            return res.render('contractInput', { error: `ENS Components is Disable` })
           }
-          else
-            address = null
-        }
+        } 
 
-        if (address)
+        if (address) {
           res.render('contractLogin', {
             address: address,
-            prefix: config.messagePrefix,
-            useSocket: config.components.qrcode,
-            useFortmatic: config.components.fortmatic,
-            useWalletConnect: config.components.walletconnect,
+            prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX),
+            useSocket: process.env.EAUTH_COMPONENTS_QRCODE,
+            useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC,
+            useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT,
           })
-        else {
+        } else {
           res.render('contractInput', { error: `'${req.query.wallet}' is not valid` })
         }
       } else {
@@ -70,7 +65,7 @@ module.exports = function(app, User, ens) {
       if (req.session.address) {
         res.redirect('/')
       } else {
-        res.render('customizedSign', { address: req.query.wallet, prefix: config.messagePrefix })
+        res.render('customizedSign', { address: req.query.wallet, prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX) })
       }
     })
   }
@@ -87,10 +82,10 @@ module.exports = function(app, User, ens) {
       else {
         User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
           const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-            expiresIn: config.sessionMinutes * 60 * 1000,
+            expiresIn: process.env.EAUTH_SESSION_TIMEOUT,
           })
 
-          req.session.cookie.expires = config.sessionMinutes * 60 * 1000
+          req.session.cookie.expires = process.env.EAUTH_SESSION_TIMEOUT
           req.session.address_id = eauth.dataValues.id // database id // oauth use
           req.session.address = address
           req.session.token = token
@@ -119,10 +114,10 @@ module.exports = function(app, User, ens) {
       else {
         User.findOrCreate({ where: { address: address } }).spread((eauth, created) => {
           const token = jwt.sign(eauth.get({ plain: true }), app.get('secret'), {
-            expiresIn: config.sessionMinutes * 60 * 1000,
+            expiresIn: parseInt(process.env.EAUTH_SESSION_TIMEOUT),
           })
 
-          req.session.cookie.expires = config.sessionMinutes * 60 * 1000
+          req.session.cookie.expires = parseInt(process.env.EAUTH_SESSION_TIMEOUT)
           req.session.address_id = eauth.dataValues.id // database id // oauth use
           req.session.address = address
           req.session.token = token

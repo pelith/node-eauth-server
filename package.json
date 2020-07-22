@@ -1,18 +1,19 @@
 {
   "name": "node-eauth-server",
-  "version": "2.3.0",
-  "description": "",
+  "version": "2.4.0",
+  "description": "An OAuth-compatiable service based on Ethereum credentials to authenticate users on a website.",
   "author": "Pelith",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node -r dotenv/config index.js ",
+    "dev": "nodemon -r dotenv/config index.js"
   },
   "dependencies": {
     "async": "^2.6.2",
     "body-parser": "^1.18.3",
     "connect-session-sequelize": "^6.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "express-eauth": "^2.0.0-beta.1",
     "express-session": "^1.16.1",

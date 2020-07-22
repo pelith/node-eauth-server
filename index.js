@@ -1,3 +1,4 @@
+const async = require('async')
 const express = require('express')
 const path = require('path')
 const util = require('util')
@@ -5,12 +6,9 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
-const async = require('async')
 
 // initalize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
-
-const env = process.env.NODE_ENV || 'development'
 
 const app = express()
 const server = require('http').Server(app)
@@ -21,17 +19,14 @@ app.set('view engine', 'pug')
 // LOG
 if (app.get('env') === 'development') app.use(morgan('dev'))
 
-const config = require('./config/config.json')[env]
 let ens = null
-try {
-  const ENS = require('ethereum-ens')
-  ens = new ENS(config.rpcURL)
-} catch (err) {
-  console.log('ens disabled')
+if (process.env.EAUTH_COMPONENTS_ENS === 'true') {
+  const ENS = require('./components/ens')
+  ens = new ENS()
 }
 
 // issue, dev // maybe add salt with secret
-app.set('secret', config.secret)
+app.set('secret', process.env.EAUTH_SECRET)
 
 // initalize database
 const db = require('./models')
@@ -106,13 +101,13 @@ api.use(apiMiddleware)
 
 require('./components/eauth')(app, api, User, ens)
 
-if (config.components.contract)
+if (process.env.EAUTH_COMPONENTS_CONTRACT === 'true')
   require('./components/contract')(app, User, ens)
 
-if (config.components.oauth)
+if (process.env.EAUTH_COMPONENTS_OAUTH === 'true')
   require('./components/oauth')(app, api, User, ens)
 
-if (config.components.qrcode)
+if (process.env.EAUTH_COMPONENTS_QRCODE === 'true')
   require('./components/qrcode')(app, api, sequelizeStore, server)
 
 // error handler

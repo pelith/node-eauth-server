@@ -12,32 +12,15 @@ const OAuthClient = db.OAuthClient
 // initalize oauth2 server
 const oauth = require('./oauth')
 
-// ENS HOOK
-const env = process.env.NODE_ENV || 'development'
-const config = require('../../config/config.json')[env]
-
 module.exports = function(app, api, User, ens) {
   // only private can get
   app.get('/oauth/user', authenticate(), async function(req, res) {
-    // ENS HOOK
-    let ens_name = null
-    if (config.components.ens) {
-      try {
-        const reverse_name = await ens.reverse(req.user.User.address).name()
-        const name = await ens.resolver(reverse_name).addr()
-
-       // Check to be sure the reverse record is correct.
-        if (req.user.User.address.toLowerCase() == name.toLowerCase())
-          ens_name = reverse_name
-      } catch (e) {
-        console.log(e)
-      }
-    }
+    const ens_name = ens ? await ens.reverse(req.user.User.address) : null
 
     return ens_name ? res.json(Object.assign(req.user.User, {ens: ens_name})) : res.json(req.user.User)
   })
 
-  app.all('/oauth/token', function(req,res,next) {
+  app.all('/oauth/token', function(req, res, next) {
     const request = new Request(req)
     const response = new Response(res)
 
@@ -62,20 +45,8 @@ module.exports = function(app, api, User, ens) {
         attributes: ['id', 'name'],
       }).then(async function(model) {
         if (!model) return res.status(404).json({ error: 'Invalid Client' })
-        let ens_name = null
-        if (config.components.ens) {
-          try {
-            const reverse_name = await ens.reverse(req.session.address).name()
-            const name = await ens.resolver(reverse_name).addr()
-
-           // Check to be sure the reverse record is correct.
-            if (req.session.address.toLowerCase() == name.toLowerCase())
-              ens_name = reverse_name
-          } catch (e) {
-            console.log(e)
-          }
-        }
-
+        const ens_name = ens ? await ens.reverse(req.session.address) : null
+        
         return res.render('authorise', {
           client_id: req.query.client_id,
           redirect_uri: req.query.redirect_uri,

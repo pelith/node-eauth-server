@@ -28,7 +28,7 @@ class LoginApp {
       location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
     }
 
-    if (!this.eauth.AUTH_RESPONSE) {
+    if (!this.eauth.AUTH_RESPONSE || !JSON.parse(this.eauth.AUTH_RESPONSE).success) {
       alert('Authentication failed.')
       window.location.reload()
     } else {

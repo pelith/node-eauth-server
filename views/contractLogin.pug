@@ -11,7 +11,7 @@ block content
       .subtitle.mt-24 Continue login with your contract
       #fulladdress(style='display: none;') #{address}
       .address
-        span#address(data-toggle="tooltip" title=`${address}`) -
+        span#address(data-toggle="tooltip" title=`${address}`) #{ens}
     .dialog__actions
       button.button.button--eauth Ethereum Login
       if useFortmatic
@@ -37,7 +37,6 @@ block scripts
   script.
    const prefix = `#{prefix}`
   script(src='/scripts/contractlogin.js' type='text/javascript')
-  script(src='/scripts/showAddress.js' type='text/javascript')
 
   if useSocket
     script(src='/socket.io/socket.io.js' type='text/javascript')

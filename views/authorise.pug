@@ -9,15 +9,15 @@ block content
       img(src='/images/logo.png' alt='logo')
     .dialog__message
       .title Authorize
-      .subtitle.mt-24 You will continue with
+      .subtitle.mt-24 You are now authorized with ENS
+      .address
+        span(title=`${ens}`) #{ens}
+    .dialog__message
+      .subtitle Address
       #fulladdress(style='display: none;') #{address}
       .address
         span#address(data-toggle="tooltip" title=`${address}`) -
       #fulladdress.collapse #{address}
-    .dialog__message(style=`${!!ens ? '' : 'display: none;'}`)
-      .subtitle ENS
-      .address
-        span#address(title=`${ens}`) #{ens}
     .dialog__actions
       form(action='' method='post')
         input(type='hidden', name='allow', value='yes')

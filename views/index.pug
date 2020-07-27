@@ -8,10 +8,11 @@ block content
     .dialog__logo
       img(src='/images/logo.png' alt='logo')
     .dialog__message
-      .title Authenticate with your Ethereum wallet
+      .title Login with your<br>Ethereum Name Service
     .dialog__actions
-      button.button.button--normal Login with Ethereum wallet
-      button.button.button--contract Login with Contract wallet
+      input.input--ens(value='')
+      label.error #{error}
+      button.button.button--normal Login
 
 block scripts
   script(src='/scripts/index.js' type='text/javascript')

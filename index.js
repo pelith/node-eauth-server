@@ -19,12 +19,6 @@ app.set('view engine', 'pug')
 // LOG
 if (app.get('env') === 'development') app.use(morgan('dev'))
 
-let ens = null
-if (process.env.EAUTH_COMPONENTS_ENS === 'true') {
-  const ENS = require('./components/ens')
-  ens = new ENS()
-}
-
 // issue, dev // maybe add salt with secret
 app.set('secret', process.env.EAUTH_SECRET)
 
@@ -99,13 +93,13 @@ const api = express.Router()
 // api middleware
 api.use(apiMiddleware)
 
-require('./components/eauth')(app, api, User, ens)
+require('./components/eauth')(app, api, User)
 
 if (process.env.EAUTH_COMPONENTS_CONTRACT === 'true')
-  require('./components/contract')(app, User, ens)
+  require('./components/contract')(app, User)
 
 if (process.env.EAUTH_COMPONENTS_OAUTH === 'true')
-  require('./components/oauth')(app, api, User, ens)
+  require('./components/oauth')(app, api, User)
 
 if (process.env.EAUTH_COMPONENTS_QRCODE === 'true')
   require('./components/qrcode')(app, api, sequelizeStore, server)

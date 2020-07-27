@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true,
     },
-    address: DataTypes.STRING(42),
+    ens: DataTypes.STRING(255),
     scope: DataTypes.STRING
   }, {
     tableName: 'user',

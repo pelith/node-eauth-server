@@ -1,3 +1,3 @@
-module.exports = function(app, User, ens){
-  require('./contract')(app, User, ens)
+module.exports = function(app, User){
+  require('./contract')(app, User)
 }

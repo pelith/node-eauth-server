@@ -8,7 +8,10 @@ block content
     .dialog__logo
       img(src='/images/logo.png' alt='logo')
     .dialog__message
-      .title Login with Ethereum
+      .subtitle.mt-24 Continue login with your account
+      #fulladdress(style='display: none;') #{address}
+      .address
+        span#address(data-toggle="tooltip" title=`${address}`) #{ens}
     .dialog__actions
       button.button.button--eauth Ethereum Login
       if useFortmatic

@@ -112,7 +112,7 @@ function getAccessToken(bearerToken) {
       include: [
         {
           model: User,
-          attributes: ['id', 'address'],
+          attributes: ['id', 'ens'],
         }, OAuthClient
       ],
     })

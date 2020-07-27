@@ -11,8 +11,8 @@ class SetupSocket {
   handleSocketInit(data) {
     this.runTimer()
     const url = new URL(document.URL)
-    const walletAddr = url.searchParams.get('wallet')
-    const renderUrl = `https://${document.domain}${window.location.pathname}/?socket_id=${this.socket.id}&session_id=${data.session_id}&wallet=${walletAddr}`
+    const ens = document.querySelector('#address').textContent
+    const renderUrl = `https://${document.domain}${window.location.pathname}/?socket_id=${this.socket.id}&session_id=${data.session_id}&ens=${ens}`
     this.renderQRCode(renderUrl)
   }
 

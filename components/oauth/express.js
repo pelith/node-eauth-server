@@ -4,6 +4,7 @@ const Response = oauthServer.Response
 const async = require('async')
 const util = require('util')
 const authenticate = require('./authenticate')
+const ENS = require('../ens')
 
 // initalize database
 const db = require('./models')
@@ -11,13 +12,14 @@ const OAuthClient = db.OAuthClient
 
 // initalize oauth2 server
 const oauth = require('./oauth')
+const ens = new ENS()
 
-module.exports = function(app, api, User, ens) {
+module.exports = function(app, api, User) {
   // only private can get
   app.get('/oauth/user', authenticate(), async function(req, res) {
-    const ens_name = ens ? await ens.reverse(req.user.User.address) : null
-
-    return ens_name ? res.json(Object.assign(req.user.User, {ens: ens_name})) : res.json(req.user.User)
+    const ens_name = req.user.User.ens
+    const ens_address = await ens.reverseName(ens_name)
+    return ens_name ? res.json(Object.assign(req.user.User, {ens: ens_name, address: ens_address})) : res.json(req.user.User)
   })
 
   app.all('/oauth/token', function(req, res, next) {
@@ -43,15 +45,14 @@ module.exports = function(app, api, User, ens) {
           redirect_uri: req.query.redirect_uri,
         },
         attributes: ['id', 'name'],
-      }).then(async function(model) {
+      }).then(function(model) {
         if (!model) return res.status(404).json({ error: 'Invalid Client' })
-        const ens_name = ens ? await ens.reverse(req.session.address) : null
         
         return res.render('authorise', {
           client_id: req.query.client_id,
           redirect_uri: req.query.redirect_uri,
           address: req.session.address,
-          ens: ens_name,
+          ens: req.session.ens,
         })
       }).catch(function(err){
         return res.status(err.code || 500).json(err)

@@ -9,15 +9,15 @@ block content
       img(src='/images/logo.png' alt='logo')
     .dialog__message
       .title Authorized
-      .subtitle.mt-24 You are now authorized with
+      .subtitle.mt-24 You are now authorized with ENS
+      .address
+        span(title=`${ens}`) #{ens}
+    .dialog__message
+      .subtitle Address
       #fulladdress(style='display: none;') #{address}
       .address
         span#address(data-toggle="tooltip" title=`${address}`) -
       #fulladdress.collapse #{address}
-    .dialog__message(style=`${!!ens ? '' : 'display: none;'}`)
-      .subtitle ENS
-      .address
-        span#address(title=`${ens}`) #{ens}
     .dialog__actions
       form(action='/api/logout' method='post')
         input#url(type='hidden' name='url' value='')
@@ -26,7 +26,7 @@ block content
 block scripts
   script(src='/scripts/showAddress.js' type='text/javascript')
   script.
-    document.getElementById('url').value = new URLSearchParams(window.location.search).get('url')
+    document.getElementById('url').value = window.location.pathname + window.location.search
 
 block stylesheets
   link(rel='stylesheet' href='/stylesheets/main.css')

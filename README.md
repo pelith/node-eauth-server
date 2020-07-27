@@ -45,6 +45,9 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    2.2. Configure your `.env` accordingly. Edit the following entries:
    ```yaml
    # eauth configs
+   # eauth express http port
+   PORT=8080
+
    # your brand name
    EAUTH_BANNER=YOUR_BANNER_HERE
    # morgan logger
@@ -85,7 +88,7 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    # Eauth OAuth db configs
    EAUTH_OAUTH_DB_DIALECT=mysql
    EAUTH_OAUTH_DB_HOST=127.0.0.1
-   EAUTH_OAUTH_DB_PORT=32769
+   EAUTH_OAUTH_DB_PORT=3306
    EAUTH_OAUTH_DB_USER=YOUR_DB_USER_HERE
    EAUTH_OAUTH_DB_PASSWORD=YOUR_DB_PASSWORD_HERE
    EAUTH_OAUTH_DB_NAME=YOUR_DB_NAME_HERE
@@ -138,7 +141,8 @@ $ pm2 start pm2.config.js --env production // production mode on port 80
 Get it from [DockerHub](https://hub.docker.com/r/pelith/node-eauth-server)
 
 ```bash
-$ docker run --env-file ./.env -p 8080:8080 -d pelith/node-eauth-server
+$ docker pull pelith/node-eauth-server:latest
+$ docker run --net=host --env-file ./.env -d pelith/node-eauth-server
 ```
 
 **Optionally**: Build docker image manually 

@@ -138,10 +138,19 @@ $ pm2 start pm2.config.js --env production // production mode on port 80
 
 ### Docker
 
-Get it from [DockerHub](https://hub.docker.com/r/pelith/node-eauth-server)
+#### Get it from [DockerHub](https://hub.docker.com/r/pelith/node-eauth-server)
+
+For normal version
 
 ```bash
 $ docker pull pelith/node-eauth-server:latest
+$ docker run --net=host --env-file ./.env -d pelith/node-eauth-server
+```
+
+For ENS version
+
+```bash
+$ docker pull pelith/node-eauth-server:latest-ENS
 $ docker run --net=host --env-file ./.env -d pelith/node-eauth-server
 ```
 

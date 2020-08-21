@@ -33,7 +33,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jquery": "^1.5.0",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.4",
     "sequelize-cli": "^5.5.0"
   },
   "optionalDependencies": {

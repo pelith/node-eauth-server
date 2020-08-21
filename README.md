@@ -25,14 +25,14 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
 
 ### 1. Clone this repo, and install dependencies.
 
-   Using [npm](https://www.npmjs.com/):
+   Using [yarn](https://yarnpkg.com/):
    ```bash
-   $ npm i
+   $ yarn install
    ```
    
    **Notice**: For those who are not using **ENS** or **Contact Login**, following command can speed up the step:
    ```bash
-   $ npm i --no-optional
+   $ yarn install --ignore-optional
    ```
 
 ### 2. Configure Eauth config.
@@ -166,7 +166,7 @@ This service requires a wallet which supports `eth_signTypedData`, `personal_sig
 
 Browser Extensions (MetaMask) | Mobile Wallets (imToken / Trustwallet) | Other SDK (Fortmatic)
 :-------------------------:|:-------------------------:|:-------------------------:
-[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/faq/master/images/download-metamask.png" height="100">](https://metamask.io)  |  [<img alt="imToken badge" src="https://token.im/img/appLogo.svg" height="100">](https://token.im/download?locale=en-us) [<img alt="Trustwallet badge" src="https://avatars0.githubusercontent.com/u/32179889?s=100&v=4" height="100">](https://trustwallet.com/) | [<img alt="Fortmatic badge" src="https://avatars1.githubusercontent.com/u/38988377?s=90&v=4" height="100">](https://fortmatic.com/)
+[<img alt="MetaMask badge" src="https://raw.githubusercontent.com/MetaMask/metamask-extension/develop/app/images/icon-128.png" height="100">](https://metamask.io)  |  [<img alt="imToken badge" src="https://token.im/img/appLogo.svg" height="100">](https://token.im/download?locale=en-us) [<img alt="Trustwallet badge" src="https://avatars0.githubusercontent.com/u/32179889?s=100&v=4" height="100">](https://trustwallet.com/) | [<img alt="Fortmatic badge" src="https://avatars1.githubusercontent.com/u/38988377?s=90&v=4" height="100">](https://fortmatic.com/)
 
 1. In the page `/`, you can decide to login with your Ethereum wallet or contract wallet which implements [ERC-1271](https://github.com/ethereum/EIPs/issues/1271).
 

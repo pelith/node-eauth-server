@@ -124,13 +124,9 @@ Test it on `http://localhost:8080/`.
 ```bash
 $ npm i -g pm2
 
-$ cp pm2.config.js.example pm2.config.js
+$ cp pm2.config.js.example pm2.config.js // fill up your environment variables in pm2.config.js
 
-$ pm2 start pm2.config.js --env development // development mode on port 8080
-
-// or
-
-$ pm2 start pm2.config.js --env production // production mode on port 80
+$ pm2 start pm2.config.js
 ```
 
 ### Docker

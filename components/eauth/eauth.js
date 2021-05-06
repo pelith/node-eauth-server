@@ -27,9 +27,9 @@ module.exports = function(app, api, User, ens) {
         res.render('login', {
           isRoot: true,
           prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX),
-          useSocket: process.env.EAUTH_COMPONENTS_QRCODE,
-          useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC,
-          useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT,
+          useSocket: process.env.EAUTH_COMPONENTS_QRCODE === 'true',
+          useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC === 'true',
+          useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT === 'true',
         })
       } else {
         res.render('index', { isRoot: true })
@@ -42,9 +42,9 @@ module.exports = function(app, api, User, ens) {
       } else {
         res.render('login', {
           prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX),
-          useSocket: process.env.EAUTH_COMPONENTS_QRCODE,
-          useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC,
-          useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT,
+          useSocket: process.env.EAUTH_COMPONENTS_QRCODE === 'true',
+          useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC === 'true',
+          useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT === 'true',
         })
       }
     })

@@ -34,3 +34,5 @@ node_modules
 # Config
 .env
 pm2.config.js
+
+package-lock.json

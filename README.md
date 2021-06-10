@@ -13,7 +13,7 @@ And also has these features:
 
 Eauth - An Oauth2 compatible authentication service: https://www.youtube.com/watch?v=fE5B7DaRHnA
 
-Gitlab OAuth with Eauth: https://gitlab-demo.pelith.com
+Hakka Forum with Eauth: https://forum.hakka.finance
 
 Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
 

@@ -50,8 +50,6 @@ module.exports = function(app, User, ens) {
             address: address,
             prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX),
             useSocket: process.env.EAUTH_COMPONENTS_QRCODE === 'true',
-            useFortmatic: process.env.EAUTH_COMPONENTS_FORTMATIC === 'true',
-            useWalletConnect: process.env.EAUTH_COMPONENTS_WALLETCONNECT === 'true',
           })
         } else {
           res.render('contractInput', { error: `'${req.query.wallet}' is not valid` })

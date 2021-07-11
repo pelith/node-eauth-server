@@ -66,16 +66,12 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    EAUTH_COMPONENTS_CONTRACT=true 
    # ENS feature for OAuth and contract wallet
    EAUTH_COMPONENTS_ENS=true
-   # Fortmatic ui component
-   EAUTH_COMPONENTS_FORTMATIC=true
    # OAuth component
    EAUTH_COMPONENTS_OAUTH=true
    # qrcode for remote login
    EAUTH_COMPONENTS_QRCODE=true
    # 
    EAUTH_COMPONENTS_UI=true
-   # Wallet Connect component
-   EAUTH_COMPONENTS_WALLETCONNECT=true
 
    # Eauth DB configs
    EAUTH_DB_DIALECT=mysql

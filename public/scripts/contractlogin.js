@@ -1,9 +1,11 @@
+const Web3Modal = window.Web3Modal.default
+const WalletConnectProvider = window.WalletConnectProvider.default
+const { Fortmatic } = window
+
 class LoginApp {
   constructor() {
     this.contractWallet = document.querySelector('#fulladdress').innerHTML
     this.eauthButton = document.querySelector('.button--eauth')
-    this.fortmaticButton = document.querySelector('.button--fortmatic')
-    this.walletConnectButton = document.querySelector('.button--walletConnect')
     this.customizedButton = document.querySelector('.button--customized')
 
     this.eauth = new Eauth({
@@ -11,12 +13,35 @@ class LoginApp {
       PREFIX: prefix,
     })
 
-    this.eauthButton.addEventListener('click', this.loginWithEauth.bind(this))
+    this.eauthButton.addEventListener('click', this.onConnect.bind(this))
     this.customizedButton.addEventListener('click', this.useCustomizedSign.bind(this))
-    if (this.fortmaticButton)
-      this.fortmaticButton.addEventListener('click', this.loginWithFortmatic.bind(this))
-    if (this.walletConnectButton)
-      this.walletConnectButton.addEventListener('click', this.loginWithWalletConnect.bind(this))
+    this.init()
+  }
+
+  init() {
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: '3c15ed5027f541278717d536db299ef4',
+        },
+      },
+  
+      fortmatic: {
+        package: Fortmatic,
+        options: {
+          key: 'pk_live_CC75CEEE7D7E8630',
+        },
+      },
+    }
+  
+    this.web3Modal = new Web3Modal({
+      cacheProvider: false, // optional
+      providerOptions, // required
+      disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
+    })
+  
+    console.log('Web3Modal instance is', this.web3Modal)
   }
 
   authorise() {
@@ -39,16 +64,14 @@ class LoginApp {
     }
   }
 
-  loginWithEauth() {
-    this.eauth.contractEthLogin(this.contractWallet, this.authorise.bind(this))
-  }
-
-  loginWithFortmatic() {
-    this.eauth.contractFortmaticLogin(this.contractWallet, this.authorise.bind(this))
-  }
-
-  loginWithWalletConnect() {
-    this.eauth.contractWalletConnect(this.contractWallet)
+  async onConnect() {
+    console.log('Opening a dialog', this.web3Modal)
+    try {
+      this.provider = await this.web3Modal.connect()
+      this.eauth.contractEthLogin(this.provider, this.contractWallet, this.authorise.bind(this))
+    } catch (e) {
+      console.log('Could not get a wallet connection', e)
+    }
   }
 
   useCustomizedSign() {

@@ -1,6 +1,8 @@
 const Web3Modal = window.Web3Modal.default
 const WalletConnectProvider = window.WalletConnectProvider.default
-const { Fortmatic } = window
+const {
+  Fortmatic, Torus, Authereum, Portis,
+} = window
 
 class LoginApp {
   constructor() {
@@ -23,11 +25,22 @@ class LoginApp {
           infuraId: '3c15ed5027f541278717d536db299ef4',
         },
       },
-  
+      torus: {
+        package: Torus,
+      },
+      authereum: {
+        package: Authereum,
+      },
       fortmatic: {
         package: Fortmatic,
         options: {
           key: 'pk_live_CC75CEEE7D7E8630',
+        },
+      },
+      portis: {
+        package: Portis,
+        options: {
+          id: 'f36fb347-a067-42a8-82b7-ca77cf8b7277',
         },
       },
     }
@@ -38,7 +51,7 @@ class LoginApp {
       disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
     })
   
-    console.log('Web3Modal instance is', this.web3Modal)
+    // console.log('Web3Modal instance is', this.web3Modal)
   }
 
   authorise() {
@@ -62,9 +75,10 @@ class LoginApp {
   }
 
   async onConnect() {
-    console.log('Opening a dialog', this.web3Modal)
+    // console.log('Opening a dialog', this.web3Modal)
     try {
       this.provider = await this.web3Modal.connect()
+      // console.log(this.provider)
       this.eauth.ethLogin(this.provider, this.authorise.bind(this))
     } catch (e) {
       console.log('Could not get a wallet connection', e)

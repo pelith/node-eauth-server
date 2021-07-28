@@ -1,5 +1,6 @@
 const Web3Modal = window.Web3Modal.default
 const WalletConnectProvider = window.WalletConnectProvider.default
+const Eauth = window.Eauth.default
 const {
   Fortmatic, Torus, Authereum, Portis,
 } = window
@@ -69,8 +70,8 @@ class LoginApp {
       location = '/api/qrcode?socket_id=' + q + '&session_id=' + s
     }
 
-    if (!this.eauth.AUTH_RESPONSE) {
-      alert('Authentication failed.')
+    if (this.eauth.ERROR) {
+      alert(JSON.stringify(this.eauth.ERROR))
       window.location.reload()
     } else {
       window.location = location

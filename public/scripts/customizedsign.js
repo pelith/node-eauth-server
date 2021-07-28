@@ -1,3 +1,5 @@
+const Eauth = window.Eauth.default
+
 class LoginApp {
   constructor() {
     this.contractWallet = document.querySelector('#fulladdress').innerHTML
@@ -12,13 +14,17 @@ class LoginApp {
       PREFIX: prefix,
     })
 
-    this.eauth.getMessage(this.contractWallet).then(msg => {
-      this.message.innerHTML = msg
-      return msg
-    }).then(orgiMsg => {
-      const web3 = new Web3()
-      this.messageHex.innerHTML = web3.sha3(orgiMsg)
-    })
+    try {
+      this.eauth.getMessage(this.contractWallet).then(msg => {
+        this.message.innerHTML = msg
+        return msg
+      }).then(orgiMsg => {
+        const web3 = new Web3()
+        this.messageHex.innerHTML = web3.sha3(orgiMsg)
+      })
+    } catch(e) {
+      alert(e)
+    }
     
     this.copyOrig.addEventListener('click', this.copyMessage.bind(this))
     this.copyHex.addEventListener('click', this.copyHexMessage.bind(this))

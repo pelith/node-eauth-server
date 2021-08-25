@@ -18,7 +18,7 @@ class LoginApp {
         window.location = `/contractLogin?wallet=${walletAddress}`
       }
     } else {
-      alert('not a valid address')
+      window.toastr.warning('not a valid address')
     }
   }
 

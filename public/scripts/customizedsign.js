@@ -23,7 +23,7 @@ class LoginApp {
         this.messageHex.innerHTML = web3.sha3(orgiMsg)
       })
     } catch(e) {
-      alert(e)
+      window.toastr.warning(JSON.stringify(e))
     }
     
     this.copyOrig.addEventListener('click', this.copyMessage.bind(this))
@@ -44,8 +44,8 @@ class LoginApp {
     }
 
     if (!this.eauth.AUTH_RESPONSE) {
-      alert('Authentication failed.')
-      window.location.reload()
+      window.toastr.warning('Authentication failed.')
+      this.eauth.ERROR = null
     } else {
       window.location = location
     }

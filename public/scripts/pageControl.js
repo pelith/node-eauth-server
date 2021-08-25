@@ -1,5 +1,9 @@
 function backToLastPage() {
-  window.history.back()
+  if (window.history.length < 3) {
+    window.location = '/'
+  } else {
+    window.history.back()
+  }
 }
 
 if (document.querySelector('.back')) {

@@ -119,6 +119,7 @@ function getAccessToken(bearerToken) {
     .then(function (accessToken) {
       if (!accessToken) return false;
       var token = accessToken.toJSON();
+      token.accessTokenExpiresAt = new Date(token.accessTokenExpiresAt);
       token.user = token.User;
       token.client = token.OAuthClient;
       token.scope = token.scope

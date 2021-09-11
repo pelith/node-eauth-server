@@ -42,7 +42,7 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    $ cp .env.example .env
    ```
    
-   2.2. Configure your `.env` accordingly. Edit the following `.env.example`:
+   2.2. Configure your `.env` following `.env.example`:
    
    See more information : [Sequelize configuration](https://sequelize.org/master/manual/migrations.html#configuration)
    

@@ -42,53 +42,8 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    $ cp .env.example .env
    ```
    
-   2.2. Configure your `.env` accordingly. Edit the following entries:
-   ```yaml
-   # eauth configs
-   # eauth express http port
-   PORT=8080
-
-   # your brand name
-   EAUTH_BANNER=YOUR_BANNER_HERE
-   # morgan logger
-   EAUTH_LOGGING=true
-   # prefix showing with token
-   EAUTH_MESSAGE_PREFIX=This is a prefix example%0A%0Atoken:%0A----------%0A
-   # rpc for ENS and contract wallets
-   EAUTH_RPC_URL=https://rinkeby.infura.io/
-   # session lifetime for OAuth
-   EAUTH_SESSION_TIMEOUT=60000
-   #  app secret
-   EAUTH_SECRET=YOUR_SECRET_HERE
-
-   # component configs
-   # isValidSignature feature for ERC-1271
-   EAUTH_COMPONENTS_CONTRACT=true 
-   # ENS feature for OAuth and contract wallet
-   EAUTH_COMPONENTS_ENS=true
-   # OAuth component
-   EAUTH_COMPONENTS_OAUTH=true
-   # qrcode for remote login
-   EAUTH_COMPONENTS_QRCODE=true
-   # 
-   EAUTH_COMPONENTS_UI=true
-
-   # Eauth DB configs
-   EAUTH_DB_DIALECT=mysql
-   EAUTH_DB_HOST=127.0.0.1
-   EAUTH_DB_PORT=3306
-   EAUTH_DB_USER=YOUR_DB_USER_HERE
-   EAUTH_DB_PASSWORD=YOUR_DB_PASSWORD_HERE
-   EAUTH_DB_NAME=YOUR_DB_NAME_HERE
-
-   # Eauth OAuth db configs
-   EAUTH_OAUTH_DB_DIALECT=mysql
-   EAUTH_OAUTH_DB_HOST=127.0.0.1
-   EAUTH_OAUTH_DB_PORT=3306
-   EAUTH_OAUTH_DB_USER=YOUR_DB_USER_HERE
-   EAUTH_OAUTH_DB_PASSWORD=YOUR_DB_PASSWORD_HERE
-   EAUTH_OAUTH_DB_NAME=YOUR_DB_NAME_HERE
-   ```
+   2.2. Configure your `.env` accordingly. Edit the following `.env.example`:
+   
    See more information : [Sequelize configuration](https://sequelize.org/master/manual/migrations.html#configuration)
    
 ### 3. Setup OAuth Clients.

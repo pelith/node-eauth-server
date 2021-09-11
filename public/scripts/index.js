@@ -2,6 +2,8 @@ class LoginApp {
   constructor() {
     this.normalButton = document.querySelector('.button--normal')
     this.contractButton = document.querySelector('.button--contract')
+    this.normalButton.disabled = false
+    this.contractButton.disabled = false
 
     this.normalButton.addEventListener('click', this.normalWallet.bind(this))
     this.contractButton.addEventListener('click', this.contractWallet.bind(this))

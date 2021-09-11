@@ -97,7 +97,12 @@
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.button:hover {
+.button:disabled {
+  background-color: #fbfbfb;
+  cursor: wait;
+}
+
+.button:hover:enabled {
   background-color: #fff;
   box-shadow: 0 2px 8px -2px rgba(0, 50, 152, 0.25);
 }

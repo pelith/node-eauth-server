@@ -12,7 +12,9 @@ const config = {
   password: process.env.EAUTH_OAUTH_DB_PASSWORD,
   database: process.env.EAUTH_OAUTH_DB_NAME
 };
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = (process.env.EAUTH_OAUTH_DB_DIALECT === 'sqlite') ?
+  new Sequelize({dialect: 'sqlite', storage: 'eauth.sqlite'}) :
+  new Sequelize(config.database, config.username, config.password, config);
 const db = {};
 
 fs.readdirSync(__dirname)

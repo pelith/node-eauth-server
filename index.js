@@ -119,6 +119,6 @@ app.use((err, req, res, next) => {
   })
 })
 
-const listener = server.listen(process.env.PORT || 8080, () => {
+const listener = server.listen(process.env.EAUTH_PORT || 8080, () => {
   console.log('Listening on port ' + listener.address().port)
 })

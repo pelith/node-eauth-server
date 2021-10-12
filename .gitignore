@@ -36,3 +36,5 @@ node_modules
 pm2.config.js
 
 package-lock.json
+
+eauth.sqlite

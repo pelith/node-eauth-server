@@ -14,6 +14,7 @@
     "body-parser": "^1.18.3",
     "connect-session-sequelize": "^6.0.0",
     "dotenv": "^8.2.0",
+    "ethereum-ens": "^0.8.0",
     "express": "^4.16.4",
     "express-eauth": "^2.1.0",
     "express-session": "^1.16.1",
@@ -37,6 +38,6 @@
     "sequelize-cli": "^5.5.0"
   },
   "optionalDependencies": {
-    "ethereum-ens": "^0.8.0"
+    "sqlite3": "^5.0.2"
   }
 }

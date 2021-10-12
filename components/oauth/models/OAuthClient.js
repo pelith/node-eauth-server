@@ -11,8 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    name: DataTypes.STRING(255),
-    client_id: DataTypes.STRING(80),
+    name: {
+      type: DataTypes.STRING(255),
+      unique: true,
+    },
+    client_id: {
+      type: DataTypes.STRING(80),
+      unique: true,
+    },
     client_secret: DataTypes.STRING(80),
     redirect_uri: DataTypes.STRING(2000),
     grant_types: DataTypes.STRING(80),

@@ -30,7 +30,7 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
    $ yarn install
    ```
    
-   **Notice**: For those who are not using **ENS** or **Contact Login**, following command can speed up the step:
+   **Notice**: For those who are not using **SQLite**:
    ```bash
    $ yarn install --ignore-optional
    ```
@@ -58,14 +58,9 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
   |    ---    |      ---      |      ---      |
   |    ...    |      ...      |      ...      |
 
-  ### Command
+  ### Insert a client config when the server starts
 
-  3.2.1 Setup your `client_id, client_secret, redirect_uri` in [components/seeders/20190725062038-oauth_clients.js](./components/seeders/20190725062038-oauth_clients.js)
-
-  3.2.2 Seeding them with follow command:
-   ```bash
-   $ npx sequelize db:seed:all
-   ```
+  3.2.1 Setup your client configs `name, client_id, client_secret, redirect_uri` in `.env`
 
 ## Usage
 ### Quickstart

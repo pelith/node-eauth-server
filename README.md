@@ -172,4 +172,4 @@ Let users access blockchain apps from anywhere 💻📱 - without forcing them t
 
 ## License
 
-React is [MIT licensed](./LICENSE).
+Node Eauth Server is [MIT licensed](./LICENSE).

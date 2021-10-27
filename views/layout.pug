@@ -8,9 +8,9 @@ html
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Roboto:300,400&display=swap')
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400')
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800')
-    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet' href='/stylesheets/normalize.css')
-    link(rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css')
+    link(rel='stylesheet' href='/stylesheets/toastr.min.css')
     block stylesheets
 
   body
@@ -21,19 +21,18 @@ html
       block content
       a(href='https://pelith.com').powered-by-text Powered by Pelith
 
-    script(src='//code.jquery.com/jquery-3.3.1.min.js')
-    script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+    script(src='/scripts/lib/jquery-3.3.1.min.js')
+    script(src='/scripts/lib/bootstrap.min.js')
     script(src='/scripts/web3.js')
     script(src='/scripts/pageControl.js')
-    script(src='//cdn.jsdelivr.net/npm/fortmatic@latest/dist/fortmatic.js')
-    script(src='//unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js')
-    script(src='//unpkg.com/@walletconnect/utils@1.5.2/dist/umd/index.min.js')
-    script(src='//unpkg.com/@toruslabs/torus-embed@1.11.0/dist/torus.umd.min.js')
-    script(src='//unpkg.com/authereum@latest/authereum.js')
-    script(src='//cdn.jsdelivr.net/npm/@portis/web3@4.0.5/umd/index.js')
-    script(src='//unpkg.com/web3modal@1.9.3/dist/index.js')
-    script(src='//unpkg.com/eauth.js@latest/dist/eauth.umd.production.min.js')
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css' integrity='sha256-PF6MatZtiJ8/c9O9HQ8uSUXr++R9KBYu4gbNG5511WE=' crossorigin='anonymous')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js' type='text/javascript')
+    script(src='/scripts/lib/fortmatic.js')
+    script(src='/scripts/lib/@walletconnect/web3-provider.min.js')
+    script(src='/scripts/lib/@walletconnect/utils.min.js')
+    script(src='/scripts/lib/torus.min.js')
+    script(src='/scripts/lib/authereum.js')
+    script(src='/scripts/lib/portis.js')
+    script(src='/scripts/lib/web3modal.js')
+    script(src='/scripts/lib/eauth.min.js')
+    script(src='/scripts/lib/toastr.min.js' type='text/javascript')
     script(src='/scripts/toast.js')
     block scripts

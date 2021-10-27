@@ -10,7 +10,8 @@ const config = {
   port: process.env.EAUTH_DB_PORT,
   username: process.env.EAUTH_DB_USER,
   password: process.env.EAUTH_DB_PASSWORD,
-  database: process.env.EAUTH_DB_NAME
+  database: process.env.EAUTH_DB_NAME,
+  logging: process.env.EAUTH_DB_LOG !== 'false',
 };
 const sequelize = (process.env.EAUTH_DB_DIALECT === 'sqlite') ?
   new Sequelize({dialect: 'sqlite', storage: 'eauth.sqlite'}) :

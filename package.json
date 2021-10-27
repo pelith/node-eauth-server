@@ -1,6 +1,6 @@
 {
   "name": "node-eauth-server",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "An OAuth-compatiable service based on Ethereum credentials to authenticate users on a website.",
   "author": "Pelith",
   "license": "MIT",

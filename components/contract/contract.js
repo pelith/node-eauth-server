@@ -1,18 +1,12 @@
 const async = require('async')
 const Eauth = require('express-eauth')
 const jwt = require('jsonwebtoken')
-const MobileDetect = require('mobile-detect')
 
 const eauthContractTypedData = new Eauth({ banner: process.env.EAUTH_BANNER, method: 'wallet_validation_typedData', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX), rpc: process.env.EAUTH_RPC_URL })
-const eauthContractPersonal = new Eauth({ method: 'wallet_validation_personal', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX), rpc: process.env.EAUTH_RPC_URL })
 const eauthContractCustomizedSign = new Eauth({ method: 'wallet_validation', prefix: decodeURI(process.env.EAUTH_MESSAGE_PREFIX), rpc: process.env.EAUTH_RPC_URL })
 
 async function contractMiddleware(req, res, next) {
-  let middleware = eauthContractTypedData
-  const md = new MobileDetect(req.headers['user-agent'])
-  if (md.mobile() || req.headers['user-target'] == 'WalletConnect') middleware = eauthContractPersonal
-
-  async.series([middleware.bind(null, req, res)], (err) => {
+  async.series([eauthContractTypedData.bind(null, req, res)], (err) => {
     return err ? next(err) : next()
   })
 }

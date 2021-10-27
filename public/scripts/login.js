@@ -68,18 +68,7 @@ class LoginApp {
     }
 
     if (this.eauth.ERROR) {
-      if (this.eauth.ERROR.message.includes('Provided chainId')) {
-        window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{
-            chainId: '0x1',
-          }],
-        }).then(() => {
-          window.setTimeout(() => this.eauth.ethLogin(this.provider, this.authorise.bind(this)), 100)
-        })
-      } else {
-        window.toastr.warning(this.eauth.ERROR.message)
-      }
+      window.toastr.warning(this.eauth.ERROR.message)
       this.eauth.ERROR = null
     } else {
       window.location = location

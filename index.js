@@ -35,8 +35,16 @@ const { User, Session } = db
 
 // creat database if not exist // if force == true : drop table
 async function initalize() {
-  await User.sync()
-  await Session.sync({ force: true })
+  try {
+    await User.sync()
+    await Session.sync({ force: true })
+  } catch (e) {
+    console.error(e)
+
+    setTimeout(() => {
+      initalize()
+    }, 5000)
+  }
 }
 initalize()
 

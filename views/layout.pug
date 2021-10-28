@@ -21,6 +21,8 @@ html
       block content
       a(href='https://pelith.com').powered-by-text Powered by Pelith
 
+    script.
+      window.showWalletModal = `#{process.env.EAUTH_WALLETMODAL}`
     script(src='/scripts/lib/jquery-3.3.1.min.js')
     script(src='/scripts/lib/bootstrap.min.js')
     script(src='/scripts/web3.js')

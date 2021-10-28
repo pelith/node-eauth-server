@@ -1,5 +1,5 @@
 const Web3Modal = window.Web3Modal.default
-const WalletConnectProvider = window.WalletConnectProvider.default
+const WalletConnectProvider = window.WalletConnectProvider?.default
 const Eauth = window.Eauth.default
 const {
   Fortmatic, Torus, Authereum, Portis,
@@ -22,7 +22,7 @@ class LoginApp {
   }
 
   init() {
-    const providerOptions = {
+    const providerOptions = window.showWalletModal === 'false' ? {} : {
       walletconnect: {
         package: WalletConnectProvider,
         options: {

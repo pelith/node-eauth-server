@@ -19,7 +19,7 @@ class LoginApp {
   }
 
   init() {
-    const providerOptions = {
+    const providerOptions = window.showWalletModal === 'false' ? {} : {
       walletconnect: {
         package: WalletConnectProvider,
         options: {

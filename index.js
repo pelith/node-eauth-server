@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const jwt = require('jsonwebtoken')
 
-// initalize sequelize with session store
+// initialize sequelize with session store
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
 const app = express()
@@ -28,13 +28,13 @@ if (process.env.EAUTH_COMPONENTS_ENS === 'true') {
 // issue, dev // maybe add salt with secret
 app.set('secret', process.env.EAUTH_SECRET)
 
-// initalize database
+// initialize database
 const db = require('./models')
 
 const { User, Session } = db
 
-// creat database if not exist // if force == true : drop table
-async function initalize() {
+// create database if not exist // if force == true : drop table
+async function initialize() {
   try {
     await User.sync()
     await Session.sync({ force: true })
@@ -42,11 +42,11 @@ async function initalize() {
     console.error(e)
 
     setTimeout(() => {
-      initalize()
+      initialize()
     }, 5000)
   }
 }
-initalize()
+initialize()
 
 const sequelizeStore = new SequelizeStore({
   db: db.sequelize,

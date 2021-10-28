@@ -24,7 +24,7 @@ module.exports = function(app, api, sequelizeStore, server) {
       if (await sequelizeStore.get(req.query.session_id)) {
         await sequelizeStore.set(req.query.session_id, req.session)
       }
-      // emit loggin message
+      // emit login message
       const socket = io.clients().sockets[req.query.socket_id]
       if (socket) await socket.emit('refresh')
     }

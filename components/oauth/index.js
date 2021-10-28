@@ -3,7 +3,7 @@ const OAuthDB = require('./models')
 
 const { User, OAuthClient } = OAuthDB
 
-async function initalize() {
+async function initialize() {
   try {
     await User.sync()
     await OAuthClient.sync()
@@ -25,11 +25,11 @@ async function initalize() {
     console.error(e)
 
     setTimeout(() => {
-      initalize()
+      initialize()
     }, 5000)
   }
 }
-initalize()
+initialize()
 
 module.exports = function(app, api, User, ens){
   require('./express')(app, api, User, ens)

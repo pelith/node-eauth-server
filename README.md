@@ -50,7 +50,7 @@ Usages: [eauth-examples](https://github.com/pelith/eauth-examples)
   
   ### Manual
   
-  3.1.1 Connect to your database, and fulfill the table below with Oauth datas 
+  3.1.1 Connect to your database, and fulfill the table below with Oauth data 
   
   Table: oauth_clients
 

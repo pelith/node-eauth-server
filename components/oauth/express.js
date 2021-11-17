@@ -5,11 +5,11 @@ const async = require('async')
 const util = require('util')
 const authenticate = require('./authenticate')
 
-// initalize database
+// initialize database
 const db = require('./models')
 const OAuthClient = db.OAuthClient
 
-// initalize oauth2 server
+// initialize oauth2 server
 const oauth = require('./oauth')
 
 module.exports = function(app, api, User, ens) {

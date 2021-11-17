@@ -1,4 +1,4 @@
-// initalize database
+// initialize database
 const _ = require('lodash');
 const db = require('./models');
 const User = db.User
@@ -7,13 +7,13 @@ const OAuthAuthorizationCode = db.OAuthAuthorizationCode;
 const OAuthAccessToken = db.OAuthAccessToken;
 const OAuthRefreshToken = db.OAuthRefreshToken;
 
-async function initalize(){
+async function initialize(){
   await OAuthClient.sync();
   await OAuthAuthorizationCode.sync({force: true});
   await OAuthAccessToken.sync({force: true});
   await OAuthRefreshToken.sync({force: true});
 };
-initalize();
+initialize();
 
 function getAuthorizationCode(code) {
   return OAuthAuthorizationCode

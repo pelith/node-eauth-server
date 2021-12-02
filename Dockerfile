@@ -1,4 +1,4 @@
-FROM node:10.22.0
+FROM node:12-alpine
 
 # Setting Node environment
 ENV NODE_ENV production

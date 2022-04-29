@@ -10,7 +10,7 @@
     "dev": "nodemon -r dotenv/config index.js"
   },
   "dependencies": {
-    "async": "^2.6.2",
+    "async": "^2.6.4",
     "body-parser": "^1.18.3",
     "connect-session-sequelize": "^6.0.0",
     "dotenv": "^8.2.0",
